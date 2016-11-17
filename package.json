@@ -1,0 +1,14 @@
+{
+  "name": "hyperkeys",
+  "version": "1.0.0",
+  "description": "Global shortcut on steroids",
+  "main": "src/main.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "author": "Olivier Bourdoux",
+  "license": "ISC",
+  "dependencies": {
+    "electron": "^1.4.7"
+  }
+}
