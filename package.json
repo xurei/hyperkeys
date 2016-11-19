@@ -9,6 +9,7 @@
   "author": "Olivier Bourdoux",
   "license": "ISC",
   "dependencies": {
+    "debug": "^2.3.2",
     "electron": "^1.4.7"
   }
 }

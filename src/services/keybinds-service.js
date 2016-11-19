@@ -1,12 +1,18 @@
-const provider = require('../providers/keybinds-provider');
+const {globalShortcut} = require('electron');
+const actionService = require('./actions-service');
+const debug = require('debug')('keybinds-service');
 
 var service = {
-	registerKeys: () => {
-		provider.getKeybinds()
-		.then(keybinds => {
-			
-		});
+	registerKey: (keybind) => {
+		var action = actionService.buildActionObject(keybind.action);
+		
+		globalShortcut.register(keybind.key, action.execute);
+		debug('Registered keybind `'+keybind.key+'` => `' + keybind.action.name+'`');
+	},
+	
+	unregisterKey: (keybind) => {
+		//TODO unregisterKey
 	}
 };
 
-module.exports = service;
+module.exports = service;  

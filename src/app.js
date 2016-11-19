@@ -1,10 +1,16 @@
 const {app, BrowserWindow, globalShortcut, clipboard, Menu, Tray} = require('electron');
 const ipc = require("electron").ipcMain;
 const {exec} = require('child_process');
+const debug = require('debug')('app');
 //----------------------------------------------------------------------------------------------------------------------
 
 const platform = require('./util/platform');
+const keybindsProvider = require('./providers/keybinds-provider');
 const keybindsService = require('./services/keybinds-service');
+//----------------------------------------------------------------------------------------------------------------------
+
+const actions = require('./actions/index');
+debug(actions);
 //----------------------------------------------------------------------------------------------------------------------
 
 function toggleWindow() {
@@ -29,9 +35,9 @@ function toggleWindow() {
 }
 //----------------------------------------------------------------------------------------------------------------------
 
-console.log("platform:", platform.name);
+debug("platform:", platform.name);
 const APPPATH = __dirname;
-console.log("APPPATH:", APPPATH);
+debug("APPPATH:", APPPATH);
 var DIRSEP = "/";
 if (platform.isWin)
 	DIRSEP = "\\";
@@ -67,18 +73,13 @@ var App = {
 		
 		//mainWindow.openDevTools();
 		
-		keybindsService.registerKeys();
 		
-		/*//Register a 'alt+s' shortcut listener.
-		var shortcut = 'alt+s';
-		if (platform.isMac)
-			shortcut = 'ctrl+s';
-		var ret = globalShortcut.register(shortcut, toggleWindow);
-		if (!ret) {
-			console.log('register fails');
-			toggleWindow();
-			//TODO show message on register fail
-		}*/
+		keybindsProvider.getKeybinds()
+		.then(keybinds => {
+			for (let keybind of keybinds) {
+				keybindsService.registerKey(keybind);
+			}
+		});
 		
 		ipc.on('login', function (event, arg) {
 			
