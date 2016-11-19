@@ -1,3 +1,5 @@
+//TODO on appelle getPlatformName trop souvent, ca pourrait être optimisé
+
 function getPlatformName() {
 	if (/^win/.test(process.platform))
 		return "windows";
@@ -7,9 +9,22 @@ function getPlatformName() {
 		return "linux";
 }
 
-module.exports = {
+function getPlatformArch() {
+	return process.arch;
+}
+
+var isWin = (getPlatformName() == "windows");
+
+var platform = {
 	name: getPlatformName(),
-	isWin: (getPlatformName() == "windows"),
+	arch: getPlatformArch(),
+	
+	isWin: isWin,
+	isWin32: (isWin && getPlatformArch() == "ia32"),
+	isWin64: (isWin && getPlatformArch() == "x64"),
+	
 	isMac: (getPlatformName() == "mac"),
 	isLinux: (getPlatformName() == "linux"),
 };
+
+module.exports = platform;
