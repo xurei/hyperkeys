@@ -1,13 +1,19 @@
+const React = require ("react");
 const ReactDOM = require ("react-dom");
-const MainView = require ("./react-mainview");
+const Provider = require('react-redux').Provider;
+const MainView = require("./react-view-main");
+const store = require('./store');
 
-//Rendering the UI
-ReactDOM.render(
-	<MainView>
-	</MainView>,
-	document.getElementById('content')
-);
-
-//TODO fadeout of the loading view
-var loadingView = document.getElementById('loading-view');
-loadingView.style.display = "none";
+window.addEventListener("DOMContentLoaded", function() {
+	//Rendering the UI
+	ReactDOM.render(
+		<Provider store={store}>
+			<MainView/>
+		</Provider>,
+		document.getElementById('content')
+	);
+	
+	//TODO fadeout of the loading view
+	var loadingView = document.getElementById('loading-view');
+	loadingView.style.display = "none";
+});

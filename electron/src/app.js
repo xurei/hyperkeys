@@ -2,9 +2,10 @@ const {app, BrowserWindow, globalShortcut, clipboard, Menu, Tray} = require('ele
 const ipc = require("electron").ipcMain;
 const {exec} = require('child_process');
 const debug = require('debug')('app');
+console.log(app.getPath('userData'));
 //----------------------------------------------------------------------------------------------------------------------
 
-const platform = require('./util/platform');
+const platform = require('hyperkeys-api').platform;
 const keybindsProvider = require('./providers/keybinds-provider');
 const keybindsService = require('./services/keybinds-service');
 const actionsService = require('./services/actions-service');
@@ -17,6 +18,22 @@ for (let iextension in extensions) {
 		actionsService.registerActionFactory(action.name, action.factory);
 	}
 }
+//----------------------------------------------------------------------------------------------------------------------
+
+debug("platform:", platform.name);
+const APPPATH = __dirname;
+debug("APPPATH:", APPPATH);
+var DIRSEP = "/";
+if (platform.isWin)
+	DIRSEP = "\\";
+
+// Keep a global reference of the window object, if you don't, the window will
+// be closed automatically when the javascript object is GCed.
+var mainWindow = null;
+
+var window_open = false;
+var window_focus = false;
+var appIcon = null;
 //----------------------------------------------------------------------------------------------------------------------
 
 function toggleWindow() {
@@ -41,22 +58,6 @@ function toggleWindow() {
 }
 //----------------------------------------------------------------------------------------------------------------------
 
-debug("platform:", platform.name);
-const APPPATH = __dirname;
-debug("APPPATH:", APPPATH);
-var DIRSEP = "/";
-if (platform.isWin)
-	DIRSEP = "\\";
-
-// Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the javascript object is GCed.
-var mainWindow = null;
-
-var window_open = false;
-var window_focus = false;
-var appIcon = null;
-//----------------------------------------------------------------------------------------------------------------------
-
 var App = {
 	ready: () => {
 		if (platform.isWin || platform.isLinux) {
@@ -72,19 +73,26 @@ var App = {
 		}
 		
 		// Create the browser window.
-		mainWindow = new BrowserWindow({width: 800, height: 600, show: false});
+		mainWindow = new BrowserWindow({width: 1024, height: 768, show: false});
 		mainWindow.setMenu(null);
 		// and load the index.html of the app
 		mainWindow.loadURL('file://' + __dirname + '/index.html');
 		
 		//mainWindow.openDevTools();
 		
+		var keybinds;
 		
-		keybindsProvider.getKeybinds()
-		.then(keybinds => {
+		keybindsProvider.loadKeybinds()
+		.then(_keybinds => {
+			keybinds = _keybinds;
 			for (let keybind of keybinds) {
 				keybindsService.registerKey(keybind);
 			}
+		});
+		console.log('KEYBINDS !', keybinds);
+		
+		ipc.on('keybinds', function (event, arg) {
+			mainWindow.webContents.send('keybinds', keybinds);
 		});
 		
 		ipc.on('login', function (event, arg) {
@@ -113,14 +121,15 @@ var App = {
 		// Emitted when the window is closed.
 		mainWindow.on('close', function (e) {
 			if (mainWindow != null) {
-				mainWindow.hide();
 				e.preventDefault();
+				mainWindow.hide();
 				window_open = false;
-				if (!ret) {
-					App.exit();
-				}
 			}
 		});
+		
+		//TODO remove this toggleWindow()
+		toggleWindow();
+		mainWindow.toggleDevTools();
 	},
 	
 	exit: () => {

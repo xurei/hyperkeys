@@ -1,119 +1,34 @@
 <!DOCTYPE html>
-
 <html lang="en">
-<head>
-	<meta charset="utf-8" />
-	<title>Snippr</title>
-	<link href="css/style.css" rel="stylesheet" type="text/css" />
-	<script>
-		window.languages=['applescript','pgsql','jsx','groovy','c_cpp','none','gcode','c9search','rhtml','objectivec','markdown','clojure','tcl','protobuf','space','assembly_x86','prolog','r','handlebars','xml','cobol','vala','abap','lsl','mysql','gitignore','stylus','html','rust','coldfusion','latex','sass','vbscript','mushcode','elixir','javascript','scad','jade','soy_template','matlab','rdoc','textile','diff','xquery','vhdl','actionscript','luapage','csharp','snippets','python','haxe','ftl','dart','java','dockerfile','svg','forth','ejs','twig','plain_text','django','makefile','erlang','curly','asciidoc','smarty','toml','io','velocity','cirru','powershell','mel','yaml','batchfile','mask','less','d','scss','golang','verilog','glsl','perl','pascal','sjs','haml','elm','lua','liquid','jack','ada','json','lisp','typescript','eiffel','scala','gherkin','logiql','sh','julia','scheme','coffee','jsp','properties','lucene','livescript','ruby','apache_conf','php','jsoniq','css','dot','tex','autohotkey','ocaml','nix','praat','sql','text','haskell','ini','html_ruby'];
-	</script>
-</head>
-<body style="overflow: hidden">
-<div id="header">
-	<img src="images/logo.png" height="100%">
-	<div id="userinfos">
-	<a href="javascript:;" class="btn" data-jsname="logout_btn">Logout</a>
-	</div>
-</div>
-<div class="fullsize" id="loading-overlay">
-	<div>Loading...</div>
-</div>
-
-<div id="main-content">
-	<div data-jsname="login_view" id="login-overlay" class="fullsize" style="display: none">
-		<div id="login" class="center">
-			<!--<a class="facebook btn facebook-oauth" id="facebook-btn" href="javascript:;">
-				Login using Facebook
-			</a>
-			<br>
-			<div>OR</div>
-			<br>-->
-			<form>
-				<input type="text" data-jsname="login_input" placeholder="Login">
-				<br>
-				<input type="password" data-jsname="paswd_input" placeholder="Password">
-				<br>
-				<br>
-				<input type="submit" id="login-btn" data-jsname="login_btn" class="btn" value="Login / Register">
-			</form>
+	<head>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="bootstrap.min.css">
+	</head>
+	<body>
+		<div id="loading-view" class="active" style="position:fixed;top:0;left:0;width: 100%;height:100%;text-align:center;line-height:100%;background:#222;z-index:9999">
+			<div style="position:absolute; width:100%; top:38%; margin-top:-10px; line-height:60px; background:#6fbda3; color:#fff">LOADING...</div>
 		</div>
-	</div>
-
-	<div data-jsname="main_view" id="panes">
-		<section id="left-pane">
-			<div class="fullsize" id="left-pane-content">
-			  <form class="search_form" action="javascript:;">
-			    <input type="text" data-jsname="search_input" class="search" placeholder="Search snippet" style="width: 100%; box-sizing: border-box">
-			  </form>
-				<ul id="snippet-list" data-jsname="snippets_list" >
-				</ul>
-			</div>
-			<div id="addblock-btn" data-jsname="addblock_btn" class="btn">
-				Add snippet
-			</div>
-		</section>
-
-		<section id="resize-line">
-		</section>
-
-		<section id="right-pane">
-			<div id="editor">
-				<div data-jsname="no_snippet" class="editor-no-snippet">
-					&lt;- Select a snippet
-				</div>
-				<div class="editor-snippet">
-					<header>
-						<div class="edit-name-container"><input data-jsname="snippet_name" class="edit-name" type="text" value="${name}"/></div>
-						<div class="btns">
-							<a data-jsname="cancel_btn"  class="btn cancel show-hidden edit-visible"><i class=""></i> Revert edit</a>
-							<a data-jsname="save_btn"    class="btn save show-hidden edit-visible"><i class=""></i> Save</a>
-							<a data-jsname="revert_btn"  class="btn cancel show-visible edit-hidden"><i class=""></i> Revert draft</a>
-							<a data-jsname="edit_btn"    class="btn edit show-visible edit-hidden"><i class=""></i> Edit</a>
-							<a data-jsname="destroy_btn" class="btn destroy show-visible edit-visible"><i class=""></i> Destroy</a>
-						</div>
-						<div class="options">
-							<span>Language</span>
-							<select data-jsname="language_input" class="betterselect">
-								<option value="none">none</option><option value="abap">abap</option><option value="actionscript">actionscript</option><option value="ada">ada</option><option value="apache_conf">apache_conf</option><option value="applescript">applescript</option><option value="asciidoc">asciidoc</option><option value="assembly_x86">assembly_x86</option><option value="autohotkey">autohotkey</option><option value="batchfile">batchfile</option><option value="c9search">c9search</option><option value="c_cpp">c_cpp</option><option value="cirru">cirru</option><option value="clojure">clojure</option><option value="cobol">cobol</option><option value="coffee">coffee</option><option value="coldfusion">coldfusion</option><option value="csharp">csharp</option><option value="css">css</option><option value="curly">curly</option><option value="d">d</option><option value="dart">dart</option><option value="diff">diff</option><option value="django">django</option><option value="dockerfile">dockerfile</option><option value="dot">dot</option><option value="eiffel">eiffel</option><option value="ejs">ejs</option><option value="elixir">elixir</option><option value="elm">elm</option><option value="erlang">erlang</option><option value="forth">forth</option><option value="ftl">ftl</option><option value="gcode">gcode</option><option value="gherkin">gherkin</option><option value="gitignore">gitignore</option><option value="glsl">glsl</option><option value="golang">golang</option><option value="groovy">groovy</option><option value="haml">haml</option><option value="handlebars">handlebars</option><option value="haskell">haskell</option><option value="haxe">haxe</option><option value="html">html</option><option value="html_ruby">html_ruby</option><option value="ini">ini</option><option value="io">io</option><option value="jack">jack</option><option value="jade">jade</option><option value="java">java</option><option value="javascript">javascript</option><option value="json">json</option><option value="jsoniq">jsoniq</option><option value="jsp">jsp</option><option value="jsx">jsx</option><option value="julia">julia</option><option value="latex">latex</option><option value="less">less</option><option value="liquid">liquid</option><option value="lisp">lisp</option><option value="livescript">livescript</option><option value="logiql">logiql</option><option value="lsl">lsl</option><option value="lua">lua</option><option value="luapage">luapage</option><option value="lucene">lucene</option><option value="makefile">makefile</option><option value="markdown">markdown</option><option value="mask">mask</option><option value="matlab">matlab</option><option value="mel">mel</option><option value="mushcode">mushcode</option><option value="mysql">mysql</option><option value="nix">nix</option><option value="none">none</option><option value="objectivec">objectivec</option><option value="ocaml">ocaml</option><option value="pascal">pascal</option><option value="perl">perl</option><option value="pgsql">pgsql</option><option value="php">php</option><option value="plain_text">plain_text</option><option value="powershell">powershell</option><option value="praat">praat</option><option value="prolog">prolog</option><option value="properties">properties</option><option value="protobuf">protobuf</option><option value="python">python</option><option value="r">r</option><option value="rdoc">rdoc</option><option value="rhtml">rhtml</option><option value="ruby">ruby</option><option value="rust">rust</option><option value="sass">sass</option><option value="scad">scad</option><option value="scala">scala</option><option value="scheme">scheme</option><option value="scss">scss</option><option value="sh">sh</option><option value="sjs">sjs</option><option value="smarty">smarty</option><option value="snippets">snippets</option><option value="soy_template">soy_template</option><option value="space">space</option><option value="sql">sql</option><option value="stylus">stylus</option><option value="svg">svg</option><option value="tcl">tcl</option><option value="tex">tex</option><option value="text">text</option><option value="textile">textile</option><option value="toml">toml</option><option value="twig">twig</option><option value="typescript">typescript</option><option value="vala">vala</option><option value="vbscript">vbscript</option><option value="velocity">velocity</option><option value="verilog">verilog</option><option value="vhdl">vhdl</option><option value="xml">xml</option><option value="xquery">xquery</option><option value="yaml">yaml</option>
-							</select>
-						</div>
-					</header>
-					<div class="content"><div data-jsname="actualEditor" class="editor-code">${code}<br/><br/></div></div>
-				</div>
-			</div>
-		</section>
-	</div>
-</div>
-
-<script type="text/x-jquery-tmpl" id="snippetListItemTPL">
-	<li class="snippet-list-item togglable togglable-no-deactivate {{if has_draft}}has-draft{{/if}}" data-id="${id}">
-		${name} <span class="draft-available">Draft</span>
-	</li>
-</script>
-
-<script>
-window.requireNode = window.require;
-window.require = undefined;
-window.$ = window.jQuery = requireNode('./js/jquery-1.11.2.min.js');
-</script>
-
-<script src="js/jquery.attrs.js" type="text/javascript"></script>
-<script src="js/jquery.tmpl.min.js" type="text/javascript"></script>
-<script src="js/ace/ace.js" type="text/javascript"></script>
-
-<script src="util/aes.js" type="text/javascript"></script>
-<script src="util/activable.js" type="text/javascript"></script>
-<script src="util/jsname.js" type="text/javascript"></script>
-
-<script src="ui/betterselect.js" type="text/javascript"></script>
-<script src="ui/loginview.js" type="text/javascript"></script>
-<script src="ui/mainview.js" type="text/javascript"></script>
-
-<script src="keybinds.js" type="text/javascript"></script>
-<script src="apiwrapper.js" type="text/javascript"></script>
-<script src="app.js" type="text/javascript"></script>
-ript>
-
-</body>
+		<div id="content"></div>
+		<script>
+			if (typeof(window.require) !== 'undefined') {
+				window.requireNode = window.require;
+				window.require = undefined;
+				window.ipc = requireNode('electron').ipcRenderer;
+			}
+			else {
+				window.ipc = {
+					send: function () {},
+					on: function () {}
+				};
+			}
+			document.addEventListener("keydown", function (e) {
+				if (e.which === 123) {
+					ipc.send('devtools', null);
+				} else if (e.which === 116) {
+					location.reload();
+				}
+			});
+		</script>
+		<script src="webapp.js"></script>
+	</body>
 </html>

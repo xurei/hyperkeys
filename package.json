@@ -11,12 +11,14 @@
   "dependencies": {
     "debug": "^2.3.2",
     "electron": "^1.4.7",
+    "electron-json-storage": "^2.1.0",
+    "hyperkeys-api": "git+https://github.com/xurei/hyperkeys-api.git#master",
     "process": "^0.11.9",
     "react": "^15.4.0",
     "react-bootstrap": "^0.30.6",
     "react-dom": "^15.4.0",
+    "react-redux": "^4.4.6",
     "redux": "^3.6.0",
-    "hyperkeys-api": "git+https://github.com/xurei/hyperkeys-api.git#master",
     "xurei-util": "^1.0.2"
   },
   "devDependencies": {

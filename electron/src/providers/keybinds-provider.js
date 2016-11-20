@@ -1,5 +1,31 @@
+const storage = require('electron-json-storage');
+
 var provider = {
-	getKeybinds: function() {
+	saveKeybinds: function(keybinds) {
+		return new Promise((resolve, reject) => {
+		storage.set('keybinds', keybinds, function(error, data) {
+				if (error) {
+					reject(error);
+				}
+				
+				resolve(data);
+			});
+		});
+	},
+	
+	loadKeybinds: function() {
+		return new Promise((resolve, reject) => {
+			storage.get('keybinds', function(error, data) {
+				if (error) {
+					reject(error);
+				}
+				
+				//TODO add default config on first launch ?
+				
+				resolve(data);
+			});
+		});
+		
 		//TODO persist keybinds
 		return Promise.resolve([
 			/*{

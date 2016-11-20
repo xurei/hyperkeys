@@ -1,6 +1,5 @@
 const {app, ipc, BrowserWindow, globalShortcut, clipboard, Menu, Tray} = require('electron');
 const myapp = require('./app');
-const platform = require('./util/platform');
 
 console.log("getPath", app.getPath('exe'));
 
