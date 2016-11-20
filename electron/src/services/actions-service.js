@@ -1,5 +1,5 @@
 const provider = require('../providers/keybinds-provider');
-const isset = require('../util/isset');
+const isset = require('xurei-util').isset;
 const debug = require('debug')('actions-service');
 
 var actionFactories = {};

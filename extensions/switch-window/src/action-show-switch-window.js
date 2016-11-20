@@ -1,7 +1,7 @@
-const store = require('../stores/store-switch-window');
+const store = require('./store-switch-window');
 const exec = require('child_process').exec;
 const debug = require('debug')('action-show-switch-window');
-const platform = require('../util/platform');
+const platform = require('hyperkeys-api').platform;
 
 module.exports = {
 	name: "SHOW_SWITCH_WINDOW",
@@ -13,7 +13,7 @@ module.exports = {
 					command = 'wmctrl -ia ' + store[options.slot];
 				}
 				else if (platform.isWin) {
-					command = __dirname + '\\..\\vendor\\win32\\nircmd\\nircmd.exe win activate handle ' + store[options.slot];
+					command = __dirname + '\\win32\\nircmd\\nircmd.exe win activate handle ' + store[options.slot];
 				}
 				
 				debug(command);

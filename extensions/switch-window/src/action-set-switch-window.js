@@ -1,7 +1,7 @@
-const store = require('../stores/store-switch-window');
+const store = require('./store-switch-window');
 const exec = require('child_process').exec;
 const debug = require('debug')('action-set-switch-window');
-const platform = require('../util/platform');
+const platform = require('hyperkeys-api').platform;
 
 module.exports = {
 	name: "SET_SWITCH_WINDOW",
@@ -13,7 +13,7 @@ module.exports = {
 					command = 'xdotool getwindowfocus';
 				}
 				else if (platform.isWin) {
-					command = __dirname + '\\..\\vendor\\win32\\foregroundwin.exe';
+					command = __dirname + '\\win32\\foregroundwin.exe';
 				}
 				
 				debug(command);

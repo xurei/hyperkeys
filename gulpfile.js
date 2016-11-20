@@ -23,7 +23,7 @@ config.source = "src";
 //----------------------------------------------------------------------------------------------------------------------
 
 gulpSub.register("electron", path.join(__dirname, "electron/gulpfile.js"));
-gulpSub.register("actions", path.join(__dirname, "actions/gulpfile.js"));
+gulpSub.register("extensions", path.join(__dirname, "extensions/gulpfile.js"));
 //----------------------------------------------------------------------------------------------------------------------
 
 gulp.task('clean', function () {
@@ -36,28 +36,37 @@ gulp.task('base', function () {
 });
 gulp.task('submodules:copy', function () {
 	gulp.src(path.join(__dirname, "electron/bin/**/*"))
-	.pipe(gulp.dest(path.join(config.dest, 'electron')))
+	.pipe(gulp.dest(path.join(config.dest, 'electron')));
+	
+	gulp.src(path.join(__dirname, "extensions/bin/**/*"))
+	.pipe(gulp.dest(path.join(config.dest, 'extensions')));
 });
 //----------------------------------------------------------------------------------------------------------------------
 
 gulp.task('debug', function (callback) {
-	return runSequence('clean', 'base', () => {
-		return gulpSub.run(["electron", "actions"], "debug", () => {
-			return runSequence('submodules:copy', callback)
+	return runSequence('base', () => {
+		return gulpSub.run(["electron", "extensions"], "debug", () => {
+			return runSequence('submodules:copy', (e) => {
+				callback(e);
+				gutil.log('----------------------------------------------------------');
+			})
 		});
 	});
 });
 gulp.task('prod', function (callback) {
 	return runSequence('clean', 'base', () => {
-		return gulpSub.run(["electron", "actions"], "prod", () => {
-			return runSequence('submodules:copy', callback)
+		return gulpSub.run(["electron", "extensions"], "prod", () => {
+			return runSequence('submodules:copy', (e) => {
+				callback(e);
+				gutil.log('----------------------------------------------------------');
+			})
 		});
 	});
 });
 
 gulp.task('default', ['prod']);
 gulp.task('watch', ['debug'], function () {
-	var watcher = gulp.watch([path.join(config.source, '**/*'), path.join(config.source, '*')], ['debug']);
+	var watcher = gulp.watch(['electron/**/*', 'extensions/**/*', '!**/bin/**/*', '!**/build/**/*'], ['debug']);
 	watcher.on('change', function (event) {
 		gutil.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
 	});

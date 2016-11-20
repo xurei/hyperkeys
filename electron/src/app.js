@@ -7,10 +7,16 @@ const debug = require('debug')('app');
 const platform = require('./util/platform');
 const keybindsProvider = require('./providers/keybinds-provider');
 const keybindsService = require('./services/keybinds-service');
+const actionsService = require('./services/actions-service');
 //----------------------------------------------------------------------------------------------------------------------
 
-const actions = require('./actions');
-debug(actions);
+const extensions = require('../extensions');
+for (let iextension in extensions) {
+	var extension = extensions[iextension];
+	for (let action of extension.actions) {
+		actionsService.registerActionFactory(action.name, action.factory);
+	}
+}
 //----------------------------------------------------------------------------------------------------------------------
 
 function toggleWindow() {

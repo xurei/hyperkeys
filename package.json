@@ -16,6 +16,7 @@
     "react-bootstrap": "^0.30.6",
     "react-dom": "^15.4.0",
     "redux": "^3.6.0",
+    "hyperkeys-api": "git+https://github.com/xurei/hyperkeys-api.git#master",
     "xurei-util": "^1.0.2"
   },
   "devDependencies": {
@@ -32,7 +33,6 @@
     "gulp-exec": "^2.1.3",
     "gulp-sass": "^2.3.2",
     "gulp-sourcemaps": "^2.2.0",
-    "gulp-submodule": "git@github.com:xurei/gulp-submodule.git#master",
     "gulp-uglify": "^2.0.0",
     "gulp-util": "^3.0.7",
     "mkdirp": "^0.5.1",

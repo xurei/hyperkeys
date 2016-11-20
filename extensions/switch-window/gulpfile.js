@@ -1,7 +1,6 @@
 var gulp = require('gulp');
 
 const path = require('path');
-const gutil = require('gulp-util');
 const mkdirp = require('mkdirp');
 const del = require('del');
 const runSequence = require('run-sequence').use(gulp);
@@ -15,8 +14,6 @@ config.sourceWin32 = path.join(config.source, "win32");
 //------------------------------------------------------------------------------------------------------------------
 
 function passtrough(command, args, callback) {
-	console.log(command);
-	console.log(args);
 	var childProcess = spawn(command, args);
 	
 	childProcess.stdout.on('data', (data) => {
@@ -37,8 +34,15 @@ function passtrough(command, args, callback) {
 
 gulp.task('win32:compile', function (callback) {
 	mkdirp(path.join(config.dest, "win32"), () => {
-		passtrough("i686-w64-mingw32-g++", ["-m32", path.join(config.source ,"win32/foregroundwin.cpp"), "-o", path.join(config.dest, "win32/foregroundwin.exe")], callback);
+		passtrough("i686-w64-mingw32-g++", ["-m32", path.join(config.source ,"win32/foregroundwin.cpp"), "-o", path.join(config.dest, "win32/foregroundwin.exe")], (err) => {
+			return callback(err);
+		});
 	});
+});
+
+gulp.task('win32:copy', function () {
+	gulp.src([path.join(config.source, 'win32/**/*'), '!**/*.cpp'])
+	.pipe(gulp.dest(path.join(config.dest, "win32")));
 });
 //------------------------------------------------------------------------------------------------------------------
 
@@ -53,7 +57,7 @@ gulp.task('clean', function () {
 	]);
 });
 gulp.task('base', function (callback) {
-	return runSequence('win32:compile', 'copy', callback);
+	return runSequence(['win32:compile', 'win32:copy', 'copy'], callback);
 });
 //------------------------------------------------------------------------------------------------------------------
 
