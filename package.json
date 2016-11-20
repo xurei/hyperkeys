@@ -2,7 +2,7 @@
   "name": "hyperkeys",
   "version": "1.0.0",
   "description": "Global shortcut on steroids",
-  "main": "src/main.js",
+  "main": "bin/electron/main.js",
   "scripts": {
     "test": "npm test"
   },
@@ -10,6 +10,32 @@
   "license": "ISC",
   "dependencies": {
     "debug": "^2.3.2",
-    "electron": "^1.4.7"
+    "electron": "^1.4.7",
+    "process": "^0.11.9",
+    "react": "^15.4.0",
+    "react-bootstrap": "^0.30.6",
+    "react-dom": "^15.4.0",
+    "redux": "^3.6.0",
+    "xurei-util": "^1.0.2"
+  },
+  "devDependencies": {
+    "babel-plugin-transform-class-properties": "^6.18.0",
+    "babel-plugin-transform-runtime": "^6.15.0",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-react": "^6.16.0",
+    "del": "^2.2.2",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-browserify": "^0.5.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-eslint": "^3.0.1",
+    "gulp-exec": "^2.1.3",
+    "gulp-sass": "^2.3.2",
+    "gulp-sourcemaps": "^2.2.0",
+    "gulp-submodule": "git@github.com:xurei/gulp-submodule.git#master",
+    "gulp-uglify": "^2.0.0",
+    "gulp-util": "^3.0.7",
+    "mkdirp": "^0.5.1",
+    "run-sequence": "^1.2.2"
   }
 }

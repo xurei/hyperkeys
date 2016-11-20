@@ -9,7 +9,7 @@ const keybindsProvider = require('./providers/keybinds-provider');
 const keybindsService = require('./services/keybinds-service');
 //----------------------------------------------------------------------------------------------------------------------
 
-const actions = require('./actions/index');
+const actions = require('./actions');
 debug(actions);
 //----------------------------------------------------------------------------------------------------------------------
 

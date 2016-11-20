@@ -1,5 +1,6 @@
 *.iml
 distr
 bin
+build
 node_modules
 .*

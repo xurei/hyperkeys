@@ -5,6 +5,9 @@ const debug = require('debug')('actions-service');
 var actionFactories = {};
 
 var service = {
+	loadActions: () => {
+		
+	},
 	
 	registerActionFactory: (name, factoryMethod) => {
 		debug('Registered action `'+name+'`');
