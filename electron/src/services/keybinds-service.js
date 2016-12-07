@@ -5,7 +5,6 @@ const debug = require('debug')('keybinds-service');
 var service = {
 	registerKey: (keybind) => {
 		var action = actionService.buildActionObject(keybind.action);
-		
 		globalShortcut.register(keybind.key, action.execute);
 		debug('Registered keybind `'+keybind.key+'` => `' + keybind.action.name+'`');
 	},

@@ -6,7 +6,7 @@ console.log(app.getPath('userData'));
 //----------------------------------------------------------------------------------------------------------------------
 
 const platform = require('hyperkeys-api').platform;
-const keybindsProvider = require('./providers/keybinds-provider');
+const macrosProvider = require('./providers/macros-provider');
 const keybindsService = require('./services/keybinds-service');
 const actionsService = require('./services/actions-service');
 //----------------------------------------------------------------------------------------------------------------------
@@ -80,19 +80,26 @@ var App = {
 		
 		//mainWindow.openDevTools();
 		
-		var keybinds;
-		
-		keybindsProvider.loadKeybinds()
-		.then(_keybinds => {
-			keybinds = _keybinds;
-			for (let keybind of keybinds) {
-				keybindsService.registerKey(keybind);
+		var macros;
+		macrosProvider.loadMacros()
+		.then(_macros => {
+			try {
+				macros = _macros;
+				for (let macro of macros) {
+					for (let action of Object.keys(macro.shortcuts)) {
+						let shortcut = macro.shortcuts[action];
+						keybindsService.registerKey({key: shortcut, action: {name: action, options: macro.options}});
+					}
+				}
 			}
-		});
-		console.log('KEYBINDS !', keybinds);
+			catch (e) {
+				console.error(e);
+			}
+		})
+		.catch(e => console.error(e));
 		
-		ipc.on('keybinds', function (event, arg) {
-			mainWindow.webContents.send('keybinds', keybinds);
+		ipc.on('request_macros', function (event, arg) {
+			mainWindow.webContents.send('macros', macros);
 		});
 		
 		ipc.on('login', function (event, arg) {

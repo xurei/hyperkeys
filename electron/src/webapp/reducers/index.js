@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import keybinds from './keybinds';
+import macros from './macros';
 
 const App = combineReducers({
-	keybinds,
+	macros,
 });
 
 module.exports = App;

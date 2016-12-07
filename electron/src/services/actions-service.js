@@ -15,13 +15,12 @@ var service = {
 	},
 	
 	buildActionObject: (action) => {
-		var actionName = action.name;
-		var factory = actionFactories[actionName];
+		var factory = actionFactories[action.name];
 		if (isset(factory)) {
-			return factory(action);
+			return factory(action.options);
 		}
 		else {
-			throw "No factory found for action " + actionName;
+			throw "No factory found for action " + action.name;
 		}
 	}
 };

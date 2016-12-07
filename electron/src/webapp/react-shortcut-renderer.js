@@ -9,7 +9,9 @@ var View = React.createClass({
 		var shortcut = this.props.shortcut;
 		
 		var i = 0;
-		var keys = shortcut.split('+').map((k) => {
+		var keys = shortcut.split('+')
+		.filter((k) => k != "")
+		.map((k) => {
 			++i;
 			return (<span key={i}>&nbsp;<span className="btn btn-default">{k.toUpperCase()}</span></span>)
 		});
