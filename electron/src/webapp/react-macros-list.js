@@ -1,13 +1,55 @@
 const React = require ("react");
-const ReactRedux = require('react-redux');
 const ShortcutsList = require('./react-shortcuts-list');
 
 import { FormGroup, FormControl, ControlLabel, HelpBlock, ListGroup, ListGroupItem, Grid, Row, Col } from 'react-bootstrap';
-const ShortcutRenderer = require('./react-shortcut-renderer');
 
-var View = React.createClass({
+var MacrosListItem = React.createClass({
 	propTypes: {
-		macros: React.PropTypes.array.isRequired
+		macro: React.PropTypes.object.isRequired,
+		metadata: React.PropTypes.object.isRequired,
+		onRemoveMacro: React.PropTypes.func.isRequired,
+	},
+	getInitialState: () => ({
+		detailsVisible: true
+	}),
+	
+	toggleDetails: function(e) {
+		this.setState({detailsVisible: !this.state.detailsVisible});
+	},
+	
+	handleDelete: function(e) {
+		this.props.onRemoveMacro(e.target.id_macro);
+	},
+	
+	render: function() {
+		var macro = this.props.macro;
+		var metadata = this.props.metadata;
+		
+		var me = this;
+		
+		return (
+				<ListGroupItem>
+					<div onClick={this.toggleDetails} style={{cursor:"pointer"}}>
+						<span style={{lineHeight:"45px"}}>{this.state.detailsVisible ? "−":"+"} {metadata.title}</span>
+						<span className="pull-right">
+							<span className="btn btn-default">⚙</span>&nbsp;
+							<span className="btn btn-danger" onClick={(e) => { e.stopPropagation(); if (confirm('Remove macro ?')) me.props.onRemoveMacro(macro.id) }}>&times;</span>
+						</span>
+					</div>
+					{this.state.detailsVisible ?
+						<div style={{marginTop: "10px"}}>
+							<ShortcutsList id_macro={macro.id} shortcuts={macro.shortcuts} metadatas={metadata.actions}/>
+						</div> : <span/>}
+				</ListGroupItem>
+		);
+	}
+});
+
+var MacrosList = React.createClass({
+	propTypes: {
+		macros: React.PropTypes.array.isRequired,
+		metadatas: React.PropTypes.object.isRequired,
+		onRemoveMacro: React.PropTypes.func.isRequired,
 	},
 	
 	render: function() {
@@ -15,18 +57,7 @@ var View = React.createClass({
 		
 		var shortcuts = macros.map((macro) => {
 			return (
-				<ListGroupItem key={"macro_"+macro.id}>
-					<div>
-						<span style={{lineHeight: "45px"}}>{macro.name}</span>
-						<span className="pull-right">
-							<span className="btn btn-default">⚙</span>&nbsp;
-							<span className="btn btn-danger">&times;</span>
-						</span>
-					</div>
-					<div style={{marginTop: "10px"}}>
-						<ShortcutsList shortcuts={macro.shortcuts} />
-					</div>
-				</ListGroupItem>
+				<MacrosListItem key={"macro_"+macro.id} macro={macro} metadata={this.props.metadatas[macro.name]} onRemoveMacro={this.props.onRemoveMacro} />
 			);
 		});
 		
@@ -38,38 +69,4 @@ var View = React.createClass({
 	}
 });
 
-
-function mapStateToProps(state) {
-	return {
-		shortcuts: state.keybinds
-	}
-}
-
-function mapDispatchToProps(dispatch) {
-	/*return {
-		onClickNext: () => {
-			dispatch(actions.nextPage())
-		},
-		onClickPrev: () => {
-			dispatch(actions.prevPage())
-		},
-		onClickCancel: () => {
-			dispatch(actions.cancel());
-		},
-		onClickFinish: () => {
-			dispatch(actions.finish());
-		},
-		onValidityChange: (pageIndex, validity) => {
-			dispatch(actions.validityChange(pageIndex, validity));
-		},
-		onChange: (pageIndex, validity) => {
-			dispatch(actions.dataChange(pageIndex, validity));
-		}
-	}*/
-	return {};
-}
-
-module.exports = ReactRedux.connect(
-		mapStateToProps,
-		mapDispatchToProps
-)(View);
+module.exports = MacrosList;

@@ -1,5 +1,5 @@
 const React = require ("react");
-const ShortcutsView = require ("./react-view-shortcuts");
+const MacrosView = require ("./react-view-macros");
 
 import { FormGroup, FormControl, ControlLabel, HelpBlock, ListGroup, ListGroupItem, Grid, Row, Col } from 'react-bootstrap';
 
@@ -11,7 +11,7 @@ var MainView = React.createClass({
 					<Grid>
 						<Row>
 							<Col xs={12}>
-								<ShortcutsView></ShortcutsView>
+								<MacrosView></MacrosView>
 							</Col>
 						</Row>
 					</Grid>

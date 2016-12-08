@@ -5,7 +5,7 @@ const platform = require('hyperkeys-api').platform;
 
 module.exports = {
 	name: "SET_SWITCH_WINDOW",
-	factory: function (options) {
+	factory: function (action) {
 		return {
 			execute: () => {
 				var command = '';
@@ -21,8 +21,8 @@ module.exports = {
 				exec(command, function callback(error, stdout) {
 					if (error == null) {
 						debug("Action mapped to " + stdout.trim());
-						store[options.slot] = stdout.trim();
-						debug(store[options.slot]);
+						store[action.id_macro] = stdout.trim();
+						debug(store[action.id_macro]);
 					}
 					else {
 						//TODO error management

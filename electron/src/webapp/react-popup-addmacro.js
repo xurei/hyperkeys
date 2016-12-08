@@ -5,11 +5,15 @@ const Popup = require('./react-popup');
 
 import { FormGroup, FormControl, ControlLabel, HelpBlock, ListGroup, ListGroupItem, Grid, Row, Col } from 'react-bootstrap';
 
+function buildMacro(macro) {
+	return Object.assign({}, macro.defaultConfig);
+}
+
 var PopupAddMacro = React.createClass({
 	propTypes: {
 		onClose: React.PropTypes.func.isRequired,
 		onSubmit: React.PropTypes.func.isRequired,
-		macroTypes: React.PropTypes.array.isRequired,
+		metadatas: React.PropTypes.object.isRequired,
 	},
 	
 	getInitialState: () => ({
@@ -18,25 +22,29 @@ var PopupAddMacro = React.createClass({
 	
 	handleChange: function(e) {
 		console.log(e.target);
-		this.setState({chosenMacro: this.props.macroTypes.filter((m) => m.name == e.target.value)[0]});
+		var macro = this.props.macroTypes.filter((m) => m.name == e.target.value)[0];
+		this.setState({chosenMacro: buildMacro(macro)});
 		//var data = { value: e.target.value };
 		//this.props.onChange(data);
 		//this.props.onValidityChange(this.isValid(data));
 	},
 	
 	componentDidMount: function() {
-		this.setState({chosenMacro: this.props.macroTypes[0]})
+		this.setState({chosenMacro: buildMacro(this.props.metadatas[Object.keys(this.props.metadatas)[0]])})
 	},
 	
 	onSubmit: function(e) {
-		this.props.onSubmit(e);
+		this.props.onSubmit(this.state.chosenMacro);
 		this.props.onClose(e);
 	},
 	
 	render: function() {
-		var macroTypes = this.props.macroTypes.map((macroType) => {
+		var metadatas = this.props.metadatas;
+		
+		metadatas = Object.keys(metadatas).map((key) => {
+			let macroType = metadatas[key];
 			return (
-				<option key={macroType.name} value={macroType.name}>{macroType.title}</option>
+				<option key={key} value={macroType.name}>{macroType.title}</option>
 			);
 		});
 		
@@ -48,7 +56,7 @@ var PopupAddMacro = React.createClass({
 					<FormGroup>
 						<ControlLabel>Choose Macro type :</ControlLabel>
 						<FormControl componentClass="select" placeholder="select" onChange={this.handleChange}>
-							{macroTypes}
+							{metadatas}
 						</FormControl>
 						<HelpBlock>{curMacroDescription}</HelpBlock>
 					</FormGroup>

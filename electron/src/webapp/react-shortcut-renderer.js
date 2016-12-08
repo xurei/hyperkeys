@@ -1,12 +1,12 @@
 const React = require ("react");
 
-var View = React.createClass({
+var ShortcutRenderer = React.createClass({
 	propTypes: {
-		shortcut: React.PropTypes.string.isRequired
+		shortcut: React.PropTypes.string
 	},
 	
 	render: function() {
-		var shortcut = this.props.shortcut;
+		var shortcut = this.props.shortcut || "";
 		
 		var i = 0;
 		var keys = shortcut.split('+')
@@ -24,4 +24,4 @@ var View = React.createClass({
 	}
 });
 
-module.exports = View;
+module.exports = ShortcutRenderer;

@@ -3,7 +3,6 @@ const uuid = require('uuid');
 const macros = (state = [], action) => {
 	switch (action.type) {
 		case 'SET_MACROS':
-			console.log(action);
 			return action.macros;
 		case 'ADD_MACRO':
 			var macro = Object.assign({id: uuid()}, action.macro);

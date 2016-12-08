@@ -4,13 +4,11 @@ const uuid = require('uuid');
 //TODO default macros if none found
 
 //Bootstrap code, should be added if not found
-storage.set('macros', [
+/*storage.set('macros', [
 	{
 		id: uuid(),
 		name: 'SWITCH_WINDOW',
-		options: {
-			slot: 0,
-		},
+		options: {},
 		shortcuts: {
 			SET_SWITCH_WINDOW: 'alt+shift+w',
 			SHOW_SWITCH_WINDOW: 'alt+w'
@@ -19,9 +17,7 @@ storage.set('macros', [
 	{
 		id: uuid(),
 		name: 'SWITCH_WINDOW',
-		options: {
-			slot: 1,
-		},
+		options: {},
 		shortcuts: {
 			SET_SWITCH_WINDOW: 'alt+shift+x',
 			SHOW_SWITCH_WINDOW: 'alt+x'
@@ -30,9 +26,7 @@ storage.set('macros', [
 	{
 		id: uuid(),
 		name: 'SWITCH_WINDOW',
-		options: {
-			slot: 2,
-		},
+		options: {},
 		shortcuts: {
 			SET_SWITCH_WINDOW: 'alt+shift+c',
 			SHOW_SWITCH_WINDOW: 'alt+c'
@@ -41,15 +35,13 @@ storage.set('macros', [
 	{
 		id: uuid(),
 		name: 'SWITCH_WINDOW',
-		options: {
-			slot: 3,
-		},
+		options: {},
 		shortcuts: {
 			SET_SWITCH_WINDOW: 'alt+shift+v',
 			SHOW_SWITCH_WINDOW: 'alt+v'
 		}
 	},
-]);
+]);*/
 
 var provider = {
 	saveMacros: function(macros) {
@@ -61,7 +53,8 @@ var provider = {
 				
 				resolve(data);
 			});
-		});
+		})
+		.catch(e => console.error(e));
 	},
 	
 	loadMacros: function() {
@@ -75,7 +68,8 @@ var provider = {
 				
 				resolve(data);
 			});
-		});
+		})
+		.catch(e => console.error(e));
 	}
 };
 

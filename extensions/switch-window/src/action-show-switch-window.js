@@ -5,12 +5,12 @@ const platform = require('hyperkeys-api').platform;
 
 module.exports = {
 	name: "SHOW_SWITCH_WINDOW",
-	factory: function (options) {
+	factory: function (action) {
 		return {
 			execute: () => {
 				var command = '';
 				if (platform.isLinux) {
-					command = 'wmctrl -ia ' + store[options.slot];
+					command = 'wmctrl -ia ' + store[action.id_macro];
 				}
 				else if (platform.isWin) {
 					command = __dirname + '\\win32\\nircmd\\nircmd.exe win activate handle ' + store[options.slot];
@@ -18,8 +18,8 @@ module.exports = {
 				
 				debug(command);
 				
-				if (store[options.slot] != null) {
-					debug("Switching to", store[options.slot]);
+				if (store[action.id_macro] != null) {
+					debug("Switching to", store[action.id_macro]);
 					exec(command, function callback(error, stdout, stderr){
 						if (error == null) {
 							/* nothing */

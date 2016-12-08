@@ -1,7 +1,7 @@
-export const setKeybinds = (keybinds) => {
+export const setMetadatas = (metadatas) => {
 	return {
-		type: 'SET_KEYBINDS',
-		keybinds: keybinds
+		type: 'SET_METADATAS',
+		metadatas: metadatas
 	}
 };
 

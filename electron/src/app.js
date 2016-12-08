@@ -9,15 +9,19 @@ const platform = require('hyperkeys-api').platform;
 const macrosProvider = require('./providers/macros-provider');
 const keybindsService = require('./services/keybinds-service');
 const actionsService = require('./services/actions-service');
+const uuid = require('uuid');
 //----------------------------------------------------------------------------------------------------------------------
 
 const extensions = require('../extensions');
+var extensionsMetadata = {};
 for (let iextension in extensions) {
 	var extension = extensions[iextension];
 	for (let action of extension.actions) {
 		actionsService.registerActionFactory(action.name, action.factory);
 	}
+	extensionsMetadata[extension.metadata.name] = extension.metadata;
 }
+console.log(extensionsMetadata);
 //----------------------------------------------------------------------------------------------------------------------
 
 debug("platform:", platform.name);
@@ -49,11 +53,25 @@ function toggleWindow() {
 		}
 		window_open = true;
 		mainWindow.focus();
-		
-		//LINUX - force focus on the window, even if Gnome Shell is messing up with the focus
-		if (platform.isLinux)
-			exec('wmctrl -v -F -a "Snippr"', function callback(error, stdout, stderr) {
-			});
+	}
+}
+//----------------------------------------------------------------------------------------------------------------------
+
+function updateShortcuts(macros) {
+	//TODO diff previous and next macros and only update that
+	globalShortcut.unregisterAll();
+	registerShortcuts(macros);
+}
+//----------------------------------------------------------------------------------------------------------------------
+
+function registerShortcuts(macros) {
+	for (let macro of macros) {
+		for (let action of Object.keys(macro.shortcuts)) {
+			let shortcut = macro.shortcuts[action];
+			if (shortcut != null) {
+				keybindsService.registerKey({key: shortcut, action: {id_macro: macro.id, name: action, options: macro.options}});
+			}
+		}
 	}
 }
 //----------------------------------------------------------------------------------------------------------------------
@@ -78,19 +96,12 @@ var App = {
 		// and load the index.html of the app
 		mainWindow.loadURL('file://' + __dirname + '/index.html');
 		
-		//mainWindow.openDevTools();
-		
 		var macros;
 		macrosProvider.loadMacros()
 		.then(_macros => {
 			try {
 				macros = _macros;
-				for (let macro of macros) {
-					for (let action of Object.keys(macro.shortcuts)) {
-						let shortcut = macro.shortcuts[action];
-						keybindsService.registerKey({key: shortcut, action: {name: action, options: macro.options}});
-					}
-				}
+				registerShortcuts(macros);
 			}
 			catch (e) {
 				console.error(e);
@@ -101,14 +112,30 @@ var App = {
 		ipc.on('request_macros', function (event, arg) {
 			mainWindow.webContents.send('macros', macros);
 		});
-		
-		ipc.on('login', function (event, arg) {
+		ipc.on('request_metadatas', function (event, arg) {
+			mainWindow.webContents.send('metadatas', extensionsMetadata);
+		});
+		ipc.on('add_macro', function (event, arg) {
+			var macro = Object.assign({}, arg);
+			macro.id = uuid();
+			macros.push(macro);
+			macrosProvider.saveMacros(macros);
+			mainWindow.webContents.send('macros', macros);
+		});
+		ipc.on('remove_macro', function (event, id_macro) {
+			macros = macros.filter((macro) => macro.id != id_macro);
+			macrosProvider.saveMacros(macros);
+			mainWindow.webContents.send('macros', macros);
+		});
+		ipc.on('set_shortcut', function (event, data) {
+			var macro = macros.filter((macro) => macro.id == data.id_macro)[0];
+			macro.shortcuts[data.action] = data.shortcut;
 			
+			updateShortcuts(macros);
+			macrosProvider.saveMacros(macros);
+			mainWindow.webContents.send('macros', macros);
 		});
-		
-		ipc.on('copy', function (event, arg) {
-			clipboard.writeText(arg);
-		});
+				
 		ipc.on('close', function (event, arg) {
 			mainWindow.hide();
 			window_open = false;
@@ -136,7 +163,6 @@ var App = {
 		
 		//TODO remove this toggleWindow()
 		toggleWindow();
-		mainWindow.toggleDevTools();
 	},
 	
 	exit: () => {
