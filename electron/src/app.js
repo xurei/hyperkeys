@@ -7,13 +7,15 @@ console.log(app.getPath('userData'));
 
 const platform = require('hyperkeys-api').platform;
 const macrosProvider = require('./providers/macros-provider');
+const extensionsProvider = require('./providers/extensions-provider');
 const keybindsService = require('./services/keybinds-service');
 const actionsService = require('./services/actions-service');
 const uuid = require('uuid');
 //----------------------------------------------------------------------------------------------------------------------
 
-const extensions = require('../extensions');
-var extensionsMetadata = {};
+const extensions = extensionsProvider.loadExtensions();
+const extensionsMetadata = {};
+//Extract metadata
 for (let iextension in extensions) {
 	var extension = extensions[iextension];
 	for (let action of extension.actions) {
@@ -65,6 +67,7 @@ function updateShortcuts(macros) {
 //----------------------------------------------------------------------------------------------------------------------
 
 function registerShortcuts(macros) {
+	console.log(macros);
 	for (let macro of macros) {
 		for (let action of Object.keys(macro.shortcuts)) {
 			let shortcut = macro.shortcuts[action];
@@ -99,13 +102,8 @@ var App = {
 		var macros;
 		macrosProvider.loadMacros()
 		.then(_macros => {
-			try {
-				macros = _macros;
-				registerShortcuts(macros);
-			}
-			catch (e) {
-				console.error(e);
-			}
+			macros = _macros;
+			registerShortcuts(macros);
 		})
 		.catch(e => console.error(e));
 		
