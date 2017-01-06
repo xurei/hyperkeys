@@ -27,7 +27,7 @@ gulp.task('webapp:lint', function () {
 });
 
 gulp.task('webapp:transpile', function () {
-	return gulp.src(path.join(config.sourceReact, '**/*'))
+	return gulp.src([path.join(config.sourceReact, '**/*')])
 	.pipe(sourcemaps.init())
 	.pipe(babel({
 		presets: ['es2015', "react"]
@@ -47,7 +47,7 @@ gulp.task('webapp:browserify', function () {
 });
 
 gulp.task('copy', function () {
-	gulp.src([path.join(config.source, '**/*'), '!' + path.join(config.source, 'webapp/**')])
+	gulp.src([path.join(config.source, '**/*'), '!' + path.join(config.source, 'webapp/**/*')])
 	.pipe(gulp.dest(config.dest))
 });
 
@@ -57,6 +57,7 @@ gulp.task('clean', function () {
 		path.join(config.build, '*')
 	]);
 });
+
 gulp.task('base', function (callback) {
 	return runSequence('copy', 'webapp:transpile', 'webapp:browserify', callback);
 });

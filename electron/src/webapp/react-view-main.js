@@ -5,9 +5,10 @@ import { FormGroup, FormControl, ControlLabel, HelpBlock, ListGroup, ListGroupIt
 
 var MainView = React.createClass({
 	render: function() {
+		//TODO header
 		return (
 				<div>
-					<div className="header">HEADER</div>
+					<div className="header"></div>
 					<Grid>
 						<Row>
 							<Col xs={12}>

@@ -2,7 +2,6 @@ const {app, BrowserWindow, globalShortcut, clipboard, Menu, Tray} = require('ele
 const ipc = require("electron").ipcMain;
 const {exec} = require('child_process');
 const debug = require('debug')('app');
-console.log(app.getPath('userData'));
 //----------------------------------------------------------------------------------------------------------------------
 
 const platform = require('hyperkeys-api').platform;
@@ -11,6 +10,11 @@ const extensionsProvider = require('./providers/extensions-provider');
 const keybindsService = require('./services/keybinds-service');
 const actionsService = require('./services/actions-service');
 const uuid = require('uuid');
+//----------------------------------------------------------------------------------------------------------------------
+
+debug("platform:", platform.name);
+const APPPATH = __dirname;
+debug("APPPATH:", APPPATH);
 //----------------------------------------------------------------------------------------------------------------------
 
 const extensions = extensionsProvider.loadExtensions();
@@ -26,9 +30,6 @@ for (let iextension in extensions) {
 console.log(extensionsMetadata);
 //----------------------------------------------------------------------------------------------------------------------
 
-debug("platform:", platform.name);
-const APPPATH = __dirname;
-debug("APPPATH:", APPPATH);
 var DIRSEP = "/";
 if (platform.isWin)
 	DIRSEP = "\\";

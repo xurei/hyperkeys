@@ -64,6 +64,10 @@ var provider = {
 					reject(error);
 				}
 				
+				if (data === {}) {
+					data = [];
+				}
+				
 				//TODO add default config on first launch ?
 				
 				resolve(data);
