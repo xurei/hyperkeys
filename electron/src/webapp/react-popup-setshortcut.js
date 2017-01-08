@@ -37,7 +37,10 @@ var PopupSetShortcut = React.createClass({
 				   onKeyUp={this.handleKey}
 				   {...this.props}>
 				<ShortcutInput ref="add_shortcut_input" shortcut={this.state.shortcut} onChange={this.handleChange} />
-				<Button bsStyle="success" className="pull-right" onClick={this.onSubmit}>Set Shortcut</Button>
+				<div style={{lineHeight: "40px"}} className="pull-right">
+					<a href="javascript:void(0)" onClick={this.props.onClose} style={{marginRight: "10px"}}>Cancel</a>
+					<Button bsStyle="success" onClick={this.onSubmit}>Set Shortcut</Button>
+				</div>
 			</Popup>
 		);
 	},

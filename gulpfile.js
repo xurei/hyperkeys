@@ -110,8 +110,8 @@ gulp.task('distr:clean', [], function(callback) {
 function spawnProcess(command, cb) {
 	var childProcess = spawn(command);
 	
-	childProcess.stdout.pipe(indentStream("           ")).pipe(logStream());
-	childProcess.stderr.pipe(indentStream("           ")).on('data', (data) => process.stdout.write(`${data}`));
+	childProcess.stdout.pipe(indentStream("  ")).pipe(logStream());
+	childProcess.stderr.pipe(indentStream("  ")).pipe(logStream());
 	
 	childProcess.on('close', (code) => {
 		cb();
@@ -128,7 +128,7 @@ gulp.task('distr:linux', ['distr:clean', 'prod'], function() {
 	});
 });
 
-gulp.task('distr:windows', ['distr:clean', 'distr:linux', 'prod'], function() {
+gulp.task('distr:windows', ['distr:clean', 'prod'], function() {
 	return new Promise((resolve, reject) => {
 		setTimeout(() => {
 			spawnProcess('./create_win32_package.sh', resolve);

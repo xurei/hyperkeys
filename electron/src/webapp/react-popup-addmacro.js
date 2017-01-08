@@ -60,7 +60,11 @@ var PopupAddMacro = React.createClass({
 						</FormControl>
 						<HelpBlock>{curMacroDescription}</HelpBlock>
 					</FormGroup>
-					<Button bsStyle="success" className="pull-right" onClick={this.onSubmit}>Add Macro</Button>
+					
+					<div style={{lineHeight: "40px"}} className="pull-right">
+						<a href="javascript:void(0)" onClick={this.props.onClose} style={{marginRight: "10px"}}>Cancel</a>
+						<Button bsStyle="success" onClick={this.onSubmit}>Add Macro</Button>
+					</div>
 				</form>
 			</Popup>
 		);
