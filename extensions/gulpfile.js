@@ -2,7 +2,6 @@ var gulp = require('gulp');
 
 const path = require('path');
 const fs = require('fs');
-const del = require('del');
 const runSequence = require('run-sequence').use(gulp);
 const xutil = require('xurei-util');
 const mkdirp = require('mkdirp');
@@ -43,28 +42,16 @@ gulp.task('submodules:copy', function () {
 	gulp.src(['*.js', '!gulpfile.js'])
 	.pipe(gulp.dest(config.dest))
 });
-
-gulp.task('clean', function () {
-	return del([
-		path.join(config.dest, '*')
-	]);
-});
-gulp.task('base', function (callback) {
-	return mkdirp(config.dest, () => {
-		return runSequence('submodules:copy', callback);
-	});
-});
 //------------------------------------------------------------------------------------------------------------------
 
 gulp.task('prod', function (callback) {
 	return gulpSub.run(subs, "prod", () => {
-		return runSequence('submodules:copy', callback)
-		return runSequence('clean', 'base', /*'es:lint', 'css:uglify',*/ callback);
+		return runSequence('submodules:copy', callback);
 	})
 });
 gulp.task('debug', function (callback) {
 	return gulpSub.run(subs, "debug", () => {
-		return runSequence('clean', 'base', /*'es:lint', 'css:uglify',*/ callback);
+		return runSequence('submodules:copy', callback);
 	})
 });
 

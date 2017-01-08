@@ -2,7 +2,7 @@ var gulp = require('gulp');
 
 const path = require('path');
 const mkdirp = require('mkdirp');
-const del = require('del');
+const rm = require('gulp-rimraf');
 const runSequence = require('run-sequence').use(gulp);
 const spawn = require('child_process').spawn;
 //------------------------------------------------------------------------------------------------------------------
@@ -52,9 +52,8 @@ gulp.task('copy', function () {
 });
 
 gulp.task('clean', function () {
-	return del([
-		path.join(config.dest, '*'),
-	]);
+	return gulp.src([path.join(config.dest, '*')])
+	.pipe(rm());
 });
 gulp.task('base', function (callback) {
 	return runSequence(['win32:compile', 'win32:copy', 'copy'], callback);

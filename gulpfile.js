@@ -1,24 +1,27 @@
 var gulp = require('gulp');
 
-const runSequence = require('run-sequence').use(gulp);
-const uglify = require('gulp-uglify');
-const sourcemaps = require('gulp-sourcemaps');
-const eslint = require('gulp-eslint');
-const path = require('path');
-const rm = require('gulp-rimraf');
-const gutil = require('gulp-util');
-const concat = require('gulp-concat');
-const sass = require('gulp-sass');
 const babel = require('gulp-babel');
 const browserify = require('gulp-browserify');
-const install = require('gulp-install');
-const fs = require('fs');
-const electron = require('./gulp-electron-packager');
+const concat = require('gulp-concat');
+const eslint = require('gulp-eslint');
 const exec = require('gulp-exec');
+const fs = require('fs');
+const gutil = require('gulp-util');
+const indentStream = require('indent-stream');
+const install = require('gulp-install');
 const merge2 = require('merge2');
+const path = require('path');
+const rm = require('gulp-rimraf');
+const runSequence = require('run-sequence').use(gulp);
+const sass = require('gulp-sass');
+const sourcemaps = require('gulp-sourcemaps');
 const spawn = require('child_process').spawn;
+const uglify = require('gulp-uglify');
 
 const gulpSub = require('./gulp-sub')(gulp);
+//----------------------------------------------------------------------------------------------------------------------
+
+const logStream = require('gutil-log-stream');
 //----------------------------------------------------------------------------------------------------------------------
 
 var config = {};
@@ -104,33 +107,11 @@ gulp.task('distr:clean', [], function(callback) {
 	.pipe(rm());
 });
 
-function package(platform, arch) {
-	var json = JSON.parse(fs.readFileSync(path.join(config.dest, 'package.json')));
-	
-	return electron({
-		dir: path.join(__dirname, config.dest),
-		out: path.join(__dirname, config.distr),
-		platform: platform,
-		arch: arch,
-		'app-version': json.version
-	})
-}
-
 function spawnProcess(command, cb) {
 	var childProcess = spawn(command);
 	
-	childProcess.stdout.on('data', (data) => {
-		var lines = `${data}`.split("\n");
-		for (let l of lines) {
-			if (l.length > 0) gutil.log(l);
-		}
-	});
-	childProcess.stderr.on('data', (data) => {
-		var lines = `${data}`.split("\n");
-		for (let l of lines) {
-			if (l.length > 0) gutil.log(l);
-		}
-	});
+	childProcess.stdout.pipe(indentStream("           ")).pipe(logStream());
+	childProcess.stderr.pipe(indentStream("           ")).on('data', (data) => process.stdout.write(`${data}`));
 	
 	childProcess.on('close', (code) => {
 		cb();

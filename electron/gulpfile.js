@@ -6,7 +6,7 @@ const browserify = require('gulp-browserify');
 const eslint = require('gulp-eslint');
 const sourcemaps = require('gulp-sourcemaps');
 const uglify = require('gulp-uglify');
-const del = require('del');
+const rm = require('gulp-rimraf');
 const runSequence = require('run-sequence').use(gulp);
 //------------------------------------------------------------------------------------------------------------------
 
@@ -52,10 +52,11 @@ gulp.task('copy', function () {
 });
 
 gulp.task('clean', function () {
-	return del([
+	return gulp.src([
 		path.join(config.dest, '*'),
 		path.join(config.build, '*')
-	]);
+	])
+	.pipe(rm());
 });
 
 gulp.task('base', function (callback) {
