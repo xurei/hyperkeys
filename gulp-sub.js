@@ -1,6 +1,7 @@
 const process = require('process');
 const spawn = require('child_process').spawn;
 const gutil = require('gulp-util');
+const indentStream = require('indent-stream');
 
 var subs = {};
 
@@ -9,33 +10,8 @@ function spawnProcess(command, args) {
 		var childProcess = spawn(command, args);
 		var errBuffer = null;
 		
-		var indent = true;
-		function write(data) {
-			data = `${data}`;
-			
-			if (indent) {
-				process.stdout.write("    ");
-			}
-			
-			if (data.charAt(data.length-1) == "\n") {
-				data = data.substr(0, data.length-1);
-				data = data.replace("\n", "\n    ");
-				data += "\n";
-				indent = true;
-			}
-			else {
-				indent = false;
-			}
-			process.stdout.write(data);
-		}
-		
-		childProcess.stdout.on('data', (data) => {
-			write(data);
-		});
-		childProcess.stderr.on('data', (data) => {
-			write(data);
-			errBuffer = "An error occured";
-		});
+		childProcess.stdout.pipe(indentStream("           ")).on('data', (data) => process.stdout.write(`${data}`));
+		childProcess.stderr.pipe(indentStream("           ")).on('data', (data) => process.stdout.write(`${data}`));
 		
 		childProcess.on('close', (code) => {
 			if (errBuffer == null) {
@@ -76,14 +52,18 @@ var gulpSub = function(gulp) {
 					tasks = tasks.join(' ');
 				}
 				
-				gutil.log('Running submodule ' + name + ' (' + tasks + ')');
+				var t0 = new Date().getTime();
+				gutil.log('Running submodule ' + gutil.colors.cyan(name) + ' (' + gutil.colors.cyan(tasks) + ')');
 				spawnProcess('gulp', ['--color', '--gulpfile', subs[name], tasks])
-				.then((code) => {
-					gutil.log('Submodule ' + name + ' (' + tasks + ')' + ` exited with code ${code}`);
+				.then(() => {
+					var t1 = new Date().getTime();
+					gutil.log('Submodule ' + gutil.colors.cyan(name) + ' (' + gutil.colors.cyan(tasks) + ')' + ` ran without error ` + gutil.colors.magenta((t1-t0)+' ms'));
 					callback();
 				})
-				.catch(() => {
-					gutil.log('ERROR IN Submodule ' + name + ' (' + tasks + ')');
+				.catch((e) => {
+					var t1 = new Date().getTime();
+					gutil.log('ERROR IN Submodule ' + gutil.colors.cyan(name) + ' (' + gutil.colors.cyan(tasks) + ') ' + gutil.colors.magenta((t1-t0)+' ms'));
+					gutil.log(e);
 					callback();
 				});
 			}
