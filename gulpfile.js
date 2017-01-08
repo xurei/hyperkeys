@@ -39,12 +39,10 @@ gulp.task('clean', function () {
 	return gulp.src(path.join(config.dest, '*'))
 	.pipe(rm());
 });
-gulp.task('base', function (callback) {
-	return runSequence('package.json', 'npm', callback);
-});
+gulp.task('base', ['package.json', 'npm']);
 gulp.task('npm', ['package.json'], function (callback) {
 	return gulp.src(path.join(config.dest, '*'))
-	.pipe(install({production: true}));
+	.pipe(install({production: true, silent:true}));
 });
 gulp.task('electron:copy', function () {
 	return gulp.src(path.join(__dirname, "electron/bin/**/*"))
@@ -90,8 +88,9 @@ gulp.task('debug', function (callback) {
 		});
 	});
 });
-gulp.task('prod', function (callback) {
-	return runSequence('clean', 'base', () => {
+
+gulp.task('prod', ['clean'], function (callback) {
+	return runSequence('base', () => {
 		return gulpSub.run(["electron", "extensions"], "prod", () => {
 			return runSequence('assemble', (e) => {
 				gutil.log('----------------------------------------------------------');
@@ -136,8 +135,7 @@ gulp.task('distr:windows', ['distr:clean', 'prod'], function() {
 	});
 });
 
-gulp.task('distr', ['distr:clean', 'distr:linux', 'distr:windows'], function() {
-});
+gulp.task('distr', ['distr:clean', 'distr:windows', 'distr:linux']);
 //----------------------------------------------------------------------------------------------------------------------
 
 gulp.task('default', ['prod']);

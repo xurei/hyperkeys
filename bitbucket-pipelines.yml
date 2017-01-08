@@ -1,0 +1,18 @@
+# This is a sample build configuration for Javascript.
+# Check our guides at https://confluence.atlassian.com/x/VYk8Lw for more examples.
+# Only use spaces to indent your .yml configuration.
+# -----
+# You can specify a custom docker image from Docker Hub as your build environment.
+image: xurei/hyperkeys-docker-build-image:latest
+
+pipelines:
+  branches:
+    production:
+      - step:
+          script: # Modify the commands below to build your repository.
+            - npm install
+            - node_modules/gulp/bin/gulp.js distr
+            - tree -L 2 distr
+            - chmod 400 ssh.pem
+            - scp -i ssh.pem -oStrictHostKeyChecking=no distr/hyperkeys-linux-*.tar.gz root@37.59.123.100:/var/www/xureilab/hyperkeys/download
+            - scp -i ssh.pem -oStrictHostKeyChecking=no distr/hyperkeys-win32-*.exe root@37.59.123.100:/var/www/xureilab/hyperkeys/download

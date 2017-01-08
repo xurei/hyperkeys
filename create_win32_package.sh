@@ -9,15 +9,13 @@ echo "Packaging Win32 version"
 
 echo $DIRNAME
 
-command -v electron-packager >/dev/null 2>&1 || { echo >&2 "I require electron-packager but it's not installed.  Aborting."; exit 1; }
-
 mkdir -p $DIRNAME/distr
 
 function create_package_sub {
     ARCH=$1
 
-    electron-packager $DIRNAME/bin hyperkeys --platform=win32 --arch=$ARCH --out=$DIRNAME/distr;
-    makensis -Dplatform=$ARCH $DIRNAME/hyperkeys-base.nsi
+    node_modules/electron-packager/cli.js $DIRNAME/bin hyperkeys --platform=win32 --arch=$ARCH --out=$DIRNAME/distr;
+    makensis -V2 -Dplatform=$ARCH $DIRNAME/hyperkeys-base.nsi
     echo ""
 }
 

@@ -2,12 +2,18 @@ const process = require('process');
 const spawn = require('child_process').spawn;
 const gutil = require('gulp-util');
 const indentStream = require('indent-stream');
+const path = require('path');
 
 var subs = {};
 
 function spawnProcess(command, args) {
 	return new Promise((resolve, reject) => {
-		var childProcess = spawn(command, args);
+		try {
+			var childProcess = spawn(command, args);
+		}
+		catch (e) {
+			console.error(e);
+		}
 		var errBuffer = null;
 		
 		childProcess.stdout.pipe(indentStream("           ")).on('data', (data) => process.stdout.write(`${data}`));
@@ -54,7 +60,7 @@ var gulpSub = function(gulp) {
 				
 				var t0 = new Date().getTime();
 				gutil.log('Running submodule ' + gutil.colors.cyan(name) + ' (' + gutil.colors.cyan(tasks) + ')');
-				spawnProcess('gulp', ['--color', '--gulpfile', subs[name], tasks])
+				spawnProcess(process.argv[0], [process.argv[1], '--color', '--gulpfile', subs[name], tasks])
 				.then(() => {
 					var t1 = new Date().getTime();
 					gutil.log('Submodule ' + gutil.colors.cyan(name) + ' (' + gutil.colors.cyan(tasks) + ')' + ` ran without error ` + gutil.colors.magenta((t1-t0)+' ms'));

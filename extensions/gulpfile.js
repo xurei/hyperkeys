@@ -21,7 +21,7 @@ var dirs = ls.filter((file) => {
 	return (stat && stat.isDirectory())
 });
 
-for (let dir of dirs) {
+for (var dir of dirs) {
 	var gulpFile = path.join(dir, 'gulpfile.js');
 	try {
 		fs.accessSync(gulpFile, fs.constants.R_OK);
@@ -35,7 +35,7 @@ for (let dir of dirs) {
 //------------------------------------------------------------------------------------------------------------------
 
 gulp.task('submodules:copy', function () {
-	for (let sub of subs) {
+	for (var sub of subs) {
 		gulp.src(sub + '/' + config.dest + '/**/*')
 		.pipe(gulp.dest(path.join(config.dest, sub)))
 	}
