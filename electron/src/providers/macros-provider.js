@@ -1,6 +1,5 @@
 const storage = require('electron-json-storage');
-const uuid = require('uuid');
-
+	
 //TODO default macros if none found
 
 //Bootstrap code, should be added if not found

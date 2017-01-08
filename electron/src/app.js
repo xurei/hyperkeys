@@ -10,6 +10,7 @@ const extensionsProvider = require('./providers/extensions-provider');
 const keybindsService = require('./services/keybinds-service');
 const actionsService = require('./services/actions-service');
 const uuid = require('uuid');
+const notifier = require('node-notifier');
 //----------------------------------------------------------------------------------------------------------------------
 
 debug("platform:", platform.name);
@@ -27,7 +28,6 @@ for (let iextension in extensions) {
 	}
 	extensionsMetadata[extension.metadata.name] = extension.metadata;
 }
-console.log(extensionsMetadata);
 //----------------------------------------------------------------------------------------------------------------------
 
 var DIRSEP = "/";

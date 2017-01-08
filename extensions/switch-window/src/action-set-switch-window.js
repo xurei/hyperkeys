@@ -1,7 +1,9 @@
 const store = require('./store-switch-window');
 const exec = require('child_process').exec;
 const debug = require('debug')('action-set-switch-window');
+const path = require('path');
 const platform = require('hyperkeys-api').platform;
+const notifier = require('node-notifier');
 
 module.exports = {
 	name: "SET_SWITCH_WINDOW",
@@ -22,10 +24,20 @@ module.exports = {
 					if (error == null) {
 						debug("Action mapped to " + stdout.trim());
 						store[action.id_macro] = stdout.trim();
-						debug(store[action.id_macro]);
+						
+						notifier.notify({
+							'title': 'Window Pinner',
+							'message': 'Window pinned'
+						});
 					}
 					else {
-						//TODO error management
+						debug("Error occured");
+						debug(error);
+						
+						notifier.notify({
+							'title': 'Window Pinner',
+							'message': 'ERROR : cannot pin window'
+						});
 					}
 				});
 			}
