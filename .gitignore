@@ -1,6 +1,8 @@
 *.iml
+distr.old
 distr
 bin
 build
 node_modules
 .*
+!.gitignore

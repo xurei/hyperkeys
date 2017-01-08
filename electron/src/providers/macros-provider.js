@@ -64,7 +64,7 @@ var provider = {
 					reject(error);
 				}
 				
-				if (data === {}) {
+				if (!Array.isArray(data)) {
 					data = [];
 				}
 				
