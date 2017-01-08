@@ -13,7 +13,7 @@ module.exports = {
 					command = 'wmctrl -ia ' + store[action.id_macro];
 				}
 				else if (platform.isWin) {
-					command = __dirname + '\\win32\\nircmd\\nircmd.exe win activate handle ' + store[options.slot];
+					command = __dirname + '\\win32\\nircmd\\nircmd.exe win activate handle ' + store[action.id_macro];
 				}
 				
 				debug(command);

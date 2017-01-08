@@ -71,7 +71,6 @@ var View = React.createClass({
 					style={{height:"0px", padding:0, border:"none"}}
 					id={this.props.id}
 					placeholder={this.props.placeholder}
-					onChange={this.props.onChange}
 					onKeyDown={this.handleKey}
 					onKeyUp={this.handleKey}
 				/>
