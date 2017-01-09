@@ -10,7 +10,6 @@
   "license": "ISC",
   "dependencies": {
     "debug": "^2.3.2",
-    "electron": "^1.4.7",
     "electron-json-storage": "^2.1.0",
     "hyperkeys-api": "git+https://github.com/xurei/hyperkeys-api.git#master",
     "node-notifier": "^4.6.1",
