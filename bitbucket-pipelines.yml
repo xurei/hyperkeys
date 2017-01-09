@@ -10,7 +10,6 @@ pipelines:
     production:
       - step:
           script: # Modify the commands below to build your repository.
-            - apt-get install sudo
             - npm install
             - node_modules/gulp/bin/gulp.js distr
             - tree -L 2 distr
