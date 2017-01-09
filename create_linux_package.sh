@@ -14,7 +14,7 @@ mkdir -p $DIRNAME/distr
 function create_package_sub {
     ARCH=$1
 
-    node_modules/electron-packager/cli.js $DIRNAME/bin hyperkeys --platform=linux --arch=$ARCH --out=$DIRNAME/distr --electron-version=v1.4.13;
+    node_modules/electron-packager/cli.js $DIRNAME/bin hyperkeys --platform=linux --arch=$ARCH --out=$DIRNAME/distr --electron-version=v1.4.13
 
     tar --directory=$DIRNAME/distr -czf $DIRNAME/distr/hyperkeys-linux-$ARCH.tar.gz hyperkeys-linux-$ARCH
 }
