@@ -14,7 +14,7 @@ mkdir -p $DIRNAME/distr
 function create_package_sub {
     ARCH=$1
 
-    node_modules/electron-packager/cli.js $DIRNAME/bin hyperkeys --platform=win32 --arch=$ARCH --out=$DIRNAME/distr --electron-version=v1.4.13 --version=v1.4.13
+    node_modules/electron-packager/cli.js $DIRNAME/bin hyperkeys --platform=win32 --arch=$ARCH --out=$DIRNAME/distr --electron-version=1.4.13 --version=1.4.13
     makensis -V2 -Dplatform=$ARCH $DIRNAME/hyperkeys-base.nsi
     echo ""
 }
