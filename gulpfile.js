@@ -41,7 +41,7 @@ gulp.task('clean', function () {
 gulp.task('base', ['package.json', 'npm']);
 gulp.task('npm', ['package.json'], function (callback) {
 	return gulp.src(path.join(config.dest, '*'))
-	.pipe(install({production: true, silent:true}));
+	.pipe(install({production: true, args: ['--silent']}));
 });
 gulp.task('electron:copy', function () {
 	return gulp.src(path.join(__dirname, "electron/bin/**/*"))

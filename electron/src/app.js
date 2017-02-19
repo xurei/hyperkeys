@@ -1,10 +1,10 @@
-const {app, BrowserWindow, globalShortcut, clipboard, Menu, Tray} = require('electron');
+const {app, BrowserWindow, globalShortcut, Menu, Tray} = require('electron');
 const ipc = require("electron").ipcMain;
-const {exec} = require('child_process');
 const debug = require('debug')('app');
 //----------------------------------------------------------------------------------------------------------------------
 
-const platform = require('hyperkeys-api').platform;
+const HKAPI = require('hyperkeys-api');
+const platform = HKAPI.platform;
 const macrosProvider = require('./providers/macros-provider');
 const extensionsProvider = require('./providers/extensions-provider');
 const keybindsService = require('./services/keybinds-service');
@@ -22,11 +22,13 @@ const extensions = extensionsProvider.loadExtensions();
 const extensionsMetadata = {};
 //Extract metadata
 for (let iextension in extensions) {
-	let extension = extensions[iextension];
-	for (let action of extension.actions) {
-		actionsService.registerActionFactory(action.name, action.factory);
+	if (extensions.hasOwnProperty(iextension)) {
+		let extension = extensions[iextension];
+		for (let action of extension.actions) {
+			actionsService.registerActionFactory(action.name, action.factory);
+		}
+		extensionsMetadata[extension.metadata.name] = extension.metadata;
 	}
-	extensionsMetadata[extension.metadata.name] = extension.metadata;
 }
 //----------------------------------------------------------------------------------------------------------------------
 
