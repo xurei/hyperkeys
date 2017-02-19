@@ -124,6 +124,8 @@ let App = {
 		});
 		ipc.on('remove_macro', function (event, id_macro) {
 			macros = macros.filter((macro) => macro.id != id_macro);
+			
+			updateShortcuts(macros);
 			macrosProvider.saveMacros(macros);
 			mainWindow.webContents.send('macros', macros);
 		});
