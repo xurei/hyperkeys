@@ -1,4 +1,4 @@
-var gulp = require('gulp');
+let gulp = require('gulp');
 
 const babel = require('gulp-babel');
 const browserify = require('gulp-browserify');
@@ -9,7 +9,6 @@ const fs = require('fs');
 const gutil = require('gulp-util');
 const indentStream = require('indent-stream');
 const install = require('gulp-install');
-const merge2 = require('merge2');
 const path = require('path');
 const rm = require('gulp-rimraf');
 const runSequence = require('run-sequence').use(gulp);
@@ -24,7 +23,7 @@ const gulpSub = require('./gulp-sub')(gulp);
 const logStream = require('gutil-log-stream');
 //----------------------------------------------------------------------------------------------------------------------
 
-var config = {};
+let config = {};
 
 config.source = "src";
 config.dest = "bin";
@@ -55,7 +54,7 @@ gulp.task('extensions:copy', function () {
 gulp.task('package.json', function () {
 	//Clean package.json from its devDependencies and write it in the bin
 	function string_src(filename, string) {
-		var src = require('stream').Readable({ objectMode: true })
+		let src = require('stream').Readable({ objectMode: true })
 		src._read = function () {
 			this.push(new gutil.File({
 				cwd: "",
@@ -67,7 +66,7 @@ gulp.task('package.json', function () {
 		};
 		return src;
 	}
-	var json = JSON.parse(fs.readFileSync('./package.json'));
+	let json = JSON.parse(fs.readFileSync('./package.json'));
 	delete json.devDependencies;
 	delete json.scripts;
 	
@@ -107,7 +106,7 @@ gulp.task('distr:clean', [], function(callback) {
 });
 
 function spawnProcess(command, cb) {
-	var childProcess = spawn(command);
+	let childProcess = spawn(command);
 	
 	childProcess.stdout.pipe(indentStream("  ")).pipe(logStream());
 	childProcess.stderr.pipe(indentStream("  ")).pipe(logStream());
@@ -119,7 +118,6 @@ function spawnProcess(command, cb) {
 
 gulp.task('distr:linux', ['distr:clean', 'prod'], function() {
 	//FIXME I don't know why but the files are apparently not written right after prod... I've put a setTimeout of one second to fix that, but I should investigate this
-	
 	return new Promise((resolve, reject) => {
 		setTimeout(() => {
 			spawnProcess('./create_linux_package.sh', resolve);
@@ -128,6 +126,7 @@ gulp.task('distr:linux', ['distr:clean', 'prod'], function() {
 });
 
 gulp.task('distr:windows', ['distr:clean', 'prod'], function() {
+	//FIXME I don't know why but the files are apparently not written right after prod... I've put a setTimeout of one second to fix that, but I should investigate this
 	return new Promise((resolve, reject) => {
 		setTimeout(() => {
 			spawnProcess('./create_win32_package.sh', resolve);
@@ -140,7 +139,7 @@ gulp.task('distr', ['distr:clean', 'distr:windows', 'distr:linux']);
 
 gulp.task('default', ['prod']);
 gulp.task('watch', ['debug'], function () {
-	var watcher = gulp.watch(['electron/**/*', 'extensions/**/*', '!**/bin/**/*', '!**/build/**/*', '!distr/**/*', '!distr*/**/*'], ['debug']);
+	let watcher = gulp.watch(['electron/**/*', 'extensions/**/*', '!**/bin/**/*', '!**/build/**/*', '!distr/**/*', '!distr*/**/*'], ['debug']);
 	watcher.on('change', function (event) {
 		gutil.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
 	});

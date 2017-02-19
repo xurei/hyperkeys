@@ -5,7 +5,7 @@ const debug = require('debug')('extensions-provider');
 const fs = require('fs');
 const basename = require('path').basename;
 const pathjoin = require('path').join;
-const xutil = require('xurei-util');
+const lsDir = require('../util/lsdir');
 
 //Bootstrap code, should be added if not found
 const loadExtensions = function(path) {
@@ -14,14 +14,14 @@ const loadExtensions = function(path) {
 		return {};
 	}
 	//Load files
-	var files = xutil.lsDir(path, false);
-	var dirs = files.filter((file) => {
-		var stat = fs.statSync(file);
+	let files = lsDir(path, false);
+	let dirs = files.filter((file) => {
+		let stat = fs.statSync(file);
 		return (stat && stat.isDirectory())
 	});
-	var extensions = {};
+	let extensions = {};
 	for (let dir of dirs) {
-		var dirname = basename(dir);
+		let dirname = basename(dir);
 		if (dirname != "bin" && dirname != "node_modules") {
 			extensions[dirname] = require(dir);
 		}
@@ -30,10 +30,10 @@ const loadExtensions = function(path) {
 	return extensions;
 };
 
-var provider = {
+let provider = {
 	loadExtensions: function() {
-		var userExtensions = loadExtensions(pathjoin(app.getPath('userData'), 'extensions'));
-		var bundledExtensions = loadExtensions(pathjoin(app.getAppPath(), 'extensions'));
+		let userExtensions = loadExtensions(pathjoin(app.getPath('userData'), 'extensions'));
+		let bundledExtensions = loadExtensions(pathjoin(app.getAppPath(), 'extensions'));
 		
 		return Object.assign(bundledExtensions, userExtensions);
 	},

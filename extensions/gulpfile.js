@@ -1,28 +1,28 @@
-var gulp = require('gulp');
+let gulp = require('gulp');
 
 const path = require('path');
 const fs = require('fs');
 const runSequence = require('run-sequence').use(gulp);
-const xutil = require('xurei-util');
 const mkdirp = require('mkdirp');
+const lsDir = require('../util/lsdir');
 
 const gulpSub = require('../gulp-sub')(gulp);
 //------------------------------------------------------------------------------------------------------------------
 
-var config = {};
+let config = {};
 config.dest = "bin";
 //------------------------------------------------------------------------------------------------------------------
 
-var subs = [];
+let subs = [];
 
-var ls = xutil.lsDir(__dirname, false);
-var dirs = ls.filter((file) => {
-	var stat = fs.statSync(file);
+let ls = lsDir(__dirname, false);
+let dirs = ls.filter((file) => {
+	let stat = fs.statSync(file);
 	return (stat && stat.isDirectory())
 });
 
-for (var dir of dirs) {
-	var gulpFile = path.join(dir, 'gulpfile.js');
+for (let dir of dirs) {
+	let gulpFile = path.join(dir, 'gulpfile.js');
 	try {
 		fs.accessSync(gulpFile, fs.constants.R_OK);
 		gulpSub.register(path.basename(dir), gulpFile);
@@ -35,7 +35,7 @@ for (var dir of dirs) {
 //------------------------------------------------------------------------------------------------------------------
 
 gulp.task('submodules:copy', function () {
-	for (var sub of subs) {
+	for (let sub of subs) {
 		gulp.src(sub + '/' + config.dest + '/**/*')
 		.pipe(gulp.dest(path.join(config.dest, sub)))
 	}

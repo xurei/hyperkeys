@@ -42,7 +42,7 @@ const storage = require('electron-json-storage');
 	},
 ]);*/
 
-var provider = {
+let provider = {
 	saveMacros: function(macros) {
 		return new Promise((resolve, reject) => {
 		storage.set('macros', macros, function(error, data) {

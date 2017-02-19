@@ -2,6 +2,7 @@ const {app, ipc, BrowserWindow, globalShortcut, clipboard, Menu, Tray} = require
 const myapp = require('./app');
 
 console.log("getPath", app.getPath('exe'));
+console.log("getDataPath", app.getPath('userData'));
 
 //PLATFORM DETECTION
 process.on('uncaughtException', function (err) {
