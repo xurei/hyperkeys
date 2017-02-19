@@ -1,4 +1,4 @@
-const React = require ("react");
+const React = require('./react');
 const MacrosView = require ("./react-view-macros");
 
 import { FormGroup, FormControl, ControlLabel, HelpBlock, ListGroup, ListGroupItem, Grid, Row, Col } from 'react-bootstrap';

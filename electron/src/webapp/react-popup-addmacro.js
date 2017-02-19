@@ -1,4 +1,4 @@
-const React = require ("react");
+const React = require('./react');
 
 import { Button } from 'react-bootstrap';
 const Popup = require('./react-popup');

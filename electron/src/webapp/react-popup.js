@@ -1,4 +1,4 @@
-const React = require ("react");
+const React = require('./react');
 
 var Popup = React.createClass({
 	propTypes: {

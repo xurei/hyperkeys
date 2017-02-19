@@ -1,9 +1,9 @@
-const React = require ("react");
+const React = require('./react');
 const ShortcutsList = require('./react-shortcuts-list');
 
-import { FormGroup, FormControl, ControlLabel, HelpBlock, ListGroup, ListGroupItem, Grid, Row, Col } from 'react-bootstrap';
+import { ListGroup, ListGroupItem } from 'react-bootstrap';
 
-var MacrosListItem = React.createClass({
+let MacrosListItem = React.createClass({
 	propTypes: {
 		macro: React.PropTypes.object.isRequired,
 		metadata: React.PropTypes.object.isRequired,
@@ -22,10 +22,10 @@ var MacrosListItem = React.createClass({
 	},
 	
 	render: function() {
-		var macro = this.props.macro;
-		var metadata = this.props.metadata;
+		let macro = this.props.macro;
+		let metadata = this.props.metadata;
 		
-		var me = this;
+		let me = this;
 		
 		return (
 				<ListGroupItem>
@@ -45,7 +45,7 @@ var MacrosListItem = React.createClass({
 	}
 });
 
-var MacrosList = React.createClass({
+let MacrosList = React.createClass({
 	propTypes: {
 		macros: React.PropTypes.array.isRequired,
 		metadatas: React.PropTypes.object.isRequired,
@@ -53,9 +53,9 @@ var MacrosList = React.createClass({
 	},
 	
 	render: function() {
-		var macros = this.props.macros;
+		let macros = this.props.macros;
 		
-		var shortcuts = macros.map((macro) => {
+		let shortcuts = macros.map((macro) => {
 			return (
 				<MacrosListItem key={"macro_"+macro.id} macro={macro} metadata={this.props.metadatas[macro.name]} onRemoveMacro={this.props.onRemoveMacro} />
 			);
