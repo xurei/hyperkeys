@@ -8,6 +8,7 @@ let MacrosListItem = React.createClass({
 		macro: React.PropTypes.object.isRequired,
 		metadata: React.PropTypes.object.isRequired,
 		onRemoveMacro: React.PropTypes.func.isRequired,
+		onMacroConfig: React.PropTypes.func.isRequired,
 	},
 	getInitialState: () => ({
 		detailsVisible: true
@@ -15,10 +16,6 @@ let MacrosListItem = React.createClass({
 	
 	toggleDetails: function(e) {
 		this.setState({detailsVisible: !this.state.detailsVisible});
-	},
-	
-	handleDelete: function(e) {
-		this.props.onRemoveMacro(e.target.id_macro);
 	},
 	
 	render: function() {
@@ -32,8 +29,13 @@ let MacrosListItem = React.createClass({
 					<div onClick={this.toggleDetails} style={{cursor:"pointer"}}>
 						<span style={{lineHeight:"45px"}}>{this.state.detailsVisible ? "−":"+"} {metadata.title}</span>
 						<span className="pull-right">
-							<span className="btn btn-default">⚙</span>&nbsp;
-							<span className="btn btn-danger" onClick={(e) => { e.stopPropagation(); if (confirm('Remove macro ?')) me.props.onRemoveMacro(macro.id) }}>&times;</span>
+							{
+								(metadata.configScreen && metadata.configScreen.enabled)
+								? (<span className="btn btn-default" onClick={(e) => { e.stopPropagation(); me.props.onMacroConfig(macro.id); }}>⚙</span>)
+								: (<span/>)
+							}
+							&nbsp;
+							<span className="btn btn-danger" onClick={(e) => { e.stopPropagation(); if (confirm('Remove macro ?')) me.props.onRemoveMacro(macro.id); }}>&times;</span>
 						</span>
 					</div>
 					{this.state.detailsVisible ?
@@ -50,6 +52,7 @@ let MacrosList = React.createClass({
 		macros: React.PropTypes.array.isRequired,
 		metadatas: React.PropTypes.object.isRequired,
 		onRemoveMacro: React.PropTypes.func.isRequired,
+		onMacroConfig: React.PropTypes.func.isRequired,
 	},
 	
 	render: function() {
@@ -57,7 +60,7 @@ let MacrosList = React.createClass({
 		
 		let shortcuts = macros.map((macro) => {
 			return (
-				<MacrosListItem key={"macro_"+macro.id} macro={macro} metadata={this.props.metadatas[macro.name]} onRemoveMacro={this.props.onRemoveMacro} />
+				<MacrosListItem key={"macro_"+macro.id} macro={macro} metadata={this.props.metadatas[macro.name]} onRemoveMacro={this.props.onRemoveMacro} onMacroConfig={this.props.onMacroConfig}/>
 			);
 		});
 		

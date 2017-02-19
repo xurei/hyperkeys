@@ -1,6 +1,6 @@
 const React = require('./react');
 
-var Popup = React.createClass({
+const Popup = React.createClass({
 	propTypes: {
 		visible: React.PropTypes.bool,
 		onClose: React.PropTypes.func.isRequired,

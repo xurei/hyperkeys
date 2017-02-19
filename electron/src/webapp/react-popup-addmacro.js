@@ -2,35 +2,42 @@ const React = require('./react');
 
 import { Button } from 'react-bootstrap';
 const Popup = require('./react-popup');
+const arrayToMap = require('xurei-util').arrayToMap;
 
-import { FormGroup, FormControl, ControlLabel, HelpBlock, ListGroup, ListGroupItem, Grid, Row, Col } from 'react-bootstrap';
+import { FormGroup, FormControl, ControlLabel, HelpBlock } from 'react-bootstrap';
 
 function buildMacro(macro) {
-	return Object.assign({}, macro.defaultConfig);
+	macro = JSON.parse(JSON.stringify(macro));
+	return {name: macro.name, shortcuts: arrayToMap(Object.keys(macro.actions), k=>k, v=>null), config: macro.defaultConfig};
 }
 
-var PopupAddMacro = React.createClass({
+const PopupAddMacro = React.createClass({
 	propTypes: {
 		onClose: React.PropTypes.func.isRequired,
 		onSubmit: React.PropTypes.func.isRequired,
 		metadatas: React.PropTypes.object.isRequired,
 	},
 	
-	getInitialState: () => ({
-		chosenMacro: null
-	}),
+	getInitialState: function() {
+		console.log(this.props.metadatas);
+		return {
+			chosenMacro: buildMacro(this.props.metadatas[Object.keys(this.props.metadatas)[0]])
+		};
+	},
 	
 	handleChange: function(e) {
 		console.log(e.target);
-		var macro = this.props.macroTypes.filter((m) => m.name == e.target.value)[0];
-		this.setState({chosenMacro: buildMacro(macro)});
-		//var data = { value: e.target.value };
-		//this.props.onChange(data);
-		//this.props.onValidityChange(this.isValid(data));
+		const macro = this.props.metadatas[
+			Object.keys(this.props.metadatas).filter((key) => {
+				const m = this.props.metadatas[key];
+				return (m.name == e.target.value);
+			})[0]
+		];
+		console.log(macro, buildMacro(macro));
+		this.setState({chosenMacro: buildMacro(macro)}, null);
 	},
 	
 	componentDidMount: function() {
-		this.setState({chosenMacro: buildMacro(this.props.metadatas[Object.keys(this.props.metadatas)[0]])})
 	},
 	
 	onSubmit: function(e) {
@@ -39,7 +46,7 @@ var PopupAddMacro = React.createClass({
 	},
 	
 	render: function() {
-		var metadatas = this.props.metadatas;
+		let metadatas = this.props.metadatas;
 		
 		metadatas = Object.keys(metadatas).map((key) => {
 			let macroType = metadatas[key];
@@ -48,7 +55,7 @@ var PopupAddMacro = React.createClass({
 			);
 		});
 		
-		var curMacroDescription = (this.state.chosenMacro ? this.state.chosenMacro.description : "plop");
+		let curMacroDescription = (this.state.chosenMacro ? this.state.chosenMacro.description : "plop");
 		
 		return (
 			<Popup maxHeight="220px" title="Add Macro" {...this.props}>

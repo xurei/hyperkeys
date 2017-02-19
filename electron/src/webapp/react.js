@@ -3,7 +3,9 @@
  *  PropTypes: {
  *      object: {isRequired:boolean},
  *      array:  {isRequired:boolean},
- *      fund:   {isRequired:boolean}
+ *      func:   {isRequired:boolean},
+ *      string: {isRequired:boolean},
+ *      bool:   {isRequired:boolean}
  *  }
  *
  *  createClass: function(object)

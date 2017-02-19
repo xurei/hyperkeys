@@ -1,9 +1,9 @@
 const React = require('./react');
 const MacrosView = require ("./react-view-macros");
 
-import { FormGroup, FormControl, ControlLabel, HelpBlock, ListGroup, ListGroupItem, Grid, Row, Col } from 'react-bootstrap';
+import { Grid, Row, Col } from 'react-bootstrap';
 
-var MainView = React.createClass({
+const MainView = React.createClass({
 	render: function() {
 		//TODO header
 		return (
@@ -12,7 +12,7 @@ var MainView = React.createClass({
 					<Grid>
 						<Row>
 							<Col xs={12}>
-								<MacrosView></MacrosView>
+								<MacrosView/>
 							</Col>
 						</Row>
 					</Grid>

@@ -3,64 +3,75 @@ var gulp = require('gulp');
 const path = require('path');
 const babel = require('gulp-babel');
 const browserify = require('gulp-browserify');
-const eslint = require('gulp-eslint');
 const sourcemaps = require('gulp-sourcemaps');
-const uglify = require('gulp-uglify');
+const mkdirp = require('mkdirp');
 const rm = require('gulp-rimraf');
 const runSequence = require('run-sequence').use(gulp);
+const webpack = require('gulp-webpack');
 //------------------------------------------------------------------------------------------------------------------
 
-let config = {};
+const config = {};
 config.dest = "bin";
 config.source = "src";
-config.build = "build";
-config.sourceReact = path.join(config.source, 'webapp');
-config.buildReact = path.join(config.build, 'webapp');
-config.destReact = path.join(config.dest, 'webapp');
 //------------------------------------------------------------------------------------------------------------------
 
-gulp.task('webapp:lint', function () {
-	return gulp.src(path.join(config.sourceReact, '**/*'))
-	.pipe(eslint())
-	.pipe(eslint.format())
-	.pipe(eslint.failAfterError());
-});
-
 gulp.task('webapp:transpile', function () {
-	return gulp.src([path.join(config.sourceReact, '**/*')])
-	.pipe(sourcemaps.init())
-	.pipe(babel({
-		presets: ['es2015', "react"]
+	return gulp.src(path.join(config.source, 'configscreen.js'))
+	.pipe(webpack({
+		module: {
+			loaders: [
+				{
+					loader: 'babel-loader',
+					
+					// Skip any files outside of your project's `src` directory
+					include: [
+						path.resolve(__dirname),
+					],
+					
+					// Only run `.js` and `.jsx` files through Babel
+					test: /\.jsx?$/,
+					
+					// Options to configure babel with
+					query: {
+						//plugins: ['transform-runtime','transform-class-properties'],
+						presets: ['es2015', 'react'],
+					}
+				},
+			],
+		},
+		
+		output: {
+			filename: 'configscreen.js'
+		},
 	}))
-	.pipe(sourcemaps.write())
-	.pipe(gulp.dest(config.buildReact));
+	.pipe(gulp.dest(config.dest));
 });
 
 gulp.task('webapp:browserify', function () {
 	// Single entry point to browserify
-	gulp.src(path.join(config.buildReact, 'webapp.js'))
+	gulp.src(path.join(config.source, 'configscreen.js'))
 	.pipe(browserify({
 		debug: true,
 		insertGlobals: true
 	}))
 	.pipe(gulp.dest(config.dest))
 });
+//------------------------------------------------------------------------------------------------------------------
 
 gulp.task('copy', function () {
-	gulp.src([path.join(config.source, '**/*'), '!' + path.join(config.source, 'webapp/**/*')])
-	.pipe(gulp.dest(config.dest))
+	gulp.src([path.join(config.source, 'index.js'), path.join(config.source, 'action-run-command.js'), path.join(config.source, 'configscreen.html')])
+	.pipe(gulp.dest(config.dest));
 });
 
 gulp.task('clean', function () {
 	return gulp.src([
-		path.join(config.dest, '*'),
-		path.join(config.build, '*')
+		path.join(config.dest, '*')
 	])
 	.pipe(rm());
 });
 
 gulp.task('base', function (callback) {
-	return runSequence('copy', 'webapp:transpile', 'webapp:browserify', callback);
+	return runSequence('copy', 'webapp:transpile', /*'webapp:browserify', */callback);
 });
 //------------------------------------------------------------------------------------------------------------------
 
