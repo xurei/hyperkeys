@@ -22,7 +22,7 @@ const extensions = extensionsProvider.loadExtensions();
 const extensionsMetadata = {};
 //Extract metadata
 for (let iextension in extensions) {
-	var extension = extensions[iextension];
+	let extension = extensions[iextension];
 	for (let action of extension.actions) {
 		actionsService.registerActionFactory(action.name, action.factory);
 	}
@@ -30,17 +30,17 @@ for (let iextension in extensions) {
 }
 //----------------------------------------------------------------------------------------------------------------------
 
-var DIRSEP = "/";
+let DIRSEP = "/";
 if (platform.isWin)
 	DIRSEP = "\\";
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the javascript object is GCed.
-var mainWindow = null;
+let mainWindow = null;
 
-var window_open = false;
-var window_focus = false;
-var appIcon = null;
+let window_open = false;
+let window_focus = false;
+let appIcon = null;
 //----------------------------------------------------------------------------------------------------------------------
 
 function toggleWindow() {
@@ -51,6 +51,7 @@ function toggleWindow() {
 	else {
 		if (!window_open) {
 			mainWindow.show();
+			mainWindow.setTitle('Hyperkeys');
 			mainWindow.restore();
 			mainWindow.webContents.send('openWindow', {"APPPATH": APPPATH});
 		}
@@ -80,11 +81,11 @@ function registerShortcuts(macros) {
 }
 //----------------------------------------------------------------------------------------------------------------------
 
-var App = {
+let App = {
 	ready: () => {
 		if (platform.isWin || platform.isLinux) {
 			appIcon = new Tray(APPPATH + DIRSEP + 'icon.png');
-			var contextMenu = Menu.buildFromTemplate([
+			let contextMenu = Menu.buildFromTemplate([
 				{label: 'Show', click: toggleWindow},
 				{label: 'Exit', click: App.exit}
 			]);
@@ -100,7 +101,7 @@ var App = {
 		// and load the index.html of the app
 		mainWindow.loadURL('file://' + __dirname + '/index.html');
 		
-		var macros;
+		let macros;
 		macrosProvider.loadMacros()
 		.then(_macros => {
 			macros = _macros;
@@ -115,7 +116,7 @@ var App = {
 			mainWindow.webContents.send('metadatas', extensionsMetadata);
 		});
 		ipc.on('add_macro', function (event, arg) {
-			var macro = Object.assign({}, arg);
+			let macro = Object.assign({}, arg);
 			macro.id = uuid();
 			macros.push(macro);
 			macrosProvider.saveMacros(macros);
@@ -127,7 +128,7 @@ var App = {
 			mainWindow.webContents.send('macros', macros);
 		});
 		ipc.on('set_shortcut', function (event, data) {
-			var macro = macros.filter((macro) => macro.id == data.id_macro)[0];
+			let macro = macros.filter((macro) => macro.id == data.id_macro)[0];
 			macro.shortcuts[data.action] = data.shortcut;
 			
 			updateShortcuts(macros);
