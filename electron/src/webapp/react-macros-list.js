@@ -1,13 +1,14 @@
-const React = require ("react");
+const React = require('./react');
 const ShortcutsList = require('./react-shortcuts-list');
 
-import { FormGroup, FormControl, ControlLabel, HelpBlock, ListGroup, ListGroupItem, Grid, Row, Col } from 'react-bootstrap';
+import { ListGroup, ListGroupItem } from 'react-bootstrap';
 
-var MacrosListItem = React.createClass({
+let MacrosListItem = React.createClass({
 	propTypes: {
 		macro: React.PropTypes.object.isRequired,
 		metadata: React.PropTypes.object.isRequired,
 		onRemoveMacro: React.PropTypes.func.isRequired,
+		onMacroConfig: React.PropTypes.func.isRequired,
 	},
 	getInitialState: () => ({
 		detailsVisible: true
@@ -17,23 +18,26 @@ var MacrosListItem = React.createClass({
 		this.setState({detailsVisible: !this.state.detailsVisible});
 	},
 	
-	handleDelete: function(e) {
-		this.props.onRemoveMacro(e.target.id_macro);
-	},
-	
 	render: function() {
-		var macro = this.props.macro;
-		var metadata = this.props.metadata;
+		let macro = this.props.macro;
+		let metadata = this.props.metadata;
 		
-		var me = this;
+		console.log(macro);
+		
+		let me = this;
 		
 		return (
 				<ListGroupItem>
 					<div onClick={this.toggleDetails} style={{cursor:"pointer"}}>
-						<span style={{lineHeight:"45px"}}>{this.state.detailsVisible ? "−":"+"} {metadata.title}</span>
+						<span style={{lineHeight:"45px"}}>{this.state.detailsVisible ? "−":"+"} {macro.title}</span>
 						<span className="pull-right">
-							<span className="btn btn-default">⚙</span>&nbsp;
-							<span className="btn btn-danger" onClick={(e) => { e.stopPropagation(); if (confirm('Remove macro ?')) me.props.onRemoveMacro(macro.id) }}>&times;</span>
+							{
+								(metadata.configScreen && metadata.configScreen.enabled)
+								? (<span className="btn btn-default" onClick={(e) => { e.stopPropagation(); me.props.onMacroConfig(macro.id); }}>⚙</span>)
+								: (<span/>)
+							}
+							&nbsp;
+							<span className="btn btn-danger" onClick={(e) => { e.stopPropagation(); if (confirm('Remove macro ?')) me.props.onRemoveMacro(macro.id); }}>&times;</span>
 						</span>
 					</div>
 					{this.state.detailsVisible ?
@@ -45,19 +49,20 @@ var MacrosListItem = React.createClass({
 	}
 });
 
-var MacrosList = React.createClass({
+let MacrosList = React.createClass({
 	propTypes: {
 		macros: React.PropTypes.array.isRequired,
 		metadatas: React.PropTypes.object.isRequired,
 		onRemoveMacro: React.PropTypes.func.isRequired,
+		onMacroConfig: React.PropTypes.func.isRequired,
 	},
 	
 	render: function() {
-		var macros = this.props.macros;
+		let macros = this.props.macros;
 		
-		var shortcuts = macros.map((macro) => {
+		let shortcuts = macros.map((macro) => {
 			return (
-				<MacrosListItem key={"macro_"+macro.id} macro={macro} metadata={this.props.metadatas[macro.name]} onRemoveMacro={this.props.onRemoveMacro} />
+				<MacrosListItem key={"macro_"+macro.id} macro={macro} metadata={this.props.metadatas[macro.name]} onRemoveMacro={this.props.onRemoveMacro} onMacroConfig={this.props.onMacroConfig}/>
 			);
 		});
 		

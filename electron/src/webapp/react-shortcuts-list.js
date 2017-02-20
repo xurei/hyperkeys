@@ -1,4 +1,4 @@
-const React = require ("react");
+const React = require('./react');
 const PopupSetShortcut = require('./react-popup-setshortcut');
 
 import {ListGroup, ListGroupItem, Row, Col} from 'react-bootstrap';

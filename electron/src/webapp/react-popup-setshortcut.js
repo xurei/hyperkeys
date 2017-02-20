@@ -1,4 +1,4 @@
-const React = require ("react");
+const React = require('./react');
 
 const Popup = require('./react-popup');
 const actions = require('./actions');

@@ -1,4 +1,4 @@
-const React = require ("react");
+const React = require('./react');
 
 import { Button } from 'react-bootstrap';
 const MacrosList = require('./react-macros-list');
@@ -17,7 +17,7 @@ window.ipc.on('metadatas', (event, arg) => {
 	store.dispatch(actions.setMetadatas(arg));
 });
 
-var MainView = React.createClass({
+const MainView = React.createClass({
 	getInitialState: function() {
 		return {
 			showPopupAddMacro: false
@@ -33,14 +33,13 @@ var MainView = React.createClass({
 	},
 	
 	render: function() {
-		
 		return (
 				<div>
 					<div className="pull-right">
 						<Button bsStyle="success" onClick={this.addMacroClick}>Add Macro</Button>
 					</div>
 					<h2>Configured Macros</h2>
-					<MacrosList macros={this.props.macros} metadatas={this.props.metadatas} onRemoveMacro={this.removeMacro} />
+					<MacrosList macros={this.props.macros} metadatas={this.props.metadatas} onRemoveMacro={this.removeMacro} onMacroConfig={this.showMacroConfig} />
 					
 					{this.state.showPopupAddMacro ? <PopupAddMacro onClose={this.closeAddMacroPopup} onSubmit={this.submitAddMacroPopup} metadatas={this.props.metadatas}/> : (<div></div>)}
 				</div>
@@ -49,6 +48,10 @@ var MainView = React.createClass({
 	
 	removeMacro: function(macro_id) {
 		window.ipc.send('remove_macro', macro_id);
+	},
+	
+	showMacroConfig: function(macro_id) {
+		window.ipc.send('macro_configscreen', macro_id);
 	},
 	
 	closeAddMacroPopup: function(e) {
@@ -74,14 +77,6 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-	/*return {
-	 onClickNext: () => {
-	 dispatch(actions.nextPage())
-	 },
-	 onClickPrev: () => {
-	 dispatch(actions.prevPage())
-	 },
-	 }*/
 	return {};
 }
 

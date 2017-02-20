@@ -12,7 +12,7 @@
   "dependencies": {
     "debug": "^2.3.2",
     "electron-json-storage": "^2.1.0",
-    "hyperkeys-api": "git+https://github.com/xurei/hyperkeys-api.git#master",
+    "hyperkeys-api": "^1.0.1",
     "node-notifier": "^4.6.1",
     "react": "^15.4.0",
     "react-bootstrap": "^0.30.6",
@@ -23,6 +23,8 @@
     "xurei-util": "^1.0.2"
   },
   "devDependencies": {
+    "babel-core": "^6.22.1",
+    "babel-loader": "^6.2.10",
     "babel-plugin-transform-class-properties": "^6.18.0",
     "babel-plugin-transform-runtime": "^6.15.0",
     "babel-preset-es2015": "^6.18.0",
@@ -36,12 +38,13 @@
     "gulp-concat": "^2.6.1",
     "gulp-eslint": "^3.0.1",
     "gulp-exec": "^2.1.3",
-    "gulp-install": "git+https://github.com/xurei/gulp-install.git#master",
+    "gulp-install": "^0.6.0",
     "gulp-rimraf": "latest",
     "gulp-sass": "^2.3.2",
     "gulp-sourcemaps": "^2.2.0",
     "gulp-uglify": "^2.0.0",
     "gulp-util": "^3.0.7",
+    "gulp-webpack": "^1.5.0",
     "gutil-log-stream": "^1.0.0",
     "indent-stream": "^1.0.0",
     "mkdirp": "^0.5.1",
