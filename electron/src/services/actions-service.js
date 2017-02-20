@@ -1,16 +1,16 @@
 const isset = require('xurei-util').isset;
 const debug = require('debug')('actions-service');
 
-var actionFactories = {};
+let actionFactories = {};
 
-var service = {
+const ActionService = {
 	registerActionFactory: (name, factoryMethod) => {
 		debug('Registered action `'+name+'`');
 		actionFactories[name] = factoryMethod;
 	},
 	
 	buildActionObject: (action) => {
-		var factory = actionFactories[action.name];
+		let factory = actionFactories[action.name];
 		if (isset(factory)) {
 			return factory(action);
 		}
@@ -20,4 +20,4 @@ var service = {
 	}
 };
 
-module.exports = service;
+module.exports = ActionService;

@@ -1,5 +1,5 @@
 const exec = require('child_process').exec;
-const debug = require('debug')('action-set-switch-window');
+const debug = require('debug')('action-run-command');
 const notifier = require('node-notifier');
 
 module.exports = {
@@ -7,9 +7,8 @@ module.exports = {
 	factory: function (action) {
 		return {
 			execute: () => {
-				console.log('action', action);
-				let command = 'gedit';
-				debug(command);
+				let command = action.config.command;
+				debug("Running command", command);
 				exec(command);
 			}
 		};

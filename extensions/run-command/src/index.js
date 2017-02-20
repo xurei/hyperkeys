@@ -4,7 +4,7 @@ module.exports = {
 	],
 	metadata: {
 		name: 'RUN_COMMAND',
-		title: (macro) => "Run command `" + macro.config.command + "`",
+		title: (config) => "Run command `" + config.command + "`",
 		description: "Run a command line instruction",
 		actions: {
 			RUN_COMMAND: {title: "Run command"}

@@ -22,12 +22,14 @@ let MacrosListItem = React.createClass({
 		let macro = this.props.macro;
 		let metadata = this.props.metadata;
 		
+		console.log(macro);
+		
 		let me = this;
 		
 		return (
 				<ListGroupItem>
 					<div onClick={this.toggleDetails} style={{cursor:"pointer"}}>
-						<span style={{lineHeight:"45px"}}>{this.state.detailsVisible ? "−":"+"} {metadata.title}</span>
+						<span style={{lineHeight:"45px"}}>{this.state.detailsVisible ? "−":"+"} {macro.title}</span>
 						<span className="pull-right">
 							{
 								(metadata.configScreen && metadata.configScreen.enabled)
