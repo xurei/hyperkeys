@@ -98,6 +98,7 @@ module.exports = {
 				for (let key in extensionsMetadata) {
 					meta[key] = normalizeMetadata(extensionsMetadata[key]);
 				}
+				debug(meta);
 				mainWindow.webContents.send('metadatas', meta);
 			}
 			
