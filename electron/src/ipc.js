@@ -31,7 +31,7 @@ function updateShortcuts(macros) {
 }
 //----------------------------------------------------------------------------------------------------------------------
 
-function applyMetadata(macro, metadata) {
+function normalizeMacro(macro, metadata) {
 	function callMeta(meta, config) {
 		if (typeof meta === "function") {
 			return meta(config);
@@ -43,6 +43,23 @@ function applyMetadata(macro, metadata) {
 	
 	let out = JSON.parse(JSON.stringify(macro));
 	out.title = callMeta(metadata.title, macro.config);
+	
+	return out;
+}
+//----------------------------------------------------------------------------------------------------------------------
+
+function normalizeMetadata(metadata) {
+	function callMeta(meta) {
+		if (typeof meta === "function") {
+			return meta(null);
+		}
+		else {
+			return meta;
+		}
+	}
+	
+	let out = JSON.parse(JSON.stringify(metadata));
+	out.title = callMeta(metadata.title);
 	
 	return out;
 }
@@ -73,8 +90,15 @@ module.exports = {
 			function sendMacros() {
 				mainWindow.webContents.send('macros', macros.map((macro) => {
 					let metadata = extensionsMetadata[macro.name];
-					return applyMetadata(macro, metadata);
+					return normalizeMacro(macro, metadata);
 				}));
+			}
+			function sendMetadatas() {
+				let meta = {};
+				for (let key in extensionsMetadata) {
+					meta[key] = normalizeMetadata(extensionsMetadata[key]);
+				}
+				mainWindow.webContents.send('metadatas', meta);
 			}
 			
 			ipc.on('request_macros', function (/*event, arg*/) {
@@ -82,7 +106,7 @@ module.exports = {
 			});
 			
 			ipc.on('request_metadatas', function (/*event, arg*/) {
-				mainWindow.webContents.send('metadatas', extensionsMetadata);
+				sendMetadatas();
 			});
 			
 			ipc.on('add_macro', function (event, arg) {
@@ -109,7 +133,9 @@ module.exports = {
 				
 				let config = { id: macro.id, config: Object.assign({}, macro.config) };
 				configWindow.loadURL('file://' + metadata.directory + '/configscreen.html#' + encodeURIComponent(JSON.stringify(config)));
-				configWindow.toggleDevTools();
+				
+				//Toggle Debug
+				//configWindow.toggleDevTools();
 			});
 			
 			ipc.on('set_config', function (event, newConfig) {

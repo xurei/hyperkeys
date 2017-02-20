@@ -4,7 +4,7 @@ module.exports = {
 	],
 	metadata: {
 		name: 'RUN_COMMAND',
-		title: (config) => "Run command `" + config.command + "`",
+		title: (config) => config ? "Run command `" + config.command + "`" : 'Run command',
 		description: "Run a command line instruction",
 		actions: {
 			RUN_COMMAND: {title: "Run command"}
@@ -15,7 +15,7 @@ module.exports = {
 			height: 200,
 		},
 		defaultConfig: {
-			command: "gedit"
+			command: ""
 		}
 	}
 };
