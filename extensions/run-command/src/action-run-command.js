@@ -9,7 +9,16 @@ module.exports = {
 			execute: () => {
 				let command = action.config.command;
 				debug("Running command", command);
-				exec(command);
+				exec(command, function callback(error, stdout, stderr){
+					if (error == null) {
+						/* nothing */
+					}
+					else {
+						debug("STDOUT " + stdout.trim());
+						debug("STDERR " + stderr.trim());
+						//TODO error management
+					}
+				});
 			}
 		};
 	}
