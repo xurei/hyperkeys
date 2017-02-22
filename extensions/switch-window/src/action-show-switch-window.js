@@ -8,12 +8,12 @@ module.exports = {
 	factory: function (action) {
 		return {
 			execute: () => {
-				var command = '';
+				let command = '';
 				if (platform.isLinux) {
 					command = 'wmctrl -ia ' + store[action.id_macro];
 				}
 				else if (platform.isWin) {
-					command = __dirname + '\\win32\\nircmd\\nircmd.exe win activate handle ' + store[action.id_macro];
+					command = '"' + __dirname + '\\win32\\nircmd\\nircmd.exe" win activate handle ' + store[action.id_macro];
 				}
 				
 				debug(command);
