@@ -4,7 +4,7 @@ const PopupSetShortcut = require('./react-popup-setshortcut');
 import {ListGroup, ListGroupItem, Row, Col} from 'react-bootstrap';
 const ShortcutRenderer = require('./react-shortcut-renderer');
 
-var ShortcutsListItem = React.createClass({
+const ShortcutsListItem = React.createClass({
 	propTypes: {
 		id_macro: React.PropTypes.string.isRequired,
 		action_name: React.PropTypes.string.isRequired,
@@ -16,7 +16,7 @@ var ShortcutsListItem = React.createClass({
 	}),
 	
 	render: function() {
-		var shortcut = this.props.shortcut;
+		let shortcut = this.props.shortcut;
 		return (
 			<ListGroupItem>
 				<Row>
@@ -24,10 +24,13 @@ var ShortcutsListItem = React.createClass({
 						<div style={{lineHeight:"40px"}}>{this.props.metadata.title}</div>
 					</Col>
 					<Col xs={12} sm={8} md={9}>
-						<ShortcutRenderer shortcut={shortcut}></ShortcutRenderer>
+						<ShortcutRenderer shortcut={shortcut}/>
 						<span className="pull-right">
-						<span className="btn btn-default" onClick={this.openPopup}>🖉</span>&nbsp;
-					</span>
+							<span className="btn btn-default" onClick={this.openPopup}>
+								<i className="fa fa-pencil" aria-hidden="true"/>
+							</span>
+							&nbsp;
+						</span>
 					</Col>
 				</Row>
 				{this.state.settingShortcut
@@ -46,11 +49,11 @@ var ShortcutsListItem = React.createClass({
 		});
 	},
 	
-	openPopup: function(e) {
+	openPopup: function(/*e*/) {
 		this.setState({settingShortcut: true});
 	},
 	
-	handlePopupClose: function(e) {
+	handlePopupClose: function(/*e*/) {
 		this.setState({settingShortcut: false});
 	},
 	
@@ -59,7 +62,7 @@ var ShortcutsListItem = React.createClass({
 	}
 });
 
-var ShortcutsList = React.createClass({
+let ShortcutsList = React.createClass({
 	propTypes: {
 		id_macro: React.PropTypes.string.isRequired,
 		shortcuts: React.PropTypes.object.isRequired,
@@ -69,8 +72,8 @@ var ShortcutsList = React.createClass({
 	}),
 	
 	render: function() {
-		var shortcuts = Object.keys(this.props.shortcuts).map((key) => {
-			var shortcut = this.props.shortcuts[key];
+		let shortcuts = Object.keys(this.props.shortcuts).map((key) => {
+			let shortcut = this.props.shortcuts[key];
 			return (
 				<ShortcutsListItem id_macro={this.props.id_macro} key={"shortcut_"+key} action_name={key} metadata={this.props.metadatas[key]} shortcut={shortcut} />
 			);

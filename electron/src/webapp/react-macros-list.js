@@ -33,7 +33,9 @@ let MacrosListItem = React.createClass({
 						<span className="pull-right">
 							{
 								(metadata.configScreen && metadata.configScreen.enabled)
-								? (<span className="btn btn-default" onClick={(e) => { e.stopPropagation(); me.props.onMacroConfig(macro.id); }}>⚙</span>)
+								? (<span className="btn btn-default" onClick={(e) => { e.stopPropagation(); me.props.onMacroConfig(macro.id); }}>
+									<i className="fa fa-cog" aria-hidden="true"/>
+								</span>)
 								: (<span/>)
 							}
 							&nbsp;
