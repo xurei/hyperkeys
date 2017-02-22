@@ -1,4 +1,4 @@
-const exec = require('child_process').exec;
+const exec = require('child_process').spawn;
 const debug = require('debug')('action-run-command');
 const notifier = require('node-notifier');
 
@@ -9,15 +9,8 @@ module.exports = {
 			execute: () => {
 				let command = action.config.command;
 				debug("Running command", command);
-				exec(command, function callback(error, stdout, stderr){
-					if (error == null) {
-						/* nothing */
-					}
-					else {
-						debug("STDOUT " + stdout.trim());
-						debug("STDERR " + stderr.trim());
-						//TODO error management
-					}
+				exec(command, {
+					detached: true
 				});
 			}
 		};
