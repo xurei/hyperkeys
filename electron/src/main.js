@@ -15,7 +15,7 @@ app.commandLine.appendSwitch('disable-http-cache', '');
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
-	if (process.platform != 'darwin')
+	if (process.platform !== 'darwin')
 		app.quit();
 });
 
