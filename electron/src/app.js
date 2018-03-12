@@ -45,8 +45,8 @@ let App = {
 			]);
 			appIcon.setContextMenu(contextMenu);
 			appIcon.setToolTip('Hyperkeys');
-			appIcon.on('double-clicked', toggleWindow);
-			appIcon.on('clicked', toggleWindow);
+			appIcon.on('double-click', toggleWindow);
+			appIcon.on('click', toggleWindow);
 		}
 		
 		//TODO remove this toggleWindow()
