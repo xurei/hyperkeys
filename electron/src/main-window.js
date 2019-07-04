@@ -2,7 +2,15 @@ const {BrowserWindow} = require('electron');
 const path = require('path');
 
 // Create the browser window.
-const mainWindow = new BrowserWindow({width: 1024, height: 768, show: false, icon: path.join(__dirname, 'icon.png')});
+const mainWindow = new BrowserWindow({
+	width: 1024,
+	height: 768,
+	show: false,
+	icon: path.join(__dirname, 'icon.png'),
+	webPreferences: {
+		nodeIntegration: true
+	},
+});
 mainWindow.setMenu(null);
 mainWindow.setTitle('Hyperkeys');
 // and load the index.html of the app
