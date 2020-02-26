@@ -9,7 +9,6 @@
     "test": "npm test"
   },
   "author": "xurei Lab",
-  "license": "ISC",
   "private": true,
   "dependencies": {
     "@babel/polyfill": "^7.6.0",
@@ -17,6 +16,7 @@
     "@babel/runtime-corejs3": "^7.6.0",
     "autobind-decorator": "^2.4.0",
     "core-js": "^3.2.1",
+    "debug": "^2.6.9",
     "deep-eql": "^4.0.0",
     "electron-json-storage": "^2.1.0",
     "hyperkeys-api": "^1.0.1",
@@ -45,7 +45,6 @@
     "babel-plugin-styled-components": "^1.10.6",
     "babel-plugin-transform-imports": "^2.0.0",
     "css-loader": "^3.4.2",
-    "debug": "^2.6.9",
     "electron": "^8.0.2",
     "electron-packager": "^14.2.1",
     "eslint": "^6.3.0",
