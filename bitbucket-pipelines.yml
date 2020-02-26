@@ -10,13 +10,5 @@ pipelines:
     production:
       - step:
           script: # Modify the commands below to build your repository.
-            - npm install
-            - node_modules/gulp/bin/gulp.js distr
-            - tree -L 2 distr
-            - chmod 400 ssh.pem
-            - scp -v -i ssh.pem -oStrictHostKeyChecking=no distr/hyperkeys-linux-*.tar.gz root@37.59.123.100:/var/www/xureilab/hyperkeys/download
-            - scp -v -i ssh.pem -oStrictHostKeyChecking=no distr/hyperkeys-win32-*.exe root@37.59.123.100:/var/www/xureilab/hyperkeys/download
-            - wget http://www.xureilab.com/hyperkeys/download/hyperkeys-linux-ia32.tar.gz
-            - wget http://www.xureilab.com/hyperkeys/download/hyperkeys-linux-x64.tar.gz
-            - wget http://www.xureilab.com/hyperkeys/download/hyperkeys-win32-ia32.exe
-            - wget http://www.xureilab.com/hyperkeys/download/hyperkeys-win32-x64.exe
+            - npm ci
+            - npm run build
