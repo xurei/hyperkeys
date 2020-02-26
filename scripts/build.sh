@@ -15,8 +15,11 @@ rm -rf build || true
 mkdir build
 
 node $BASEPATH/build_package_json.js
+cd $BASEPATH/../build
+npm install
+cd $BASEPATH/..
+
 node_modules/.bin/babel --config-file $BASEPATH/../.babelrc.main src/main -d build --copy-files
-#node_modules/.bin/babel --config-file $BASEPATH/../.babelrc.web src/extensions -d build/extensions --copy-files
 compile_module run-command
 compile_module switch-window
 compile_module window-pin-by-name
