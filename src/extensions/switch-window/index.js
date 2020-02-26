@@ -11,7 +11,6 @@ module.exports = {
 			SET_SWITCH_WINDOW: {title: "Pin current window"},
 			SHOW_SWITCH_WINDOW: {title: "Bring pinned window to front"},
 		},
-		hasConfigScreen: false,
 		defaultConfig: {}
 	}
 };

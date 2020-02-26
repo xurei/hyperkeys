@@ -4,6 +4,7 @@ import deepEqual from 'deep-eql';
 import autobind from 'autobind-decorator';
 
 import PopupSetShortcut from './react-popup-setshortcut';
+import { FlexLayout, FlexChild } from './components/layout/flex-layout';
 
 import {ListGroup, ListGroupItem, Row, Col} from 'reactstrap';
 import ShortcutRenderer from './react-shortcut-renderer';
@@ -27,11 +28,12 @@ class ShortcutsListItem extends React.Component {
 		let shortcut = this.props.shortcut;
 		return (
 			<ListGroupItem>
-				<Row>
-					<Col xs={12} sm={4} md={3}>
+				<FlexLayout>
+					<FlexChild width={200} grow={0.1}>
 						<div style={{lineHeight:"40px"}}>{this.props.metadata.title}</div>
-					</Col>
-					<Col xs={12} sm={8} md={9}>
+					</FlexChild>
+					
+					<FlexChild width={100} grow={1}>
 						<ShortcutRenderer shortcut={shortcut}/>
 						<span className="pull-right">
 							<span className="btn btn-default" onClick={this.handleOpenPopup}>
@@ -39,8 +41,8 @@ class ShortcutsListItem extends React.Component {
 							</span>
 							&nbsp;
 						</span>
-					</Col>
-				</Row>
+					</FlexChild>
+				</FlexLayout>
 				{this.state.settingShortcut && (
 					<PopupSetShortcut onClose={this.handlePopupClose} onSubmit={this.handleChangeShortcut} />
 				)}

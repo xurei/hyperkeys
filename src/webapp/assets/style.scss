@@ -1,0 +1,37 @@
+a,a:hover,a:focus,a:active,a:focus:active {
+  color: #EE8202;
+}
+.btn-success {
+  background: #EE8202;
+  border-color: #EE8202;
+  &.disabled:hover, &.disabled {
+    background: #444;
+    border-color: #444;
+  }
+  &:hover {
+    background: #DE7800;
+    border-color: #DE7800;
+  }
+  &:active, &:focus, &:active:focus {
+    background: #D17000;
+    border-color: #D17000;
+  }
+}
+
+.fullw {
+  width: 100%;
+}
+
+body {
+  background-color: #222;
+}
+
+input[type="text"], textarea {
+  background-color: #333;
+  color: #eee;
+
+  &::placeholder {
+    color: #888 !important;
+    opacity: 1; /* Firefox */
+  }
+}

@@ -9,8 +9,6 @@ const path = require('path');
 const debug = require('debug')('hyperkeys-ipc');
 const ConfigWindow = require('./config-window');
 
-let configWindow = null;
-
 function registerShortcuts(macros) {
 	debug(macros);
 	for (let macro of macros) {
@@ -83,8 +81,8 @@ module.exports = {
 		
 		macrosProvider.loadMacros()
 		.then(_macros => {
-			let macros = _macros;
 			const mainWindow = require('./main-window');
+			let macros = _macros;
 			registerShortcuts(macros);
 			
 			function sendMacros() {
@@ -126,19 +124,6 @@ module.exports = {
 				sendMacros();
 			});
 			
-			ipc.on('macro_configscreen', function (event, id_macro) {
-				let macro = macros.filter((macro) => macro.id === id_macro)[0];
-				let metadata = extensionsMetadata[macro.name];
-				
-				configWindow = ConfigWindow(mainWindow, metadata.configScreen);
-				
-				let config = { id: macro.id, config: Object.assign({}, macro.config) };
-				configWindow.loadURL('file://' + metadata.directory + '/configscreen.html#' + encodeURIComponent(JSON.stringify(config)));
-				
-				//Toggle Debug
-				//configWindow.toggleDevTools();
-			});
-			
 			ipc.on('set_config', function (event, newConfig) {
 				debug('newConfig', newConfig);
 				
@@ -152,7 +137,6 @@ module.exports = {
 				updateShortcuts(macros);
 				macrosProvider.saveMacros(macros);
 				sendMacros();
-				configWindow.close();
 			});
 			
 			ipc.on('set_shortcut', function (event, data) {

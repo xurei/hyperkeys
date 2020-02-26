@@ -25,34 +25,47 @@ class MacrosListItem extends React.Component {
 		let macro = this.props.macro;
 		let metadata = this.props.metadata;
 		
-		console.log(macro);
+		//console.log(macro, metadata);
 		
 		let me = this;
+		
+		const ConfigScreen = global.hyperkeys_modules[metadata.name];
 		
 		return (
 			<ListGroupItem>
 				<div onClick={this.handleToggleDetails} style={{cursor:"pointer"}}>
 					<span style={{lineHeight:"45px"}}>{this.state.detailsVisible ? "−":"+"} {macro.title}</span>
 					<span className="pull-right">
-						{(metadata.configScreen && metadata.configScreen.enabled) && (
-							<span className="btn btn-default" onClick={(e) => { e.stopPropagation(); me.props.onMacroConfig(macro.id); }}>
-								<i className="fa fa-cog" aria-hidden="true"/>
-							</span>
-						)}
-						&nbsp;
 						<span className="btn btn-danger" onClick={(e) => { e.stopPropagation(); if (confirm('Remove macro ?')) me.props.onRemoveMacro(macro.id); }}>&times;</span>
 					</span>
 				</div>
-				{this.state.detailsVisible ?
+				{this.state.detailsVisible && (
 					<div style={{marginTop: "10px"}}>
+						{(metadata.configScreen && metadata.configScreen.enabled) && (
+							<ListGroupItem>
+								{ConfigScreen && <ConfigScreen config={macro.config} onSubmit={this.handleConfigChange}/>}
+							</ListGroupItem>
+						)}
 						<ShortcutsList id_macro={macro.id} shortcuts={macro.shortcuts} metadatas={metadata.actions}/>
-					</div> : <span/>}
+					</div>
+				)}
 			</ListGroupItem>
 		);
 	}
 	
 	@autobind
+	handleConfigChange(config) {
+		let macro = this.props.macro;
+		window.ipc.send('set_config', { id: macro.id, config: config });
+	}
+	
+	@autobind
 	handleToggleDetails(e) {
+		this.setState({detailsVisible: !this.state.detailsVisible});
+	}
+	
+	@autobind
+	handleToggleConfig(e) {
 		this.setState({detailsVisible: !this.state.detailsVisible});
 	}
 	

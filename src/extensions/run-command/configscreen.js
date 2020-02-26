@@ -1,60 +1,62 @@
-const React = require ("react");
-const ReactDOM = require ("react-dom");
+import ReactDOM from 'react-dom'; //eslint-disable-line no-unused-vars
+import React from 'react'; //eslint-disable-line no-unused-vars
+import PropTypes from 'prop-types'; //eslint-disable-line no-unused-vars
+import autobind from 'autobind-decorator';
 
-import { FormGroup, Input, ControlLabel, HelpBlock, Button, Container, Row, Col } from 'reactstrap';
+//import { FlexLayout, FlexChild } from '../../webapp/components/layout/flex-layout';
 
-const ConfigScreen = React.createClass({
-	propTypes: {
-		config: PropTypes.object.isRequired
-	},
+import { FormGroup, Input, Label, Button } from 'reactstrap';
+
+class ConfigScreen extends React.Component {
+	static propTypes = {
+		config: PropTypes.object.isRequired,
+		onSubmit: PropTypes.func.isRequired,
+	};
 	
-	getInitialState() {
-		return {
-			value: this.props.config.config.command
+	constructor(props) {
+		super(props);
+		this.state = {
+			value: props.config.command,
 		};
-	},
-	
-	handleChange(e) {
-		this.setState({ value: e.target.value }, null);
-	},
-	
-	onSubmit: function(/*e*/) {
-		const config = Object.assign({}, this.props.config.config, { command: this.state.value })
-		window.ipc.send('set_config', { id: this.props.config.id, config: config });
-	},
-	
-	render: function() {
-		return (
-			<Container>
-				<Row>
-					<Col xs={12}>
-						<div>&nbsp;</div>
-						<form>
-							<FormGroup>
-								<ControlLabel>Command to execute</ControlLabel>
-								<Input type="text" value={this.state.value} placeholder="Example : firefox" onChange={this.handleChange}/>
-								<Input.Feedback />
-								<HelpBlock/>
-							</FormGroup>
-							<Button bsStyle="success" className="pull-right" onClick={this.onSubmit}>Confirm</Button>
-						</form>
-					</Col>
-				</Row>
-			</Container>
-		);
-	},
-	
-	shouldComponentUpdate: function(nextProps, nextState) {
-		try {
-			return JSON.stringify(this.props) !== JSON.stringify(nextProps) || JSON.stringify(this.state) !== JSON.stringify(nextState);
-		}
-		catch (e) {
-			console.warn(e);
-			return true;
-		}
 	}
-});
+	
+	render() {
+		return (
+			<form onSubmit={this.handleSubmit}>
+				<FormGroup>
+					<Label>Command to execute</Label>
+					<div style={{display: 'flex'}}>
+						<div style={{flexGrow: 1}}>
+							<Input type="text" value={this.state.value} placeholder="Example : firefox" onChange={this.handleChange}/>
+						</div>
+						<div style={{flexGrow: 0, width: 90}}>
+							<Button color="success" disabled={this.state.value === this.props.config.command} className="pull-right fullw" onClick={this.handleSubmit}>Confirm</Button>
+						</div>
+					</div>
+				</FormGroup>
+			</form>
+		);
+	}
+	
+	@autobind
+	handleChange(e) {
+		this.setState({value: e.target.value});
+	}
+	
+	@autobind
+	handleSubmit(e) {
+		e.preventDefault();
+		const config = Object.assign({}, this.props.config, { command: this.state.value });
+		this.props.onSubmit(config);
+	}
+}
 
+export { ConfigScreen };
+
+global.hyperkeys_modules = global.hyperkeys_modules || {};
+global.hyperkeys_modules['RUN_COMMAND'] = ConfigScreen;
+
+/*
 window.addEventListener("DOMContentLoaded", function() {
 	const config = JSON.parse(decodeURIComponent(document.location.hash).substring(1));
 	
@@ -66,3 +68,4 @@ window.addEventListener("DOMContentLoaded", function() {
 		document.getElementById('content')
 	);
 });
+*/

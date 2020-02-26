@@ -13,15 +13,6 @@ import { setMacros, setMetadatas } from './actions';
 
 const ipc = window.ipc;
 
-ipc.on('macros', (event, arg) => {
-	console.log("Got macros", arg);
-	store.dispatch(setMacros(arg));
-});
-ipc.on('metadatas', (event, arg) => {
-	console.log("Got metadatas", arg);
-	store.dispatch(setMetadatas(arg));
-});
-
 class MacrosView extends React.Component {
 	static propTypes = {};
 	
@@ -39,6 +30,7 @@ class MacrosView extends React.Component {
 
 	render() {
 		const props = this.props;
+		
 		return (
 			<div>
 				<div className="pull-right">
@@ -56,12 +48,6 @@ class MacrosView extends React.Component {
 	
 	handleRemoveMacro(macro_id) {
 		ipc.send('remove_macro', macro_id);
-	}
-	
-	handleShowMacroConfig(macro_id) {
-		
-		component: React.lazy(() => import('/components/form/survey-form')),
-		ipc.send('macro_configscreen', macro_id);
 	}
 	
 	@autobind

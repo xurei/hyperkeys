@@ -9,7 +9,6 @@ module.exports = {
 		actions: {
 			SHOW_WINDOW_PIN_BY_NAME: {title: "Bring pinned window to front"},
 		},
-		hasConfigScreen: false,
 		defaultConfig: {}
 	}
 };
