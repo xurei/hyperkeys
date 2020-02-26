@@ -4,7 +4,7 @@ const debug = require('debug')('hyperkeys-action-show-switch-window');
 const platform = require('hyperkeys-api').platform;
 
 module.exports = {
-	name: "SHOW_SWITCH_WINDOW",
+	name: "SHOW_WINDOW_PIN_BY_NAME",
 	factory: function (action) {
 		return {
 			execute: () => {

@@ -1,0 +1,95 @@
+import React from 'react'; //eslint-disable-line no-unused-vars
+import PropTypes from 'prop-types'; //eslint-disable-line no-unused-vars
+import deepEqual from 'deep-eql';
+import autobind from 'autobind-decorator';
+import { connect as redux_connect } from 'react-redux';
+
+import { Button } from 'reactstrap';
+
+import MacrosList from './react-macros-list';
+import PopupAddMacro from './react-popup-addmacro';
+import store from './store';
+import { setMacros, setMetadatas } from './actions';
+
+const ipc = window.ipc;
+
+ipc.on('macros', (event, arg) => {
+	console.log("Got macros", arg);
+	store.dispatch(setMacros(arg));
+});
+ipc.on('metadatas', (event, arg) => {
+	console.log("Got metadatas", arg);
+	store.dispatch(setMetadatas(arg));
+});
+
+class MacrosView extends React.Component {
+	static propTypes = {};
+	
+	constructor(props) {
+		super(props);
+		this.state = {
+			showPopupAddMacro: false
+		};
+	}
+	
+	componentDidMount() {
+		ipc.send('request_metadatas');
+		ipc.send('request_macros');
+	}
+
+	render() {
+		const props = this.props;
+		return (
+			<div>
+				<div className="pull-right">
+					<Button color="success" onClick={this.handleAddMacroClick}>Add Macro</Button>
+				</div>
+				<h2>Configured Macros</h2>
+				<MacrosList macros={props.macros} metadatas={props.metadatas} onRemoveMacro={this.handleRemoveMacro} onMacroConfig={this.handleShowMacroConfig} />
+				
+				{this.state.showPopupAddMacro && (
+					<PopupAddMacro onClose={this.handleCloseAddMacroPopup} onSubmit={this.handleSubmitAddMacroPopup} metadatas={props.metadatas}/>
+				)}
+			</div>
+		);
+	}
+	
+	handleRemoveMacro(macro_id) {
+		ipc.send('remove_macro', macro_id);
+	}
+	
+	handleShowMacroConfig(macro_id) {
+		
+		component: React.lazy(() => import('/components/form/survey-form')),
+		ipc.send('macro_configscreen', macro_id);
+	}
+	
+	@autobind
+	handleCloseAddMacroPopup(e) {
+		this.setState({showPopupAddMacro: false});
+	}
+	
+	@autobind
+	handleSubmitAddMacroPopup(data) {
+		console.log(data);
+		ipc.send('add_macro', data);
+	}
+	
+	@autobind
+	handleAddMacroClick(e) {
+		this.setState({showPopupAddMacro: true});
+	}
+	
+	shouldComponentUpdate(nextProps) {
+		return !deepEqual(this.props, nextProps);
+	}
+}
+
+MacrosView = redux_connect(
+	(state) => ({
+		macros: state.macros,
+		metadatas: state.metadatas
+	}),
+)(MacrosView);
+
+export default MacrosView;

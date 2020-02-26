@@ -1,7 +1,7 @@
 const React = require ("react");
 const ReactDOM = require ("react-dom");
 
-import { FormGroup, Input, ControlLabel, HelpBlock, Button, Grid, Row, Col } from 'reactstrap';
+import { FormGroup, Input, ControlLabel, HelpBlock, Button, Container, Row, Col } from 'reactstrap';
 
 const ConfigScreen = React.createClass({
 	propTypes: {
@@ -25,7 +25,7 @@ const ConfigScreen = React.createClass({
 	
 	render: function() {
 		return (
-			<Grid>
+			<Container>
 				<Row>
 					<Col xs={12}>
 						<div>&nbsp;</div>
@@ -40,7 +40,7 @@ const ConfigScreen = React.createClass({
 						</form>
 					</Col>
 				</Row>
-			</Grid>
+			</Container>
 		);
 	},
 	

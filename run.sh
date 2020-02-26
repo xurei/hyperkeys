@@ -1,3 +1,5 @@
 #!/usr/bin/env bash
 
-electron /home/olivier/hyperkeys/app/bin
+DIR=$(dirname $0)
+
+electron $DIR/build
