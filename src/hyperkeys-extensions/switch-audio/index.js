@@ -5,9 +5,9 @@ module.exports = {
     metadata: {
         name: 'SWITCH_AUDIO',
         title: 'Switch audio output',
-        description: "Switch between your audio outputs",
+        description: 'Switch between your audio outputs',
         actions: {
-            SWITCH_AUDIO: {title: "Switch audio"}
+            SWITCH_AUDIO: {title: 'Switch audio'}
         },
     }
 };

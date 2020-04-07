@@ -1,4 +1,4 @@
-const ipc = require("electron").ipcMain;
+const ipc = require('electron').ipcMain;
 const {globalShortcut} = require('electron');
 const keybindsService = require('./services/keybinds-service');
 const uuid = require('uuid').v4;
@@ -31,7 +31,7 @@ function updateShortcuts(macros) {
 
 function normalizeMacro(macro, metadata) {
     function callMeta(meta, config) {
-        if (typeof meta === "function") {
+        if (typeof meta === 'function') {
             return meta(config);
         }
         else {
@@ -48,7 +48,7 @@ function normalizeMacro(macro, metadata) {
 
 function normalizeMetadata(metadata) {
     function callMeta(meta) {
-        if (typeof meta === "function") {
+        if (typeof meta === 'function') {
             return meta(null);
         }
         else {

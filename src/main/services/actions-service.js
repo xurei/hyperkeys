@@ -15,7 +15,7 @@ const ActionService = {
             return factory(action);
         }
         else {
-            throw "No factory found for action " + action.name;
+            throw 'No factory found for action ' + action.name;
         }
     }
 };

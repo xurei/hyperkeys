@@ -32,15 +32,15 @@ class MacrosListItem extends React.Component {
         
         return (
             <ListGroupItem>
-                <div onClick={this.handleToggleDetails} style={{cursor:"pointer"}}>
-                    <span style={{lineHeight:"45px", display: 'inline-block', width:200}}>{hasConfig ? (this.state.detailsVisible ? "−":"+") : ' '} {macro.title}</span>
+                <div onClick={this.handleToggleDetails} style={{cursor:'pointer'}}>
+                    <span style={{lineHeight:'45px', display: 'inline-block', width:200}}>{hasConfig ? (this.state.detailsVisible ? '−':'+') : ' '} {macro.title}</span>
                     <ShortcutsList id_macro={macro.id} shortcuts={macro.shortcuts} metadatas={metadata.actions}/>
                     <span className="pull-right">
                         <span className="btn btn-danger" onClick={(e) => { e.stopPropagation(); if (confirm('Remove macro ?')) me.props.onRemoveMacro(macro.id); }}>&times;</span>
                     </span>
                 </div>
                 {hasConfig && this.state.detailsVisible && (
-                    <div style={{marginTop: "10px"}}>
+                    <div style={{marginTop: '10px'}}>
                         {(metadata.configScreen && metadata.configScreen.enabled) && (
                             <div>
                                 {ConfigScreen && <ConfigScreen config={macro.config} onSubmit={this.handleConfigChange}/>}
@@ -94,7 +94,7 @@ class MacrosList extends React.Component {
         
         const shortcuts = macros.map((macro) => {
             return (
-                <MacrosListItem key={"macro_"+macro.id} macro={macro} metadata={this.props.metadatas[macro.name]}
+                <MacrosListItem key={'macro_'+macro.id} macro={macro} metadata={this.props.metadatas[macro.name]}
                                 onRemoveMacro={this.props.onRemoveMacro} onMacroConfig={this.props.onMacroConfig}/>
             );
         });

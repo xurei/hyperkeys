@@ -5,7 +5,7 @@ const platform = require('hyperkeys-api').platform;
 const NotificationService = require('hyperkeys-api').NotificationService;
 
 module.exports = {
-    name: "SET_SWITCH_WINDOW",
+    name: 'SET_SWITCH_WINDOW',
     factory: function (action) {
         return {
             execute: () => {
@@ -21,7 +21,7 @@ module.exports = {
 				
                 exec(command, function callback(error, stdout) {
                     if (error == null) {
-                        debug("Action mapped to " + stdout.trim());
+                        debug('Action mapped to ' + stdout.trim());
                         store[action.id_macro] = stdout.trim();
 						
                         NotificationService.notify({
@@ -30,7 +30,7 @@ module.exports = {
                         });
                     }
                     else {
-                        debug("Error occured");
+                        debug('Error occured');
                         debug(error);
 						
                         NotificationService.notify({

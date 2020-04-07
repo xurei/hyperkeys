@@ -50,7 +50,7 @@ class ShortcutsListItem extends React.Component {
         return (
             <span style={{padding: '0 15px'}}>
                 {this.props.metadata.title}
-                {" "}
+                {' '}
                 <span onClick={this.handleOpenPopup}>
                     {!shortcut || shortcut === '' ? (
                         <span className="btn btn-default" style={{padding: '5px'}}>
@@ -107,7 +107,7 @@ class ShortcutsList extends React.Component {
         const shortcuts = Object.keys(this.props.shortcuts).map((key) => {
             const shortcut = this.props.shortcuts[key];
             return (
-                <ShortcutsListItem id_macro={this.props.id_macro} key={"shortcut_"+key} action_name={key} metadata={this.props.metadatas[key]} shortcut={shortcut} />
+                <ShortcutsListItem id_macro={this.props.id_macro} key={'shortcut_'+key} action_name={key} metadata={this.props.metadatas[key]} shortcut={shortcut} />
             );
         });
 		

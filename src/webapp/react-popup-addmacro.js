@@ -57,7 +57,7 @@ class PopupAddMacro extends React.Component {
             );
         });
 		
-        const curMacroDescription = (this.state.chosenMacro ? this.state.chosenMacro.description : "plop");
+        const curMacroDescription = (this.state.chosenMacro ? this.state.chosenMacro.description : 'plop');
 		
         return (
             <Popup maxHeight="220px" title="Add Macro" {...this.props}>
@@ -70,8 +70,8 @@ class PopupAddMacro extends React.Component {
                         <FormText color="muted">{curMacroDescription}</FormText>
                     </FormGroup>
 					
-                    <div style={{lineHeight: "40px"}} className="pull-right">
-                        <a href="javascript:void(0)" onClick={this.props.onClose} style={{marginRight: "10px"}}>Cancel</a>
+                    <div style={{lineHeight: '40px'}} className="pull-right">
+                        <a href="javascript:void(0)" onClick={this.props.onClose} style={{marginRight: '10px'}}>Cancel</a>
                         <Button color="success" onClick={this.handleSubmit}>Add Macro</Button>
                     </div>
                 </form>

@@ -4,7 +4,7 @@ const debug = require('debug')('hyperkeys-action-show-switch-window');
 const platform = require('hyperkeys-api').platform;
 
 module.exports = {
-    name: "SHOW_WINDOW_PIN_BY_NAME",
+    name: 'SHOW_WINDOW_PIN_BY_NAME',
     factory: function (action) {
         return {
             execute: () => {
@@ -19,7 +19,7 @@ module.exports = {
                 debug(command);
 				
                 if (store[action.id_macro] != null) {
-                    debug("Switching to", store[action.id_macro]);
+                    debug('Switching to', store[action.id_macro]);
                     exec(command, function callback(error, stdout, stderr){
                         if (error == null) {
                             /* nothing */
@@ -31,7 +31,7 @@ module.exports = {
                 }
                 else {
                     //TODO alert ? "No window mapped to this action"
-                    debug("No window mapped to this action");
+                    debug('No window mapped to this action');
                 }
             }
         };

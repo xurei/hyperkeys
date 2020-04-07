@@ -15,9 +15,9 @@ function addModule(path) {
     document.body.appendChild(script);
 }
 
-window.addEventListener("DOMContentLoaded", function() {
+window.addEventListener('DOMContentLoaded', function() {
     ipc.on('metadatas', (event, metadatas) => {
-        console.log("Got metadatas", metadatas);
+        console.log('Got metadatas', metadatas);
 		
         Object.keys(metadatas).forEach((key) => {
             const metadata = metadatas[key];
@@ -30,7 +30,7 @@ window.addEventListener("DOMContentLoaded", function() {
         ipc.send('request_macros');
     });
     ipc.on('macros', (event, arg) => {
-        console.log("Got macros", arg);
+        console.log('Got macros', arg);
         store.dispatch(setMacros(arg));
 		
         //Rendering the UI
@@ -44,7 +44,7 @@ window.addEventListener("DOMContentLoaded", function() {
 			
             //TODO fadeout of the loading view
             var loadingView = document.getElementById('loading-view');
-            loadingView.style.display = "none";
+            loadingView.style.display = 'none';
         }, 200);
     });
     ipc.send('request_metadatas');

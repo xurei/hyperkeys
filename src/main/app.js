@@ -10,15 +10,15 @@ const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-d
 const ipcService = require('./ipc');
 //----------------------------------------------------------------------------------------------------------------------
 
-debug("platform:", platform.name);
-debug("arch:", platform.arch);
+debug('platform:', platform.name);
+debug('arch:', platform.arch);
 const APPPATH = __dirname;
-debug("APPPATH:", APPPATH);
+debug('APPPATH:', APPPATH);
 //----------------------------------------------------------------------------------------------------------------------
 
-let DIRSEP = "/";
+let DIRSEP = '/';
 if (platform.isWin)
-    DIRSEP = "\\";
+    DIRSEP = '\\';
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the javascript object is GCed.

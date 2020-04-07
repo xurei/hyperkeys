@@ -73,12 +73,12 @@ function getSinkInputs() {
 }
 
 module.exports = {
-    name: "SWITCH_AUDIO",
+    name: 'SWITCH_AUDIO',
     factory: function (action) {
         return {
             execute: () => {
                 const command = action.config.command;
-                debug("Switching audio", command);
+                debug('Switching audio', command);
                 Promise.all([getAudioSinks(), getSinkInputs()])
                 .then(([sinks, inputs]) => {
                     debug('Sinks:');

@@ -1,12 +1,12 @@
 const {app} = require('electron');
 const myapp = require('./app');
 
-console.log("getPath", app.getPath('exe'));
-console.log("getDataPath", app.getPath('userData'));
+console.log('getPath', app.getPath('exe'));
+console.log('getDataPath', app.getPath('userData'));
 
 //PLATFORM DETECTION
 process.on('uncaughtException', function (err) {
-    console.log("EXCEPTION OCCURRED");
+    console.log('EXCEPTION OCCURRED');
     console.log(err);
     app.exit();
 });
