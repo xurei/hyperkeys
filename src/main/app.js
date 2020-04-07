@@ -3,9 +3,6 @@ const debug = require('debug')('hyperkeys-app');
 
 const HKAPI = require('hyperkeys-api');
 const platform = HKAPI.platform;
-const uuid = require('uuid').v4;
-const notifier = require('node-notifier');
-const path = require('path');
 
 const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer');
 
@@ -14,6 +11,7 @@ const ipcService = require('./ipc');
 //----------------------------------------------------------------------------------------------------------------------
 
 debug("platform:", platform.name);
+debug("arch:", platform.arch);
 const APPPATH = __dirname;
 debug("APPPATH:", APPPATH);
 //----------------------------------------------------------------------------------------------------------------------

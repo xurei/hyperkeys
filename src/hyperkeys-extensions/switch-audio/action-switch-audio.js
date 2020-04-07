@@ -1,7 +1,7 @@
 const spawn = require('child_process').spawn;
 const exec = require('child_process').exec;
 const debug = require('debug')('hyperkeys-action-switch-audio');
-const notifier = require('node-notifier');
+const NotificationService = require('hyperkeys-api').NotificationService;
 
 function getAudioSinks() {
 	return new Promise((resolve, reject) => {
@@ -12,7 +12,6 @@ function getAudioSinks() {
 			let curSink = {};
 			output.forEach(line => {
 				line = line.trim();
-				//console.log(line);
 				if (line.startsWith('index:')) {
 					sinks.push(curSink);
 					curSink = {
@@ -89,19 +88,20 @@ module.exports = {
 					const newActiveSink = sinks[(activeIndex+1) % sinks.length];
 					
 					exec(`pacmd set-default-sink ${newActiveSink.index}`, {}, (err,stderr,stdout) => {
-						console.log(stderr);
-						console.log(stdout);
+						debug(stderr);
+						debug(stdout);
 					});
 					inputs.forEach((sinkInput) => {
 						exec(`pacmd move-sink-input ${sinkInput.index} ${newActiveSink.index}`, {}, (err,stderr,stdout) => {
-							console.log(stderr);
-							console.log(stdout);
+							debug(stderr);
+							debug(stdout);
 						});
 					});
 					
-					notifier.notify({
-						'title': 'Audio switch',
-						'message': `Switched to ${newActiveSink.name}`
+					NotificationService.notify({
+						title: 'Audio switch',
+						message: `Switched to ${newActiveSink.name}`,
+						timeout: 3,
 					});
 				});
 			}

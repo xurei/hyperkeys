@@ -14,6 +14,9 @@ function compile_module {
 # Build main
 node_modules/.bin/babel --config-file $BASEPATH/../.babelrc.main src/main -d build --copy-files
 
+# Build package.json
+node $BASEPATH/build_package_json.js
+
 # Build hyperkeys modules
 #TODO iterate over folders and build instead of hard-coded
 compile_module run-command

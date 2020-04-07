@@ -23,8 +23,8 @@
     "debug": "^2.6.9",
     "electron-json-storage": "^2.1.0",
     "gkm": "^0.2.0",
-    "hyperkeys-api": "^1.0.1",
-    "node-notifier": "^4.6.1",
+    "hyperkeys-api": "^1.1.0",
+    "node-notifier": "^6.0.0",
     "uuid": "^7.0.1",
     "xurei-util": "^1.4.1"
   },
