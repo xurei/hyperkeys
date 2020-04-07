@@ -14,68 +14,68 @@ import { setMacros, setMetadatas } from './actions';
 const ipc = window.ipc;
 
 class MacrosView extends React.Component {
-	static propTypes = {};
-	
-	constructor(props) {
-		super(props);
-		this.state = {
-			showPopupAddMacro: false
-		};
-	}
-	
-	componentDidMount() {
-		ipc.send('request_metadatas');
-		ipc.send('request_macros');
-	}
+    static propTypes = {};
+    
+    constructor(props) {
+        super(props);
+        this.state = {
+            showPopupAddMacro: false
+        };
+    }
+    
+    componentDidMount() {
+        ipc.send('request_metadatas');
+        ipc.send('request_macros');
+    }
 
-	render() {
-		const props = this.props;
+    render() {
+        const props = this.props;
 		
-		return (
-			<div>
-				<div className="pull-right">
-					<Button color="success" onClick={this.handleAddMacroClick}>Add Macro</Button>
-				</div>
-				<h2>Configured Macros</h2>
-				<MacrosList macros={props.macros} metadatas={props.metadatas} onRemoveMacro={this.handleRemoveMacro} onMacroConfig={this.handleShowMacroConfig} />
+        return (
+            <div>
+                <div className="pull-right">
+                    <Button color="success" onClick={this.handleAddMacroClick}>Add Macro</Button>
+                </div>
+                <h2>Configured Macros</h2>
+                <MacrosList macros={props.macros} metadatas={props.metadatas} onRemoveMacro={this.handleRemoveMacro} onMacroConfig={this.handleShowMacroConfig} />
 				
-				{this.state.showPopupAddMacro && (
-					<PopupAddMacro onClose={this.handleCloseAddMacroPopup} onSubmit={this.handleSubmitAddMacroPopup} metadatas={props.metadatas}/>
-				)}
-			</div>
-		);
-	}
-	
-	handleRemoveMacro(macro_id) {
-		ipc.send('remove_macro', macro_id);
-	}
-	
-	@autobind
-	handleCloseAddMacroPopup(e) {
-		this.setState({showPopupAddMacro: false});
-	}
-	
-	@autobind
-	handleSubmitAddMacroPopup(data) {
-		console.log(data);
-		ipc.send('add_macro', data);
-	}
-	
-	@autobind
-	handleAddMacroClick(e) {
-		this.setState({showPopupAddMacro: true});
-	}
-	
-	shouldComponentUpdate(nextProps, nextState) {
-	    return !deepEqual(this.props, nextProps) || !deepEqual(this.state, nextState);
-	}
+                {this.state.showPopupAddMacro && (
+                    <PopupAddMacro onClose={this.handleCloseAddMacroPopup} onSubmit={this.handleSubmitAddMacroPopup} metadatas={props.metadatas}/>
+                )}
+            </div>
+        );
+    }
+    
+    handleRemoveMacro(macro_id) {
+        ipc.send('remove_macro', macro_id);
+    }
+    
+    @autobind
+    handleCloseAddMacroPopup(e) {
+        this.setState({showPopupAddMacro: false});
+    }
+    
+    @autobind
+    handleSubmitAddMacroPopup(data) {
+        console.log(data);
+        ipc.send('add_macro', data);
+    }
+    
+    @autobind
+    handleAddMacroClick(e) {
+        this.setState({showPopupAddMacro: true});
+    }
+    
+    shouldComponentUpdate(nextProps, nextState) {
+        return !deepEqual(this.props, nextProps) || !deepEqual(this.state, nextState);
+    }
 }
 
 MacrosView = redux_connect(
-	(state) => ({
-		macros: state.macros,
-		metadatas: state.metadatas
-	}),
+    (state) => ({
+        macros: state.macros,
+        metadatas: state.metadatas
+    }),
 )(MacrosView);
 
 export default MacrosView;

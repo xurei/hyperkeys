@@ -9,15 +9,15 @@ import MacrosView from './react-view-macros';
 import { Container, Row, Col } from 'reactstrap';
 
 class MainView extends React.Component {
-	render() {
-		const props = this.props;
-		return (
-			<div className={props.className}>
-				<div className="header"/>
-				<MacrosView/>
-			</div>
-		);
-	}
+    render() {
+        const props = this.props;
+        return (
+            <div className={props.className}>
+                <div className="header"/>
+                <MacrosView/>
+            </div>
+        );
+    }
 }
 //language=SCSS
 MainView = Styled(MainView)`

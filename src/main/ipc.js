@@ -10,157 +10,157 @@ const debug = require('debug')('hyperkeys-ipc');
 const ConfigWindow = require('./config-window');
 
 function registerShortcuts(macros) {
-	debug(macros);
-	for (let macro of macros) {
-		for (let action of Object.keys(macro.shortcuts)) {
-			let shortcut = macro.shortcuts[action];
-			if (shortcut != null) {
-				keybindsService.registerKey({key: shortcut, action: {id_macro: macro.id, name: action, config: macro.config}});
-			}
-		}
-	}
+    debug(macros);
+    for (const macro of macros) {
+        for (const action of Object.keys(macro.shortcuts)) {
+            const shortcut = macro.shortcuts[action];
+            if (shortcut != null) {
+                keybindsService.registerKey({key: shortcut, action: {id_macro: macro.id, name: action, config: macro.config}});
+            }
+        }
+    }
 }
 //----------------------------------------------------------------------------------------------------------------------
 
 function updateShortcuts(macros) {
-	//TODO diff previous and next macros and only update that
-	globalShortcut.unregisterAll();
-	registerShortcuts(macros);
+    //TODO diff previous and next macros and only update that
+    globalShortcut.unregisterAll();
+    registerShortcuts(macros);
 }
 //----------------------------------------------------------------------------------------------------------------------
 
 function normalizeMacro(macro, metadata) {
-	function callMeta(meta, config) {
-		if (typeof meta === "function") {
-			return meta(config);
-		}
-		else {
-			return meta;
-		}
-	}
-	
-	let out = JSON.parse(JSON.stringify(macro));
-	out.title = callMeta(metadata.title, macro.config);
-	
-	return out;
+    function callMeta(meta, config) {
+        if (typeof meta === "function") {
+            return meta(config);
+        }
+        else {
+            return meta;
+        }
+    }
+    
+    const out = JSON.parse(JSON.stringify(macro));
+    out.title = callMeta(metadata.title, macro.config);
+    
+    return out;
 }
 //----------------------------------------------------------------------------------------------------------------------
 
 function normalizeMetadata(metadata) {
-	function callMeta(meta) {
-		if (typeof meta === "function") {
-			return meta(null);
-		}
-		else {
-			return meta;
-		}
-	}
-	
-	let out = JSON.parse(JSON.stringify(metadata));
-	out.title = callMeta(metadata.title);
-	
-	return out;
+    function callMeta(meta) {
+        if (typeof meta === "function") {
+            return meta(null);
+        }
+        else {
+            return meta;
+        }
+    }
+    
+    const out = JSON.parse(JSON.stringify(metadata));
+    out.title = callMeta(metadata.title);
+    
+    return out;
 }
 //----------------------------------------------------------------------------------------------------------------------
 
 module.exports = {
-	start: function (app) {
-		const extensions = extensionsProvider.loadExtensions();
-		const extensionsMetadata = {};
-		//Extract metadata
-		for (let iextension in extensions) {
-			if (extensions.hasOwnProperty(iextension)) {
-				let extension = extensions[iextension];
-				for (let action of extension.actions) {
-					actionsService.registerActionFactory(action.name, action.factory);
-				}
-				extensionsMetadata[extension.metadata.name] = extension.metadata;
-				extensionsMetadata[extension.metadata.name].directory = path.join(__dirname, 'hyperkeys-extensions', iextension);
-			}
-		}
+    start: function (app) {
+        const extensions = extensionsProvider.loadExtensions();
+        const extensionsMetadata = {};
+        //Extract metadata
+        for (const iextension in extensions) {
+            if (extensions.hasOwnProperty(iextension)) {
+                const extension = extensions[iextension];
+                for (const action of extension.actions) {
+                    actionsService.registerActionFactory(action.name, action.factory);
+                }
+                extensionsMetadata[extension.metadata.name] = extension.metadata;
+                extensionsMetadata[extension.metadata.name].directory = path.join(__dirname, 'hyperkeys-extensions', iextension);
+            }
+        }
 		
-		macrosProvider.loadMacros()
-		.then(_macros => {
-			const mainWindow = require('./main-window');
-			let macros = _macros;
-			registerShortcuts(macros);
+        macrosProvider.loadMacros()
+        .then(_macros => {
+            const mainWindow = require('./main-window');
+            let macros = _macros;
+            registerShortcuts(macros);
 			
-			function sendMacros() {
-				mainWindow.webContents.send('macros', macros.map((macro) => {
-					let metadata = extensionsMetadata[macro.name];
-					return normalizeMacro(macro, metadata);
-				}));
-			}
-			function sendMetadatas() {
-				let meta = {};
-				for (let key in extensionsMetadata) {
-					meta[key] = normalizeMetadata(extensionsMetadata[key]);
-				}
-				debug(meta);
-				mainWindow.webContents.send('metadatas', meta);
-			}
+            function sendMacros() {
+                mainWindow.webContents.send('macros', macros.map((macro) => {
+                    const metadata = extensionsMetadata[macro.name];
+                    return normalizeMacro(macro, metadata);
+                }));
+            }
+            function sendMetadatas() {
+                const meta = {};
+                for (const key in extensionsMetadata) {
+                    meta[key] = normalizeMetadata(extensionsMetadata[key]);
+                }
+                debug(meta);
+                mainWindow.webContents.send('metadatas', meta);
+            }
 			
-			ipc.on('request_macros', function (/*event, arg*/) {
-				sendMacros();
-			});
+            ipc.on('request_macros', function (/*event, arg*/) {
+                sendMacros();
+            });
 			
-			ipc.on('request_metadatas', function (/*event, arg*/) {
-				sendMetadatas();
-			});
+            ipc.on('request_metadatas', function (/*event, arg*/) {
+                sendMetadatas();
+            });
 			
-			ipc.on('add_macro', function (event, arg) {
-				let macro = Object.assign({}, arg);
-				macro.id = uuid();
-				macros.push(macro);
-				macrosProvider.saveMacros(macros);
-				sendMacros();
-			});
+            ipc.on('add_macro', function (event, arg) {
+                const macro = Object.assign({}, arg);
+                macro.id = uuid();
+                macros.push(macro);
+                macrosProvider.saveMacros(macros);
+                sendMacros();
+            });
 			
-			ipc.on('remove_macro', function (event, id_macro) {
-				macros = macros.filter((macro) => macro.id !== id_macro);
+            ipc.on('remove_macro', function (event, id_macro) {
+                macros = macros.filter((macro) => macro.id !== id_macro);
 				
-				updateShortcuts(macros);
-				macrosProvider.saveMacros(macros);
-				sendMacros();
-			});
+                updateShortcuts(macros);
+                macrosProvider.saveMacros(macros);
+                sendMacros();
+            });
 			
-			ipc.on('set_config', function (event, newConfig) {
-				debug('newConfig', newConfig);
+            ipc.on('set_config', function (event, newConfig) {
+                debug('newConfig', newConfig);
 				
-				macros.forEach((macro, index) => {
-					if (macro.id === newConfig.id) {
-						debug('found matching macro');
-						macros[index].config = newConfig.config;
-					}
-				});
+                macros.forEach((macro, index) => {
+                    if (macro.id === newConfig.id) {
+                        debug('found matching macro');
+                        macros[index].config = newConfig.config;
+                    }
+                });
 				
-				updateShortcuts(macros);
-				macrosProvider.saveMacros(macros);
-				sendMacros();
-			});
+                updateShortcuts(macros);
+                macrosProvider.saveMacros(macros);
+                sendMacros();
+            });
 			
-			ipc.on('set_shortcut', function (event, data) {
-				let macro = macros.filter((macro) => macro.id === data.id_macro)[0];
-				macro.shortcuts[data.action] = data.shortcut;
+            ipc.on('set_shortcut', function (event, data) {
+                const macro = macros.filter((macro) => macro.id === data.id_macro)[0];
+                macro.shortcuts[data.action] = data.shortcut;
 				
-				updateShortcuts(macros);
-				macrosProvider.saveMacros(macros);
-				sendMacros();
-			});
+                updateShortcuts(macros);
+                macrosProvider.saveMacros(macros);
+                sendMacros();
+            });
 			
-			ipc.on('close', function (/*event, arg*/) {
-				mainWindow.hide();
-				window_open = false;
-			});
+            ipc.on('close', function (/*event, arg*/) {
+                mainWindow.hide();
+                window_open = false;
+            });
 			
-			ipc.on('devtools', function (/*event, arg*/) {
-				mainWindow.toggleDevTools();
-			});
-		})
-		.catch(e => {
-			console.error(e);
-			app.quit();
-			app.exit(1);
-		});
-	}
+            ipc.on('devtools', function (/*event, arg*/) {
+                mainWindow.toggleDevTools();
+            });
+        })
+        .catch(e => {
+            console.error(e);
+            app.quit();
+            app.exit(1);
+        });
+    }
 };
