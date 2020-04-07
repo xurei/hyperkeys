@@ -9,6 +9,16 @@ node $BASEPATH/build_package_json.js
 # Copy native files
 cp -R $BASEPATH/../natives $BASEPATH/../build
 
+# Building non-js dependencies
+# GKM Java
+echo "--- Build GKM"
+cd $BASEPATH/../src/vendor/gkm-java
+ant package
+cp $BASEPATH/../src/vendor/gkm-java/dist/gkm.jar $BASEPATH/../build/vendor
+cd -
+echo "--- Build GKM done"
+echo ""
+
 # Add non-dev js dependencies
 cd $BASEPATH/../build
 npm install

