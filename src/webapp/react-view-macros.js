@@ -37,7 +37,9 @@ class MacrosView extends React.Component {
 					<Button color="success" onClick={this.handleAddMacroClick}>Add Macro</Button>
 				</div>
 				<h2>Configured Macros</h2>
-				<MacrosList macros={props.macros} metadatas={props.metadatas} onRemoveMacro={this.handleRemoveMacro} onMacroConfig={this.handleShowMacroConfig} />
+				{!this.state.showPopupAddMacro && (
+					<MacrosList macros={props.macros} metadatas={props.metadatas} onRemoveMacro={this.handleRemoveMacro} onMacroConfig={this.handleShowMacroConfig} />
+				)}
 				
 				{this.state.showPopupAddMacro && (
 					<PopupAddMacro onClose={this.handleCloseAddMacroPopup} onSubmit={this.handleSubmitAddMacroPopup} metadatas={props.metadatas}/>
@@ -66,8 +68,8 @@ class MacrosView extends React.Component {
 		this.setState({showPopupAddMacro: true});
 	}
 	
-	shouldComponentUpdate(nextProps) {
-		return !deepEqual(this.props, nextProps);
+	shouldComponentUpdate(nextProps, nextState) {
+	    return !deepEqual(this.props, nextProps) || !deepEqual(this.state, nextState);
 	}
 }
 

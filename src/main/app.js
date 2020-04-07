@@ -1,13 +1,16 @@
 const {app, globalShortcut, Menu, Tray} = require('electron');
 const debug = require('debug')('hyperkeys-app');
-const ipcService = require('./ipc');
-//----------------------------------------------------------------------------------------------------------------------
 
 const HKAPI = require('hyperkeys-api');
 const platform = HKAPI.platform;
 const uuid = require('uuid').v4;
 const notifier = require('node-notifier');
 const path = require('path');
+
+const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer');
+
+//const KeyloggerService = require('./services/keylogger-service');
+const ipcService = require('./ipc');
 //----------------------------------------------------------------------------------------------------------------------
 
 debug("platform:", platform.name);
@@ -31,6 +34,11 @@ let App = {
 	ready: () => {
 		mainWindow = require('./main-window');
 		
+		
+		installExtension(REACT_DEVELOPER_TOOLS)
+		.then((name) => console.log(`Added Extension:  ${name}`))
+		.catch((err) => console.log('An error occurred: ', err));
+		
 		ipcService.start(app);
 		
 		function toggleWindow() {
@@ -51,7 +59,7 @@ let App = {
 		}
 		
 		//TODO remove this toggleWindow()
-		toggleWindow();
+		//toggleWindow();
 	},
 	
 	exit: () => {

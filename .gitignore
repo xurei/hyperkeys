@@ -1,6 +1,6 @@
 *.iml
+dist
 distr.old
-distr
 bin
 build
 node_modules

@@ -2,4 +2,4 @@
 
 DIR=$(dirname $0)
 
-electron $DIR/build
+$DIR/node_modules/.bin/electron $DIR/build

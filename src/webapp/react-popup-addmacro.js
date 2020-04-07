@@ -64,9 +64,9 @@ class PopupAddMacro extends React.Component {
 				<form>
 					<FormGroup>
 						<Label>Choose Macro type :</Label>
-						<Input componentClass="select" placeholder="select" onChange={this.handleChange}>
+						<select className="form-control" placeholder="Select" onChange={this.handleChange}>
 							{metadatas}
-						</Input>
+						</select>
 						<FormText color="muted">{curMacroDescription}</FormText>
 					</FormGroup>
 					

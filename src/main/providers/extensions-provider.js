@@ -31,8 +31,8 @@ const loadExtensions = function(basePath) {
 
 let provider = {
 	loadExtensions: function() {
-		let userExtensions = loadExtensions(path.join(app.getPath('userData'), 'extensions'));
-		let bundledExtensions = loadExtensions(path.join(app.getAppPath(), 'extensions'));
+		let userExtensions = loadExtensions(path.join(app.getPath('userData'), 'hyperkeys-extensions'));
+		let bundledExtensions = loadExtensions(path.join(app.getAppPath(), 'hyperkeys-extensions'));
 		
 		return Object.assign(bundledExtensions, userExtensions);
 	},
