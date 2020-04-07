@@ -5,7 +5,7 @@ console.log('getPath', app.getPath('exe'));
 console.log('getDataPath', app.getPath('userData'));
 
 //PLATFORM DETECTION
-process.on('uncaughtException', function (err) {
+process.on('uncaughtException', function(err) {
     console.log('EXCEPTION OCCURRED');
     console.log(err);
     app.exit();
@@ -14,9 +14,9 @@ process.on('uncaughtException', function (err) {
 app.commandLine.appendSwitch('disable-http-cache', '');
 
 // Quit when all windows are closed.
-app.on('window-all-closed', function () {
+app.on('window-all-closed', function() {
     if (process.platform !== 'darwin')
-        {app.quit();}
+    {app.quit();}
 });
 
 // This method will be called when Electron has done everything

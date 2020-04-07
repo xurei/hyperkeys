@@ -18,13 +18,12 @@ debug('APPPATH:', APPPATH);
 
 let DIRSEP = '/';
 if (platform.isWin)
-    {DIRSEP = '\\';}
+{DIRSEP = '\\';}
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the javascript object is GCed.
 let mainWindow = null;
 
-const window_open = false;
 let appIcon = null;
 //----------------------------------------------------------------------------------------------------------------------
 
@@ -44,11 +43,11 @@ const App = {
         }
 		
         if (platform.isWin || platform.isLinux) {
-            console.log(APPPATH + DIRSEP + 'icon.png');
-            appIcon = new Tray(APPPATH + DIRSEP + 'icon.png');
+            console.log(`${APPPATH + DIRSEP  }icon.png`);
+            appIcon = new Tray(`${APPPATH + DIRSEP  }icon.png`);
             const contextMenu = Menu.buildFromTemplate([
                 {label: 'Show', click: toggleWindow},
-                {label: 'Exit', click: App.exit}
+                {label: 'Exit', click: App.exit},
             ]);
             appIcon.setContextMenu(contextMenu);
             appIcon.setToolTip('Hyperkeys');
@@ -76,7 +75,7 @@ const App = {
 		
         app.quit();
         app.exit(0);
-    }
+    },
 };
 
 module.exports = App;

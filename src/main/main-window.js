@@ -8,16 +8,16 @@ const mainWindow = new BrowserWindow({
     show: false,
     icon: path.join(__dirname, 'icon.png'),
     webPreferences: {
-        nodeIntegration: true
+        nodeIntegration: true,
     },
 });
 mainWindow.setMenu(null);
 mainWindow.setTitle('Hyperkeys');
 // and load the index.html of the app
-mainWindow.loadURL('file://' + __dirname + '/index.html');
+mainWindow.loadURL(`file://${  __dirname  }/index.html`);
 
 // Emitted when the window is closed.
-mainWindow.on('close', function (e) {
+mainWindow.on('close', function(e) {
     if (mainWindow !== null) {
         e.preventDefault();
         mainWindow.hide();

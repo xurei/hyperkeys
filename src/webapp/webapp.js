@@ -9,13 +9,16 @@ import './assets/bootstrap.min.css';
 import './assets/style.scss';
 import { setMacros, setMetadatas } from './actions';
 
+const document = global.document;
+const ipc = global.ipc;
+
 function addModule(path) {
     var script = document.createElement('SCRIPT');
     script.src = path;
     document.body.appendChild(script);
 }
 
-window.addEventListener('DOMContentLoaded', function() {
+global.addEventListener('DOMContentLoaded', function() {
     ipc.on('metadatas', (event, metadatas) => {
         console.log('Got metadatas', metadatas);
 		
@@ -39,7 +42,7 @@ window.addEventListener('DOMContentLoaded', function() {
                 <Provider store={store}>
                     <MainView/>
                 </Provider>,
-                document.getElementById('content')
+                document.getElementById('content'),
             );
 			
             //TODO fadeout of the loading view

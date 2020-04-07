@@ -21,7 +21,7 @@ class ShortcutRenderer extends React.Component {
                     <span key={i}>
                         {' '}
                         <span className="btn btn-default" style={{padding: 3}}>{k.toUpperCase()}</span>
-                    </span>)
+                    </span>);
             })
         );
 		

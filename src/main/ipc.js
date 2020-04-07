@@ -64,12 +64,12 @@ function normalizeMetadata(metadata) {
 //----------------------------------------------------------------------------------------------------------------------
 
 module.exports = {
-    start: function (app) {
+    start: function(app) {
         const extensions = extensionsProvider.loadExtensions();
         const extensionsMetadata = {};
         //Extract metadata
         for (const iextension in extensions) {
-            if (extensions.hasOwnProperty(iextension)) {
+            if (Object.prototype.hasOwnProperty.call(extensions, iextension)) {
                 const extension = extensions[iextension];
                 for (const action of extension.actions) {
                     actionsService.registerActionFactory(action.name, action.factory);
@@ -100,15 +100,15 @@ module.exports = {
                 mainWindow.webContents.send('metadatas', meta);
             }
 			
-            ipc.on('request_macros', function (/*event, arg*/) {
+            ipc.on('request_macros', function(/*event, arg*/) {
                 sendMacros();
             });
 			
-            ipc.on('request_metadatas', function (/*event, arg*/) {
+            ipc.on('request_metadatas', function(/*event, arg*/) {
                 sendMetadatas();
             });
 			
-            ipc.on('add_macro', function (event, arg) {
+            ipc.on('add_macro', function(event, arg) {
                 const macro = Object.assign({}, arg);
                 macro.id = uuid();
                 macros.push(macro);
@@ -116,7 +116,7 @@ module.exports = {
                 sendMacros();
             });
 			
-            ipc.on('remove_macro', function (event, id_macro) {
+            ipc.on('remove_macro', function(event, id_macro) {
                 macros = macros.filter((macro) => macro.id !== id_macro);
 				
                 updateShortcuts(macros);
@@ -124,7 +124,7 @@ module.exports = {
                 sendMacros();
             });
 			
-            ipc.on('set_config', function (event, newConfig) {
+            ipc.on('set_config', function(event, newConfig) {
                 debug('newConfig', newConfig);
 				
                 macros.forEach((macro, index) => {
@@ -139,7 +139,7 @@ module.exports = {
                 sendMacros();
             });
 			
-            ipc.on('set_shortcut', function (event, data) {
+            ipc.on('set_shortcut', function(event, data) {
                 const macro = macros.filter((macro) => macro.id === data.id_macro)[0];
                 macro.shortcuts[data.action] = data.shortcut;
 				
@@ -148,19 +148,20 @@ module.exports = {
                 sendMacros();
             });
 			
-            ipc.on('close', function (/*event, arg*/) {
+            ipc.on('close', function(/*event, arg*/) {
                 mainWindow.hide();
-                window_open = false;
             });
 			
-            ipc.on('devtools', function (/*event, arg*/) {
+            ipc.on('devtools', function(/*event, arg*/) {
                 mainWindow.toggleDevTools();
             });
+            
+            return;
         })
         .catch(e => {
             console.error(e);
             app.quit();
             app.exit(1);
         });
-    }
+    },
 };

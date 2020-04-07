@@ -32,7 +32,7 @@ const provider = {
             });
         })
         .catch(e => console.error(e));
-    }
+    },
 };
 
 module.exports = provider;

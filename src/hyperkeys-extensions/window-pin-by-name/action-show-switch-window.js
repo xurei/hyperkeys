@@ -5,15 +5,15 @@ const platform = require('hyperkeys-api').platform;
 
 module.exports = {
     name: 'SHOW_WINDOW_PIN_BY_NAME',
-    factory: function (action) {
+    factory: function(action) {
         return {
             execute: () => {
                 let command = '';
                 if (platform.isLinux) {
-                    command = 'wmctrl -ia ' + store[action.id_macro];
+                    command = `wmctrl -ia ${  store[action.id_macro]}`;
                 }
                 else if (platform.isWin) {
-                    command = '"' + __dirname + '\\win32\\nircmd\\nircmd.exe" win activate title "' + store[action.id_macro] + '"';
+                    command = `"${  __dirname  }\\win32\\nircmd\\nircmd.exe" win activate title "${  store[action.id_macro]  }"`;
                 }
 				
                 debug(command);
@@ -33,7 +33,7 @@ module.exports = {
                     //TODO alert ? "No window mapped to this action"
                     debug('No window mapped to this action');
                 }
-            }
+            },
         };
-    }
+    },
 };

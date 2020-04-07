@@ -25,18 +25,16 @@ class MacrosListItem extends React.Component {
         const macro = this.props.macro;
         const metadata = this.props.metadata;
         
-        const me = this;
-        
         const ConfigScreen = global.hyperkeys_modules[metadata.name];
         const hasConfig = metadata.configScreen && metadata.configScreen.enabled;
         
         return (
             <ListGroupItem>
-                <div onClick={this.handleToggleDetails} style={{cursor:'pointer'}}>
-                    <span style={{lineHeight:'45px', display: 'inline-block', width:200}}>{hasConfig ? (this.state.detailsVisible ? '−':'+') : ' '} {macro.title}</span>
+                <div onClick={this.handleToggleDetails} style={{cursor: 'pointer'}}>
+                    <span style={{lineHeight: '45px', display: 'inline-block', width: 200}}>{hasConfig ? (this.state.detailsVisible ? '−':'+') : ' '} {macro.title}</span>
                     <ShortcutsList id_macro={macro.id} shortcuts={macro.shortcuts} metadatas={metadata.actions}/>
                     <span className="pull-right">
-                        <span className="btn btn-danger" onClick={(e) => { e.stopPropagation(); if (confirm('Remove macro ?')) {me.props.onRemoveMacro(macro.id);} }}>&times;</span>
+                        <span className="btn btn-danger" data-id={macro.id} onClick={this.handleRemoveclick}>&times;</span>
                     </span>
                 </div>
                 {hasConfig && this.state.detailsVisible && (
@@ -54,9 +52,18 @@ class MacrosListItem extends React.Component {
     }
     
     @autobind
+    handleRemoveclick(e) {
+        e.stopPropagation();
+        if (global.confirm('Remove macro ?')) {
+            this.props.onRemoveMacro(e.target.getAttribute('data-id'));
+        }
+    }
+    
+    
+    @autobind
     handleConfigChange(config) {
         const macro = this.props.macro;
-        window.ipc.send('set_config', { id: macro.id, config: config });
+        global.ipc.send('set_config', { id: macro.id, config: config });
     }
     
     @autobind
@@ -94,8 +101,8 @@ class MacrosList extends React.Component {
         
         const shortcuts = macros.map((macro) => {
             return (
-                <MacrosListItem key={'macro_'+macro.id} macro={macro} metadata={this.props.metadatas[macro.name]}
-                                onRemoveMacro={this.props.onRemoveMacro} onMacroConfig={this.props.onMacroConfig}/>
+                <MacrosListItem key={`macro_${macro.id}`} macro={macro} metadata={this.props.metadatas[macro.name]}
+                    onRemoveMacro={this.props.onRemoveMacro} onMacroConfig={this.props.onMacroConfig}/>
             );
         });
         

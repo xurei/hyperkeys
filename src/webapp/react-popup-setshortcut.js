@@ -23,7 +23,7 @@ class PopupSetShortcut extends React.Component {
     
     @autobind
     handleChange(shortcut) {
-        this.setState({shortcut:shortcut});
+        this.setState({shortcut: shortcut});
     }
     
     @autobind
@@ -39,8 +39,8 @@ class PopupSetShortcut extends React.Component {
     render() {
         return (
             <Popup maxHeight="180px"
-			       title="Enter Shortcut"
-			       {...this.props}>
+                title="Enter Shortcut"
+                {...this.props}>
                 <ShortcutInput focus={true} ref="add_shortcut_input" shortcut={this.state.shortcut} onChange={this.handleChange} />
                 <div style={{lineHeight: '40px'}} className="pull-right">
                     <a href="javascript:" onClick={this.props.onClose} style={{marginRight: '10px'}}>Cancel</a>

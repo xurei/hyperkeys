@@ -5,7 +5,7 @@ const actionFactories = {};
 
 const ActionService = {
     registerActionFactory: (name, factoryMethod) => {
-        debug('Registered action `'+name+'`');
+        debug(`Registered action \`${name}\``);
         actionFactories[name] = factoryMethod;
     },
     
@@ -15,9 +15,9 @@ const ActionService = {
             return factory(action);
         }
         else {
-            throw 'No factory found for action ' + action.name;
+            throw `No factory found for action ${  action.name}`;
         }
-    }
+    },
 };
 
 module.exports = ActionService;

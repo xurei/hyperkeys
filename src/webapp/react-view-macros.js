@@ -8,10 +8,8 @@ import { Button } from 'reactstrap';
 
 import MacrosList from './react-macros-list';
 import PopupAddMacro from './react-popup-addmacro';
-import store from './store';
-import { setMacros, setMetadatas } from './actions';
 
-const ipc = window.ipc;
+const ipc = global.ipc;
 
 class MacrosView extends React.Component {
     static propTypes = {};
@@ -19,7 +17,7 @@ class MacrosView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            showPopupAddMacro: false
+            showPopupAddMacro: false,
         };
     }
     
@@ -74,7 +72,7 @@ class MacrosView extends React.Component {
 MacrosView = redux_connect(
     (state) => ({
         macros: state.macros,
-        metadatas: state.metadatas
+        metadatas: state.metadatas,
     }),
 )(MacrosView);
 

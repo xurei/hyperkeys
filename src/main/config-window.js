@@ -7,14 +7,14 @@ const OptionWindow = function(parentWindow, opts) {
         width: 1024,
         height: 768,
         webPreferences: {
-            nodeIntegration: true
+            nodeIntegration: true,
         },
     },
     opts,
     {
         parent: parentWindow,
         modal: true,
-        show: true
+        show: true,
     });
     
     const out = new BrowserWindow(config);

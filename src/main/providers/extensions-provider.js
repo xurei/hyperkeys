@@ -6,7 +6,7 @@ const basename = path.basename;
 const lsDir = require('../util/lsdir');
 
 const loadExtensions = function(basePath) {
-    debug('Loading extensions from ' + basePath);
+    debug(`Loading extensions from ${  basePath}`);
     if (!fs.existsSync(basePath)) {
         return {};
     }
@@ -20,7 +20,7 @@ const loadExtensions = function(basePath) {
     for (const dir of dirs) {
         const dirname = basename(dir);
         if (dirname !== 'bin' && dirname !== 'node_modules') {
-            debug('Loading extension ' + dir);
+            debug(`Loading extension ${  dir}`);
             extensions[dirname] = require(dir);
         }
     }

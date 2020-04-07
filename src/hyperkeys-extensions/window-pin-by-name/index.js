@@ -1,6 +1,6 @@
 module.exports = {
     actions: [
-        require('./action-show-switch-window')
+        require('./action-show-switch-window'),
     ],
     metadata: {
         name: 'WINDOW_PIN_BY_NAME',
@@ -12,6 +12,6 @@ module.exports = {
         configScreen: {
             enabled: true,
         },
-        defaultConfig: {}
-    }
+        defaultConfig: {},
+    },
 };

@@ -10,13 +10,13 @@ const KeybindsService = {
             globalShortcut.register(keybind.key, action.execute);
 			
             if (!globalShortcut.isRegistered(keybind.key)) {
-                console.error('Cannot register keybind `' + keybind.key + '`. Already registered.');
+                console.error(`Cannot register keybind \`${  keybind.key  }\`. Already registered.`);
             } else {
-                debug('Registered keybind `' + keybind.key + '` => `' + keybind.action.name + '`');
+                debug(`Registered keybind \`${  keybind.key  }\` => \`${  keybind.action.name  }\``);
             }
         }
         catch(e) {
-            console.error('Cannot register keybind `' + keybind.key + '`. Exception:');
+            console.error(`Cannot register keybind \`${  keybind.key  }\`. Exception:`);
             console.error(e);
         }
     },
@@ -24,7 +24,7 @@ const KeybindsService = {
     unregisterKey: (keybind) => {
         // TODO use unredisterKey()
         globalShortcut.unregister(keybind.key);
-    }
+    },
 };
 
 module.exports = KeybindsService;

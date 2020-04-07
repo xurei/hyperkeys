@@ -1,7 +1,7 @@
 module.exports = {
     actions: [
         require('./action-set-switch-window'),
-        require('./action-show-switch-window')
+        require('./action-show-switch-window'),
     ],
     metadata: {
         name: 'SWITCH_WINDOW',
@@ -11,6 +11,6 @@ module.exports = {
             SET_SWITCH_WINDOW: {title: 'Pin current'},
             SHOW_SWITCH_WINDOW: {title: 'Bring to front'},
         },
-        defaultConfig: {}
-    }
+        defaultConfig: {},
+    },
 };

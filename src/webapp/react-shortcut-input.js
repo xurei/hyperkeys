@@ -78,12 +78,12 @@ class ShortcutInput extends React.Component {
     render() {
         var inputStyle = {
             position: 'relative',
-            background:'#222',
-            height:'56px',
+            background: '#222',
+            height: '56px',
             borderRadius: '5px',
             padding: '5px',
-            textAlign:'center',
-            border: (this.state.editing ? 'solid 1px #666' : 'none')
+            textAlign: 'center',
+            border: (this.state.editing ? 'solid 1px #666' : 'none'),
         };
 		
         return (
@@ -93,18 +93,18 @@ class ShortcutInput extends React.Component {
                     value={''}
                     className="form-control"
                     ref={this.inputRef}
-                    style={{height:'0px', padding:0, border:'none'}}
+                    style={{height: '0px', padding: 0, border: 'none'}}
                     id={this.props.id}
                     placeholder={this.props.placeholder}
                     onKeyDown={this.handleKey}
                     onKeyUp={this.handleKey}
                 />
-                <div ref='fakeinput' onClick={this.handleFocus} style={inputStyle}>
-                    <div style={{zIndex: 1, position: 'absolute', width: '100%', height:'100%', lineHeight:'51px', top:0, left:0}}>
+                <div ref="fakeinput" onClick={this.handleFocus} style={inputStyle}>
+                    <div style={{zIndex: 1, position: 'absolute', width: '100%', height: '100%', lineHeight: '51px', top: 0, left: 0}}>
                         <ShortcutRenderer shortcut={this.state.shortcut}/>
                     </div>
                     {this.state.shortcut === '' && (
-                        <div style={{zIndex: 0, position: 'absolute', width: '100%', height:'100%', lineHeight:'56px', top:0, left:0, color:'#666'}}>
+                        <div style={{zIndex: 0, position: 'absolute', width: '100%', height: '100%', lineHeight: '56px', top: 0, left: 0, color: '#666'}}>
                             {this.props.placeholder}
                         </div>
                     )}

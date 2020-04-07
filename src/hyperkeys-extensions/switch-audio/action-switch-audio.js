@@ -15,13 +15,13 @@ function getAudioSinks() {
                 if (line.startsWith('index:')) {
                     sinks.push(curSink);
                     curSink = {
-                        index: line.substring(7)
+                        index: line.substring(7),
                     };
                 }
                 else if (line.startsWith('* index:')) {
                     sinks.push(curSink);
                     curSink = {
-                        index: line.substring(9)
+                        index: line.substring(9),
                     };
                 }
                 else if (line.startsWith('state: RUNNING')) {
@@ -51,13 +51,13 @@ function getSinkInputs() {
                 if (line.startsWith('index:')) {
                     inputs.push(curInput);
                     curInput = {
-                        index: line.substring(7)
+                        index: line.substring(7),
                     };
                 }
                 else if (line.startsWith('* index:')) {
                     inputs.push(curInput);
                     curInput = {
-                        index: line.substring(9)
+                        index: line.substring(9),
                     };
                 }
                 else if (line.startsWith('sink:')) {
@@ -74,12 +74,12 @@ function getSinkInputs() {
 
 module.exports = {
     name: 'SWITCH_AUDIO',
-    factory: function (action) {
+    factory: function(action) {
         return {
             execute: () => {
                 const command = action.config.command;
                 debug('Switching audio', command);
-                Promise.all([getAudioSinks(), getSinkInputs()])
+                return Promise.all([getAudioSinks(), getSinkInputs()])
                 .then(([sinks, inputs]) => {
                     debug('Sinks:');
                     debug(sinks);
@@ -103,8 +103,9 @@ module.exports = {
                         message: `Switched to ${newActiveSink.name}`,
                         timeout: 3,
                     });
+                    return;
                 });
-            }
+            },
         };
-    }
+    },
 };

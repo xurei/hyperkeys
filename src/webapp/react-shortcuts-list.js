@@ -19,7 +19,7 @@ class ShortcutsListItem extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            settingShortcut: false
+            settingShortcut: false,
         };
     }
     
@@ -71,10 +71,10 @@ class ShortcutsListItem extends React.Component {
     @autobind
     handleChangeShortcut(shortcut) {
         //console.log(this.props.action_name);
-        window.ipc.send('set_shortcut', {
+        global.ipc.send('set_shortcut', {
             id_macro: this.props.id_macro,
             action: this.props.action_name,
-            shortcut: shortcut
+            shortcut: shortcut,
         });
     }
     
@@ -107,7 +107,7 @@ class ShortcutsList extends React.Component {
         const shortcuts = Object.keys(this.props.shortcuts).map((key) => {
             const shortcut = this.props.shortcuts[key];
             return (
-                <ShortcutsListItem id_macro={this.props.id_macro} key={'shortcut_'+key} action_name={key} metadata={this.props.metadatas[key]} shortcut={shortcut} />
+                <ShortcutsListItem id_macro={this.props.id_macro} key={`shortcut_${key}`} action_name={key} metadata={this.props.metadatas[key]} shortcut={shortcut} />
             );
         });
 		
