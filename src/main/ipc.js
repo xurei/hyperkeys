@@ -75,7 +75,7 @@ module.exports = {
 					actionsService.registerActionFactory(action.name, action.factory);
 				}
 				extensionsMetadata[extension.metadata.name] = extension.metadata;
-				extensionsMetadata[extension.metadata.name].directory = path.join(__dirname, 'extensions', iextension);
+				extensionsMetadata[extension.metadata.name].directory = path.join(__dirname, 'hyperkeys-extensions', iextension);
 			}
 		}
 		
