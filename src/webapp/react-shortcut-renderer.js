@@ -17,12 +17,16 @@ class ShortcutRenderer extends React.Component {
 			.filter((k) => k != '')
 			.map((k) => {
 				++i;
-				return (<span key={i}>&nbsp;<span className="btn btn-default">{k.toUpperCase()}</span></span>)
+				return (
+					<span key={i}>
+						{' '}
+						<span className="btn btn-default" style={{padding: 3}}>{k.toUpperCase()}</span>
+					</span>)
 			})
 		);
 		
 		return (
-			<span>
+			<span style={{background: 'transparent'}}>
 				{keys}
 			</span>
 		);

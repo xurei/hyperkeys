@@ -11,8 +11,6 @@ module.exports = {
 		},
 		configScreen: {
 			enabled: true,
-			width: 600,
-			height: 200,
 		},
 		defaultConfig: {
 			command: ""

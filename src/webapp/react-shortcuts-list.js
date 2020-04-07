@@ -6,7 +6,6 @@ import autobind from 'autobind-decorator';
 import PopupSetShortcut from './react-popup-setshortcut';
 import { FlexLayout, FlexChild } from './components/layout/flex-layout';
 
-import {ListGroup, ListGroupItem, Row, Col} from 'reactstrap';
 import ShortcutRenderer from './react-shortcut-renderer';
 
 class ShortcutsListItem extends React.Component {
@@ -26,27 +25,46 @@ class ShortcutsListItem extends React.Component {
 	
 	render() {
 		let shortcut = this.props.shortcut;
+		//return (
+		//	<ListGroupItem>
+		//		<FlexLayout direction="row" >
+		//			<FlexChild width={200} grow={0.1}>
+		//				<div style={{lineHeight:"40px"}}>{this.props.metadata.title}</div>
+		//			</FlexChild>
+		//
+		//			<FlexChild width={100} grow={1}>
+		//				<ShortcutRenderer shortcut={shortcut}/>
+		//				<span className="pull-right">
+		//					<span className="btn btn-default" onClick={this.handleOpenPopup}>
+		//						<i className="fa fa-pencil" aria-hidden="true"/>
+		//					</span>
+		//					&nbsp;
+		//				</span>
+		//			</FlexChild>
+		//		</FlexLayout>
+		//		{this.state.settingShortcut && (
+		//			<PopupSetShortcut onClose={this.handlePopupClose} onSubmit={this.handleChangeShortcut} />
+		//		)}
+		//	</ListGroupItem>
+		//);
 		return (
-			<ListGroupItem>
-				<FlexLayout>
-					<FlexChild width={200} grow={0.1}>
-						<div style={{lineHeight:"40px"}}>{this.props.metadata.title}</div>
-					</FlexChild>
-					
-					<FlexChild width={100} grow={1}>
-						<ShortcutRenderer shortcut={shortcut}/>
-						<span className="pull-right">
-							<span className="btn btn-default" onClick={this.handleOpenPopup}>
-								<i className="fa fa-pencil" aria-hidden="true"/>
-							</span>
-							&nbsp;
+			<span style={{padding: '0 15px'}}>
+				{this.props.metadata.title}
+				{" "}
+				<span onClick={this.handleOpenPopup}>
+					{!shortcut || shortcut === '' ? (
+						<span className="btn btn-default" style={{padding: '5px'}}>
+							<i className="fa fa-pencil" aria-hidden="true"/>
 						</span>
-					</FlexChild>
-				</FlexLayout>
+					) : (
+						<ShortcutRenderer shortcut={shortcut}/>
+					)}
+				</span>
+				{' '}
 				{this.state.settingShortcut && (
 					<PopupSetShortcut onClose={this.handlePopupClose} onSubmit={this.handleChangeShortcut} />
 				)}
-			</ListGroupItem>
+			</span>
 		);
 	}
 	
@@ -94,9 +112,9 @@ class ShortcutsList extends React.Component {
 		});
 		
 		return (
-			<ListGroup>
+			<span>
 				{shortcuts}
-			</ListGroup>
+			</span>
 		);
 	}
 	

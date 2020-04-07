@@ -41,7 +41,7 @@ class PopupSetShortcut extends React.Component {
 			<Popup maxHeight="180px"
 			       title="Enter Shortcut"
 			       {...this.props}>
-				<ShortcutInput ref="add_shortcut_input" shortcut={this.state.shortcut} onChange={this.handleChange} />
+				<ShortcutInput focus={true} ref="add_shortcut_input" shortcut={this.state.shortcut} onChange={this.handleChange} />
 				<div style={{lineHeight: "40px"}} className="pull-right">
 					<a href="javascript:" onClick={this.props.onClose} style={{marginRight: "10px"}}>Cancel</a>
 					<Button color="success" onClick={this.handleSubmit}>Set Shortcut</Button>

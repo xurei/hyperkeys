@@ -11,55 +11,68 @@ const ReactDOM = require ('react-dom');
 class ShortcutInput extends React.Component {
 	static propTypes = {
 		onChange: PropTypes.func.isRequired,
+		focus: PropTypes.bool,
 	};
 	static defaultProps = {
 		placeholder: 'Enter shortcut',
 		id: uuid(),
 	};
-	
-	constructor(props) {
-		super(props);
-		this.state = {
-			shortcut: '',
-			editing: false
-		};
-	}
+	inputRef = React.createRef();
+	state = {
+		shortcut: '',
+		editing: false,
+	};
+	typing = false;
 	
 	@autobind
 	handleKey(e) {
 		if (this.state.editing) {
-			var key =[];
+			let key =[];
 			
 			if (e.altKey) key.push('alt');
 			if (e.metaKey) key.push('meta');
 			if (e.shiftKey) key.push('shift');
 			if (e.ctrlKey) key.push('ctrl');
 			
-			console.log(e, e.which, e.keyCode, e.code, e.key, e.charCode);
-			
-			if (e.type === 'keydown' && e.which !== 18 && e.which !== 17 && e.which !== 16 && e.which !== 91) {
-				/*key.push(e.keyCode);
-				 key.push(String.fromCharCode(e.keyCode));
-				 key.push(String.fromCharCode(e.which));
-				 key.push(e.charCode);*/
-				key.push(e.key);
-				this.setState({editing: false});
+			console.log(e.type, e.which, e.keyCode, e.code, e.key, e.charCode);
+			if (e.type === 'keydown' || (this.typing && e.type === 'keyup')) {
+				if (e.type === 'keydown') {
+					this.typing = true;
+				}
+				if (e.which !== 18 && e.which !== 17 && e.which !== 16 && e.which !== 91) {
+					/*key.push(e.keyCode);
+					 key.push(String.fromCharCode(e.keyCode));
+					 key.push(String.fromCharCode(e.which));
+					 key.push(e.charCode);*/
+					key.push(e.key);
+					this.typing = false;
+					//this.setState({editing: false});
+				}
+				else {
+					//this.setState({typing: true});
+				}
+				key = key.join('+');
+				
+				if (!e.repeat) {
+					this.setState({shortcut: key});
+					console.log(e.which, key);
+					this.props.onChange(key);
+				}
 			}
-			key = key.join('+');
-			
-			if (!e.repeat) {
-				this.setState({shortcut: key});
-				console.log(e.which, key);
-				this.props.onChange(key);
-			}
+		}
+	}
+	
+	componentDidMount() {
+		if (this.props.focus) {
+			this.setState({shortcut: '', editing: true});
+			this.inputRef.current.focus();
 		}
 	}
 	
 	@autobind
 	handleFocus() {
-		console.log('focus');
 		this.setState({shortcut: '', editing: true});
-		ReactDOM.findDOMNode(this.refs.Input).focus();
+		this.inputRef.current.focus();
 	}
 	
 	render() {
@@ -75,10 +88,11 @@ class ShortcutInput extends React.Component {
 		
 		return (
 			<FormGroup>
-				<Input
-					type='text'
+				<input
+					type="text"
 					value={''}
-					ref='Input'
+					className="form-control"
+					ref={this.inputRef}
 					style={{height:'0px', padding:0, border:'none'}}
 					id={this.props.id}
 					placeholder={this.props.placeholder}

@@ -9,13 +9,5 @@ module.exports = {
 		actions: {
 			SWITCH_AUDIO: {title: "Switch audio"}
 		},
-		configScreen: {
-			enabled: true,
-			width: 600,
-			height: 300,
-		},
-		defaultConfig: {
-			command: ""
-		}
 	}
 };
