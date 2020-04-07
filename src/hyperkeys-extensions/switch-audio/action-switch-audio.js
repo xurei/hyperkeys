@@ -33,7 +33,7 @@ function getAudioSinks() {
             });
             sinks.push(curSink);
             sinks.shift();
-			
+            
             resolve(sinks);
         });
     });
@@ -66,7 +66,7 @@ function getSinkInputs() {
             });
             inputs.push(curInput);
             inputs.shift();
-			
+            
             resolve(inputs);
         });
     });
@@ -83,10 +83,10 @@ module.exports = {
                 .then(([sinks, inputs]) => {
                     debug('Sinks:');
                     debug(sinks);
-					
+                    
                     const activeIndex = sinks.findIndex(sink => sink.active);
                     const newActiveSink = sinks[(activeIndex+1) % sinks.length];
-					
+                    
                     exec(`pacmd set-default-sink ${newActiveSink.index}`, {}, (err,stderr,stdout) => {
                         debug(stderr);
                         debug(stdout);
@@ -97,7 +97,7 @@ module.exports = {
                             debug(stdout);
                         });
                     });
-					
+                    
                     NotificationService.notify({
                         title: 'Audio switch',
                         message: `Switched to ${newActiveSink.name}`,
