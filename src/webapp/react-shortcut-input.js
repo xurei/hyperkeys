@@ -29,10 +29,10 @@ class ShortcutInput extends React.Component {
         if (this.state.editing) {
             let key =[];
 			
-            if (e.altKey) key.push('alt');
-            if (e.metaKey) key.push('meta');
-            if (e.shiftKey) key.push('shift');
-            if (e.ctrlKey) key.push('ctrl');
+            if (e.altKey) {key.push('alt');}
+            if (e.metaKey) {key.push('meta');}
+            if (e.shiftKey) {key.push('shift');}
+            if (e.ctrlKey) {key.push('ctrl');}
 			
             console.log(e.type, e.which, e.keyCode, e.code, e.key, e.charCode);
             if (e.type === 'keydown' || (this.typing && e.type === 'keyup')) {

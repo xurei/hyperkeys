@@ -18,10 +18,10 @@ module.exports = {
 				
                 debug(command);
 				
-                if (store[action.id_macro] != null) {
+                if (store[action.id_macro] !== null) {
                     debug('Switching to', store[action.id_macro]);
                     exec(command, function callback(error, stdout, stderr){
-                        if (error == null) {
+                        if (error === null) {
                             /* nothing */
                         }
                         else {

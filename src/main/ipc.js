@@ -14,7 +14,7 @@ function registerShortcuts(macros) {
     for (const macro of macros) {
         for (const action of Object.keys(macro.shortcuts)) {
             const shortcut = macro.shortcuts[action];
-            if (shortcut != null) {
+            if (shortcut !== null) {
                 keybindsService.registerKey({key: shortcut, action: {id_macro: macro.id, name: action, config: macro.config}});
             }
         }

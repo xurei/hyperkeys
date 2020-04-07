@@ -14,7 +14,7 @@ class ShortcutRenderer extends React.Component {
         let i = 0;
         const keys = (
             shortcut.split('+')
-            .filter((k) => k != '')
+            .filter((k) => k !== '')
             .map((k) => {
                 ++i;
                 return (

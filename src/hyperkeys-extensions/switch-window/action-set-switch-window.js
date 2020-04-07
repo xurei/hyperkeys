@@ -20,7 +20,7 @@ module.exports = {
                 debug(command);
 				
                 exec(command, function callback(error, stdout) {
-                    if (error == null) {
+                    if (error === null) {
                         debug('Action mapped to ' + stdout.trim());
                         store[action.id_macro] = stdout.trim();
 						

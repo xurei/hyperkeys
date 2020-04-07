@@ -18,7 +18,7 @@ debug('APPPATH:', APPPATH);
 
 let DIRSEP = '/';
 if (platform.isWin)
-    DIRSEP = '\\';
+    {DIRSEP = '\\';}
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the javascript object is GCed.
@@ -70,7 +70,7 @@ const App = {
         globalShortcut.unregisterAll();
 		
         //Destroy the app icon
-        if (appIcon != null) {
+        if (appIcon !== null) {
             appIcon.destroy();
         }
 		

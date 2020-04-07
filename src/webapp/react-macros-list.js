@@ -36,7 +36,7 @@ class MacrosListItem extends React.Component {
                     <span style={{lineHeight:'45px', display: 'inline-block', width:200}}>{hasConfig ? (this.state.detailsVisible ? '−':'+') : ' '} {macro.title}</span>
                     <ShortcutsList id_macro={macro.id} shortcuts={macro.shortcuts} metadatas={metadata.actions}/>
                     <span className="pull-right">
-                        <span className="btn btn-danger" onClick={(e) => { e.stopPropagation(); if (confirm('Remove macro ?')) me.props.onRemoveMacro(macro.id); }}>&times;</span>
+                        <span className="btn btn-danger" onClick={(e) => { e.stopPropagation(); if (confirm('Remove macro ?')) {me.props.onRemoveMacro(macro.id);} }}>&times;</span>
                     </span>
                 </div>
                 {hasConfig && this.state.detailsVisible && (

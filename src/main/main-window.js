@@ -18,7 +18,7 @@ mainWindow.loadURL('file://' + __dirname + '/index.html');
 
 // Emitted when the window is closed.
 mainWindow.on('close', function (e) {
-    if (mainWindow != null) {
+    if (mainWindow !== null) {
         e.preventDefault();
         mainWindow.hide();
     }
