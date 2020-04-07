@@ -19,6 +19,9 @@ node_modules/.bin/babel --config-file $BASEPATH/../.babelrc.main src/main -d bui
 compile_module run-command
 compile_module switch-window
 compile_module window-pin-by-name
+compile_module switch-audio
+
+# Build app
 webpack
 
 
