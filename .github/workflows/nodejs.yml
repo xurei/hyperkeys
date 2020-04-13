@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   lab:
-    runs-on: ubuntu-latest
+    runs-on: windows-2019
     steps:
       - uses: actions/checkout@v2
       - run: npm ci
@@ -39,17 +39,4 @@ jobs:
           # This token is provided by Actions, you do not need to create your own token
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           USE_HARD_LINKS: false
-
-#    - run: npm run package:windows
-#    - name: Create Release
-#      id: create_release
-#      uses: actions/create-release@latest
-#      env:
-#        # This token is provided by Actions, you do not need to create your own token
-#        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#      with:
-#        tag_name: ${{ github.ref }}
-#        release_name: Release ${{ github.ref }}
-#        draft: false
-#        prerelease: false
 
