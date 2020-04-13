@@ -21,7 +21,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - run: npm i
+      - run: npm ci
       - run: rm -rf build || true; mkdir build
       - run: npm run build:dependencies
       - run: npm run build
@@ -41,6 +41,7 @@ jobs:
       - uses: actions/checkout@v2
       - run: echo "${{ github.ref }}"
       - run: npm i
+      - run: mkdir build
       - run: npm run build:dependencies
       - run: npm run build
       - run: pwd
