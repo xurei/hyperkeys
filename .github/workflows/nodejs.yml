@@ -3,16 +3,26 @@ name: Node.js CI
 on: [push]
 
 jobs:
+  lab:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: npm ci
+      - run: npm run build
+      - run: apt-get install mingw-w64 -Y
+      - run:
+
+
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - run: npm ci
-    - run: npm run lint
-    - run: rm -rf build || true; mkdir build
-    - run: npm run build:dependencies
-    - run: npm run build
+      - uses: actions/checkout@v2
+      - run: npm ci
+      - run: npm run lint
+      - run: rm -rf build || true; mkdir build
+      - run: npm run build:dependencies
+      - run: npm run build
 
   release:
     runs-on: ubuntu-latest
@@ -20,17 +30,17 @@ jobs:
     if: startsWith(github.ref, 'v')
 
     steps:
-    - uses: actions/checkout@v2
-    - run: npm ci
-    - run: rm -rf build || true; mkdir build
-    - run: npm run build:dependencies
-    - run: npm run build
-    - run: pwd
-    - run: npm run package:linux
-      env:
-        # This token is provided by Actions, you do not need to create your own token
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        USE_HARD_LINKS: false
+      - uses: actions/checkout@v2
+      - run: npm ci
+      - run: rm -rf build || true; mkdir build
+      - run: npm run build:dependencies
+      - run: npm run build
+      - run: pwd
+      - run: npm run package:linux
+        env:
+          # This token is provided by Actions, you do not need to create your own token
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          USE_HARD_LINKS: false
 
 #    - run: npm run package:windows
 #    - name: Create Release
