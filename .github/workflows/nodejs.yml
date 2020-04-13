@@ -8,9 +8,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: npm ci
-      - run: npm run build
       - run: apt-get install mingw-w64 -Y
-      - run:
+      - run: npm run build
 
 
   build:
