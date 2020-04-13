@@ -6,16 +6,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [12.x]
-
     steps:
     - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
     - run: npm ci
     - run: npm run lint
     - run: rm -rf build || true; mkdir build
@@ -27,7 +19,18 @@ jobs:
     needs: build
 
     steps:
+    - uses: actions/checkout@v2
+    - run: npm ci
+    - run: rm -rf build || true; mkdir build
+    - run: npm run build:dependencies
+    - run: npm run build
+    - run: pwd
     - run: npm run package:linux
+      env:
+        # This token is provided by Actions, you do not need to create your own token
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        USE_HARD_LINKS: false
+
 #    - run: npm run package:windows
 #    - name: Create Release
 #      id: create_release

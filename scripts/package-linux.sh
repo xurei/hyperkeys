@@ -14,4 +14,4 @@ rm -rf $BASEPATH/dist_packages/linux-unpacked/libEGL2.so || true
 rm -rf $BASEPATH/dist_packages/linux-unpacked/chrome-sandbox || true
 
 # Create AppImage
-node_modules/.bin/electron-builder --prepackaged=dist_packages/linux-unpacked --linux
+node_modules/.bin/electron-builder --prepackaged=dist_packages/linux-unpacked --linux --p onTag
