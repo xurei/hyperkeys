@@ -1,6 +1,7 @@
 const store = require('./store-switch-window');
 const exec = require('child_process').exec;
 const debug = require('debug')('hyperkeys-action-show-switch-window');
+const NotificationService = require('hyperkeys-api').NotificationService;
 const platform = require('hyperkeys-api').platform;
 
 module.exports = {
@@ -8,29 +9,39 @@ module.exports = {
     factory: function(action) {
         return {
             execute: () => {
-                let command = '';
-                if (platform.isLinux) {
-                    command = `wmctrl -ia ${  store[action.id_macro]}`;
-                }
-                else if (platform.isWin) {
-                    command = `"${  __dirname  }\\nircmd\\nircmd.exe" win activate handle ${  store[action.id_macro]}`;
-                }
-                
-                debug(command);
-                
                 if (store[action.id_macro] !== null) {
                     debug('Switching to', store[action.id_macro]);
-                    exec(command, function callback(error, stdout, stderr){
-                        if (error === null) {
-                            /* nothing */
-                        }
-                        else {
-                            //TODO error management
-                        }
+    
+                    let command;
+                    if (platform.isLinux) {
+                        command = () => new Promise((resolve, reject) => {
+                            exec(`wmctrl -ia ${store[action.id_macro]}`, function callback(error, stdout, stderr) {
+                                if (error === null) {
+                                    resolve();
+                                }
+                                else {
+                                    reject(error);
+                                }
+                            });
+                        });
+                    }
+                    else if (platform.isWin) {
+                        const asfw = require('asfw').SetForegroundWindow;
+                        command = () => new Promise((resolve, reject) => {
+                            asfw(store[action.id_macro]);
+                            resolve();
+                        });
+                    }
+                    
+                    command()
+                    .catch(e => {
+                        NotificationService.notify({
+                            'title': 'Window Pinner',
+                            'message': `Cannot bring window to foreground: ${e}`,
+                        });
                     });
                 }
                 else {
-                    //TODO alert ? "No window mapped to this action"
                     debug('No window mapped to this action');
                 }
             },

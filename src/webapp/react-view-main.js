@@ -5,6 +5,7 @@ import deepEqual from 'deep-eql';
 import autobind from 'autobind-decorator';
 
 import MacrosView from './react-view-macros';
+import * as pkg from '../../package.json';
 
 import { Container, Row, Col } from 'reactstrap';
 
@@ -15,6 +16,9 @@ class MainView extends React.Component {
             <div className={props.className}>
                 <div className="header"/>
                 <MacrosView/>
+                <div>
+                    Version: {pkg.version}
+                </div>
             </div>
         );
     }
