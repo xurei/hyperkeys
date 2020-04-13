@@ -1,12 +1,17 @@
 #!/usr/bin/env bash
 set -e
 
-BASEPATH=$(realpath $(dirname $0))
+BASEPATH=$(realpath $(dirname $0)/..)
+echo $BASEPATH
 
-electron-packager --platform=linux --out out --overwrite build hyperkeys
+node_modules/.bin/electron-builder --dir --linux
 
 # Remove unneeded libs
-rm -rf $BASEPATH/../out/hyperkeys-linux-x64/libvk_swiftshader.so
-rm -rf $BASEPATH/../out/hyperkeys-linux-x64/swiftshader
-rm -rf $BASEPATH/../out/hyperkeys-linux-x64/vk_swiftshader_icd.json
-rm -rf $BASEPATH/../out/hyperkeys-linux-x64/libGLESv2.so
+echo "Purging useless libs..."
+rm -rf $BASEPATH/dist_packages/linux-unpacked/swiftshader || true
+rm -rf $BASEPATH/dist_packages/linux-unpacked/libGLESv2.so || true
+rm -rf $BASEPATH/dist_packages/linux-unpacked/libEGL2.so || true
+rm -rf $BASEPATH/dist_packages/linux-unpacked/chrome-sandbox || true
+
+# Create AppImage
+node_modules/.bin/electron-builder --prepackaged=dist_packages/linux-unpacked --linux

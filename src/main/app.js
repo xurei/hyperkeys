@@ -4,7 +4,11 @@ const debug = require('debug')('hyperkeys-app');
 const HKAPI = require('hyperkeys-api');
 const platform = HKAPI.platform;
 
-const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer');
+let installExtension, REACT_DEVELOPER_TOOLS;
+if (process.env['NODE_ENV'] === 'development') {
+    installExtension = require('electron-devtools-installer').default;
+    REACT_DEVELOPER_TOOLS = require('electron-devtools-installer').REACT_DEVELOPER_TOOLS;
+}
 
 //const KeyloggerService = require('./services/keylogger-service');
 const ipcService = require('./ipc');
@@ -30,11 +34,12 @@ let appIcon = null;
 const App = {
     ready: () => {
         mainWindow = require('./main-window');
-		
-		
-        installExtension(REACT_DEVELOPER_TOOLS)
-        .then((name) => console.log(`Added Extension:  ${name}`))
-        .catch((err) => console.log('An error occurred: ', err));
+    
+        if (process.env['NODE_ENV'] === 'development') {
+            installExtension(REACT_DEVELOPER_TOOLS)
+            .then((name) => console.log(`Added Extension:  ${name}`))
+            .catch((err) => console.log('An error occurred: ', err));
+        }
 		
         ipcService.start(app);
 		
