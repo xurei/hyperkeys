@@ -17,7 +17,7 @@ jobs:
   release-linux:
     runs-on: ubuntu-latest
     needs: build
-    if: startsWith(github.ref, 'v')
+    if: startsWith(github.ref, 'refs/tags/v')
 
     steps:
       - uses: actions/checkout@v2
@@ -35,6 +35,8 @@ jobs:
   release-windows:
     runs-on: windows-2019
     needs: build
+    if: startsWith(github.ref, 'refs/tags/v')
+
     steps:
       - uses: actions/checkout@v2
       - run: echo "${{ github.ref }}"
