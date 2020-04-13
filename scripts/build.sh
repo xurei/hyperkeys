@@ -9,6 +9,9 @@ function compile_module {
 	if test -f "src/hyperkeys-extensions/$MODULE_NAME/configscreen.js"; then
 		webpack "src/hyperkeys-extensions/$MODULE_NAME/configscreen.js" --output "build/hyperkeys-extensions/$MODULE_NAME/configscreen.js"
 	fi
+	if test -f "src/hyperkeys-extensions/$MODULE_NAME/build.sh"; then
+		bash "src/hyperkeys-extensions/$MODULE_NAME/build.sh";
+	fi
 }
 
 # Build main
