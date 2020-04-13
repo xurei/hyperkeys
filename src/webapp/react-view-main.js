@@ -1,13 +1,8 @@
 import React from 'react'; //eslint-disable-line no-unused-vars
 import Styled from 'styled-components';
-import PropTypes from 'prop-types'; //eslint-disable-line no-unused-vars
-import deepEqual from 'deep-eql';
-import autobind from 'autobind-decorator';
-
 import MacrosView from './react-view-macros';
+//eslint-disable-next-line xurei/no-relative-parent-imports
 import * as pkg from '../../package.json';
-
-import { Container, Row, Col } from 'reactstrap';
 
 class MainView extends React.Component {
     render() {
