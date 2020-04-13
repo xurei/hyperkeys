@@ -3,6 +3,7 @@ dist
 distr.old
 bin
 build
+out
 node_modules
 .*
 !.gitignore

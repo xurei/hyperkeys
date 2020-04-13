@@ -10,7 +10,7 @@
     "lint": "eslint src",
     "watch": "bash scripts/watch.sh",
     "package:linux": "bash scripts/package-linux.sh",
-    "package:windows": "electron-packager --platform=win32 --out dist --asar --overwrite build hyperkeys",
+    "package:windows": "bash scripts/package-windows.sh",
     "serve": "npm run build; electron build & webpack --watch",
     "test": "npm test"
   },
