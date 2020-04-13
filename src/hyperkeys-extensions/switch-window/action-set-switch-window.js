@@ -14,7 +14,7 @@ module.exports = {
                     command = 'xdotool getwindowfocus';
                 }
                 else if (platform.isWin) {
-                    command = `"${__dirname  }\\win32\\foregroundwin.exe"`;
+                    command = `"${__dirname}\\foregroundwin.exe"`;
                 }
 				
                 debug(command);
