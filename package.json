@@ -23,7 +23,8 @@
       "category": "Utility"
     },
     "linux": {
-      "category": "Utility"
+      "category": "Utility",
+      "target": "AppImage"
     },
     "directories": {
       "app": "build",
