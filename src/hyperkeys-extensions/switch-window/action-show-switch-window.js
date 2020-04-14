@@ -9,14 +9,14 @@ module.exports = {
     factory: function(action) {
         return {
             execute: () => {
-                if (store[action.id_macro] !== null) {
+                if (store[action.id_macro]) {
                     debug('Switching to', store[action.id_macro]);
     
                     let command;
                     if (platform.isLinux) {
                         command = () => new Promise((resolve, reject) => {
                             exec(`wmctrl -ia ${store[action.id_macro]}`, function callback(error, stdout, stderr) {
-                                if (error === null) {
+                                if (!error) {
                                     resolve();
                                 }
                                 else {
