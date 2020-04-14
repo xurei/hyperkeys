@@ -25,7 +25,6 @@ jobs:
       - run: rm -rf build || true; mkdir build
       - run: npm run build:dependencies
       - run: npm run build
-      - run: pwd
       - run: npm run package:linux
         env:
           # This token is provided by Actions, you do not need to create your own token
