@@ -13,7 +13,7 @@ module.exports = {
                         command = `wmctrl -a "${action.config.name}"`;
                     }
                     else if (platform.isWin) {
-                        command = `"${  __dirname  }\\win32\\nircmd\\nircmd.exe" win activate title "${action.config.name}"`;
+                        command = `"${__dirname}\\..\\..\\natives\\win32\\nircmd\\nircmdc.exe" win activate ititle "${action.config.name}"`;
                     }
                     
                     debug(command);
