@@ -10,7 +10,7 @@ module.exports = {
                 if (action.config.name && action.config.name !== '') {
                     let command = '';
                     if (platform.isLinux) {
-                        command = `wmctrl -a "${action.config.name}"`;
+                        command = `${__dirname}/../../natives/linux/wmctrl -a "${action.config.name}"`;
                     }
                     else if (platform.isWin) {
                         command = `"${__dirname}\\..\\..\\natives\\win32\\nircmd\\nircmdc.exe" win activate ititle "${action.config.name}"`;

@@ -15,7 +15,7 @@ module.exports = {
                     let command;
                     if (platform.isLinux) {
                         command = () => new Promise((resolve, reject) => {
-                            exec(`wmctrl -ia ${store[action.id_macro]}`, function callback(error, stdout, stderr) {
+                            exec(`${__dirname}/../../natives/linux/wmctrl -ia ${store[action.id_macro]}`, function callback(error, stdout, stderr) {
                                 if (!error) {
                                     resolve();
                                 }
