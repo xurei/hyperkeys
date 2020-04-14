@@ -42,7 +42,7 @@
     "debug": "^2.6.9",
     "electron-json-storage": "^4.1.8",
     "gkm": "^0.2.0",
-    "hyperkeys-api": "^1.1.1",
+    "hyperkeys-api": "^1.1.2",
     "lodash": "^4.17.15",
     "node-notifier": "^6.0.0",
     "uuid": "^7.0.1",
