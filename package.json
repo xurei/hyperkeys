@@ -1,6 +1,6 @@
 {
   "name": "hyperkeys",
-  "version": "1.1.5-alpha1",
+  "version": "1.1.5-alpha2",
   "description": "Global shortcuts on steroids",
   "main": "main.js",
   "scripts": {
