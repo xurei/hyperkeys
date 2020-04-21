@@ -1,5 +1,6 @@
 const {app} = require('electron');
 const debug = require('debug')('hyperkeys-extensions-provider');
+const platform = require('hyperkeys-api').platform;
 const fs = require('fs');
 const path = require('path');
 const basename = path.basename;
@@ -21,7 +22,25 @@ const loadExtensions = function(basePath) {
         const dirname = basename(dir);
         if (dirname !== 'bin' && dirname !== 'node_modules') {
             debug(`Loading extension ${  dir}`);
-            extensions[dirname] = require(dir);
+            const ext = require(dir);
+            let platformCompatible = true;
+            if (ext.platforms) {
+                if (platform.isLinux) {
+                    platformCompatible = ext.platforms.includes('linux');
+                }
+                else if (platform.isWin) {
+                    platformCompatible = ext.platforms.includes('windows');
+                }
+                else if (platform.isMac) {
+                    platformCompatible = ext.platforms.includes('macos');
+                }
+                else {
+                    platformCompatible = false;
+                }
+            }
+            if (platformCompatible) {
+                extensions[dirname] = ext;
+            }
         }
     }
     debug(extensions);
