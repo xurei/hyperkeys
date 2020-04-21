@@ -2,6 +2,9 @@ import React from 'react'; //eslint-disable-line no-unused-vars
 import PropTypes from 'prop-types'; //eslint-disable-line no-unused-vars
 import autobind from 'autobind-decorator';
 
+// TODO migrate this file in an external lib, for community ?
+//eslint-disable-next-line xurei/no-relative-parent-imports
+import { ExternalLink } from '../../webapp/components/external-link';
 import { FormGroup, Input, Label } from 'reactstrap';
 
 class ConfigScreen extends React.Component {
@@ -24,10 +27,7 @@ class ConfigScreen extends React.Component {
                 <FormGroup>
                     <Label>IFTTT API Key</Label>
                     <ol>
-                        <li>Go to <a target="_blank" href="https://ifttt.com/maker_webhooks" onClick={(e) => {
-                            e.preventDefault();
-                            global.ipc.send('open_external', 'https://ifttt.com/maker_webhooks');
-                        }}>https://ifttt.com/maker_webhooks</a> and login,</li>
+                        <li>Go to <ExternalLink href="https://ifttt.com/maker_webhooks">https://ifttt.com/maker_webhooks</ExternalLink> and login,</li>
                         <li>Click on the "Documentation" button in the top right,</li>
                         <li>
                             Copy your key here:
