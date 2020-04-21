@@ -1,5 +1,5 @@
 const ipc = require('electron').ipcMain;
-const {globalShortcut} = require('electron');
+const { globalShortcut, shell } = require('electron');
 const keybindsService = require('./services/keybinds-service');
 const uuid = require('uuid').v4;
 const extensionsProvider = require('./providers/extensions-provider');
@@ -99,7 +99,11 @@ module.exports = {
                 debug(meta);
                 mainWindow.webContents.send('metadatas', meta);
             }
-			
+    
+            ipc.on('open_external', function(event, arg) {
+                shell.openExternal(arg);
+            });
+    
             ipc.on('request_macros', function(/*event, arg*/) {
                 sendMacros();
             });

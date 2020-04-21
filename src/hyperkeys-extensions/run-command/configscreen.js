@@ -1,9 +1,6 @@
-import ReactDOM from 'react-dom'; //eslint-disable-line no-unused-vars
 import React from 'react'; //eslint-disable-line no-unused-vars
 import PropTypes from 'prop-types'; //eslint-disable-line no-unused-vars
 import autobind from 'autobind-decorator';
-
-//import { FlexLayout, FlexChild } from '../../webapp/components/layout/flex-layout';
 
 import { FormGroup, Input, Label, Button } from 'reactstrap';
 
@@ -55,17 +52,3 @@ export { ConfigScreen };
 
 global.hyperkeys_modules = global.hyperkeys_modules || {};
 global.hyperkeys_modules['RUN_COMMAND'] = ConfigScreen;
-
-/*
-window.addEventListener("DOMContentLoaded", function() {
-    const config = JSON.parse(decodeURIComponent(document.location.hash).substring(1));
-    
-    console.log(config);
-    
-    //Rendering the UI
-    ReactDOM.render(
-		<ConfigScreen config={config}/>,
-		document.getElementById('content')
-    );
-});
-*/

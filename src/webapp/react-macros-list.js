@@ -40,7 +40,7 @@ class MacrosListItem extends React.Component {
                 {hasConfig && this.state.detailsVisible && (
                     <div style={{marginTop: '10px'}}>
                         {(metadata.configScreen && metadata.configScreen.enabled) && (
-                            <div>
+                            <div style={{background: 'rgba(0,0,0,0.1)', padding: '5px 5px 5px 10px'}}>
                                 {ConfigScreen && <ConfigScreen config={macro.config} onSubmit={this.handleConfigChange}/>}
                             </div>
                         )}

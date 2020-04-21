@@ -95,7 +95,7 @@ const config = {
             },
         ], {}),*/
         new HtmlWebpackPlugin({
-            title: 'Hyperkeys',
+            title: 'HyperKeys',
             hash: true,
             template: path.resolve(__dirname, 'src', 'webapp', 'index.html'),
             loader: 'lodash-loader',
