@@ -12,12 +12,13 @@ function compile_module {
 
 # Build hyperkeys modules
 #TODO iterate over folders and build instead of hard-coded
-compile_module run-command
-compile_module switch-window
-compile_module window-pin-by-name
-compile_module switch-audio
+#compile_module run-command
+#compile_module switch-window
+#compile_module window-pin-by-name
+#compile_module switch-audio
+#compile_module ifttt-webhook
 
 # Build app
-webpack --watch &
+webpack --watch
 
 
