@@ -88,8 +88,13 @@ module.exports = {
             function sendMacros() {
                 mainWindow.webContents.send('macros', macros.map((macro) => {
                     const metadata = extensionsMetadata[macro.name];
-                    return normalizeMacro(macro, metadata);
-                }));
+                    if (!metadata) {
+                        return null;
+                    }
+                    else {
+                        return normalizeMacro(macro, metadata);
+                    }
+                }).filter(macro => !!macro));
             }
             function sendMetadatas() {
                 const meta = {};

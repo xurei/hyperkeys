@@ -4,9 +4,8 @@ const debug = require('debug')('hyperkeys-keybinds-service');
 
 const KeybindsService = {
     registerKey: (keybind) => {
-        const action = actionService.buildActionObject(keybind.action);
-		
         try {
+            const action = actionService.buildActionObject(keybind.action);
             globalShortcut.register(keybind.key, action.execute);
 			
             if (!globalShortcut.isRegistered(keybind.key)) {
