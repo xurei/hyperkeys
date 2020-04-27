@@ -7,14 +7,18 @@
 <br/>
 
 <div align="center">
-
-![Build artifacts](https://github.com/xurei/hyperkeys/workflows/Build%20artifacts/badge.svg?branch=master)
-![License GPL3](https://img.shields.io/github/license/xurei/hyperkeys.svg)
-<a href="https://github.com/xurei/hyperkeys/releases/latest" target="_blank">
-  <img src="https://img.shields.io/github/release/xurei/hyperkeys.svg" alt="Release" />
-</a>
-![Dependencies](https://david-dm.org/xurei/hyperkeys.svg)
-
+    <a href="https://github.com/xurei/hyperkeys/actions">
+      <img src="https://github.com/xurei/hyperkeys/workflows/Build%20artifacts/badge.svg?branch=master" alt="Build artifacts" />
+    </a>
+    <a href="https://github.com/xurei/hyperkeys/blob/master/LICENSE">
+      <img src="https://img.shields.io/github/license/xurei/hyperkeys.svg" alt="License GPL-3" />
+    </a>
+    <a href="https://github.com/xurei/hyperkeys/releases/latest" target="_blank">
+      <img src="https://img.shields.io/github/release/xurei/hyperkeys.svg" alt="Release" />
+    </a>
+    <a href="https://david-dm.org/xurei/hyperkeys">
+      <img src="https://david-dm.org/xurei/hyperkeys.svg" alt="Dependencies" />
+    </a>
 </div>
 
 Unleash the power of your keyboard by letting you bind ANY action to a shortcut.
