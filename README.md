@@ -2,7 +2,7 @@
     <img style="margin: 0 auto" src="src/main/icon.png" alt="Logo"/>
     <h1>HyperKeys</h1>
     <h3>Keyboard shortcuts on steroids</h3>
-    <a href="https://hyperkeys.xureilab.com">https://hyperkeys.xureilab.com</a>
+    <a href="https://hyperkeys.xureilab.com">hyperkeys.xureilab.com</a>
 </div>
 <br/>
 
@@ -16,7 +16,7 @@
     <a href="https://github.com/xurei/hyperkeys/releases/latest" target="_blank">
       <img src="https://img.shields.io/github/release/xurei/hyperkeys.svg" alt="Release" />
     </a>
-    <a href="https://david-dm.org/xurei/hyperkeys">
+    <a href="https://david-dm.org/xurei/hyperkeys" target="_blank">
       <img src="https://david-dm.org/xurei/hyperkeys.svg" alt="Dependencies" />
     </a>
 </div>
@@ -30,4 +30,4 @@ Unleash the power of your keyboard by letting you bind ANY action to a shortcut.
 - IFTTT Webhook
 - Switch Audio outputs (experimental; Linux only)
 
-More info on [https://hyperkeys.xureilab.com](https://hyperkeys.xureilab.com)
+More info on [hyperkeys.xureilab.com](https://hyperkeys.xureilab.com)
