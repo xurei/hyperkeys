@@ -1,10 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 const webpack = require('webpack');
-//const CopyWebpackPlugin = require('copy-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 
 const NODE_ENV = process.env.NODE_ENV || 'development';
 const DEST_DIR = process.env.DEST_DIR || 'build';
@@ -88,12 +86,6 @@ const config = {
             //'__REACT_DEVTOOLS_GLOBAL_HOOK__': '({ isDisabled: true })'
         }),
         new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-        /*new CopyWebpackPlugin([
-            {
-                from: path.resolve(__dirname, 'src', 'public'),
-                to: path.resolve(__dirname, DEST_DIR, 'public'),
-            },
-        ], {}),*/
         new HtmlWebpackPlugin({
             title: 'HyperKeys',
             hash: true,
@@ -103,9 +95,6 @@ const config = {
             favicon_suffix: NODE_ENV === 'production' ? '.png' : '.dev.png',
             inject: false,
         }),
-        /*new ScriptExtHtmlWebpackPlugin({
-            defaultAttribute: 'async',
-        }),*/
     ],
     
     watchOptions: {
