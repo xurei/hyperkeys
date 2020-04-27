@@ -11,13 +11,12 @@ class MacrosListItem extends React.Component {
         macro: PropTypes.object.isRequired,
         metadata: PropTypes.object.isRequired,
         onRemoveMacro: PropTypes.func.isRequired,
-        onMacroConfig: PropTypes.func.isRequired,
     };
     
     constructor(props) {
         super(props);
         this.state = {
-            detailsVisible: true,
+            detailsVisible: false,
         };
     }
     
@@ -30,8 +29,19 @@ class MacrosListItem extends React.Component {
         
         return (
             <ListGroupItem>
-                <div onClick={this.handleToggleDetails} style={{cursor: 'pointer'}}>
-                    <span style={{lineHeight: '45px', display: 'inline-block', width: 200}}>{hasConfig ? (this.state.detailsVisible ? '−':'+') : ' '} {macro.title}</span>
+                <div>
+                    <span onClick={this.handleToggleDetails} style={{cursor: 'pointer'}}>
+                        <span style={{lineHeight: '45px', display: 'inline-block', width: 32, paddingLeft: 3}}>
+                            {hasConfig ? (this.state.detailsVisible ? (
+                                <i className="fa fa-cog"/>
+                            ): (
+                                <i className="fa fa-cog"/>
+                            )) : ' '}
+                        </span>
+                        <span style={{lineHeight: '45px', display: 'inline-block', width: 300}}>
+                            {macro.title}
+                        </span>
+                    </span>
                     <ShortcutsList id_macro={macro.id} shortcuts={macro.shortcuts} metadatas={metadata.actions}/>
                     <span className="pull-right">
                         <span className="btn btn-danger" data-id={macro.id} onClick={this.handleRemoveclick}>&times;</span>
@@ -88,7 +98,6 @@ class MacrosList extends React.Component {
         macros: PropTypes.array.isRequired,
         metadatas: PropTypes.object.isRequired,
         onRemoveMacro: PropTypes.func.isRequired,
-        onMacroConfig: PropTypes.func.isRequired,
     };
     
     render() {
@@ -102,7 +111,7 @@ class MacrosList extends React.Component {
         const shortcuts = macros.map((macro) => {
             return (
                 <MacrosListItem key={`macro_${macro.id}`} macro={macro} metadata={this.props.metadatas[macro.name]}
-                    onRemoveMacro={this.props.onRemoveMacro} onMacroConfig={this.props.onMacroConfig}/>
+                    onRemoveMacro={this.props.onRemoveMacro} />
             );
         });
         

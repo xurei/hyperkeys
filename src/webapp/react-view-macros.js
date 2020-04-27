@@ -35,7 +35,7 @@ class MacrosView extends React.Component {
                     <Button color="success" onClick={this.handleAddMacroClick}>Add Macro</Button>
                 </div>
                 <h2>Configured Macros</h2>
-                <MacrosList macros={props.macros} metadatas={props.metadatas} onRemoveMacro={this.handleRemoveMacro} onMacroConfig={this.handleShowMacroConfig} />
+                <MacrosList macros={props.macros} metadatas={props.metadatas} onRemoveMacro={this.handleRemoveMacro} />
 				
                 {this.state.showPopupAddMacro && (
                     <PopupAddMacro onClose={this.handleCloseAddMacroPopup} onSubmit={this.handleSubmitAddMacroPopup} metadatas={props.metadatas}/>
