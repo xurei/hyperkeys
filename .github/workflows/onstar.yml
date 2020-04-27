@@ -14,7 +14,4 @@ jobs:
         env: # Or as an environment variable
           NIMROD_API_KEY: ${{ secrets.NIMROD_API_KEY }}
         run: |
-          curl -X POST -H "Content-Type: application/json" -d '{\
-            "api_key": $NIMROD_API_KEY,\
-            "message":"⭐⭐⭐ New Star on Hyperkeys ⭐⭐⭐"\
-          }' "https://www.nimrod-messenger.io/api/v1/message"
+          curl -X POST -H "Content-Type: application/json" -d '{"api_key": "$NIMROD_API_KEY", "message":"⭐⭐⭐ New Star on Hyperkeys ⭐⭐⭐" }' "https://www.nimrod-messenger.io/api/v1/message"
