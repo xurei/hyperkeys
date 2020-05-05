@@ -7,7 +7,6 @@ const macrosProvider = require('./providers/macros-provider');
 const actionsService = require('./services/actions-service');
 const path = require('path');
 const debug = require('debug')('hyperkeys-ipc');
-const ConfigWindow = require('./config-window');
 
 function registerShortcuts(macros) {
     debug(macros);

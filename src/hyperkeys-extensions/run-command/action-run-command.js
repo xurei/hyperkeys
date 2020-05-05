@@ -1,5 +1,6 @@
 const spawn = require('child_process').spawn;
-const debug = require('debug')('hyperkeys-action-run-command');
+const path = require('path');
+const debug = require('debug')(`hyperkeys-${path.basename(__dirname)}`);
 const NotificationService = require('hyperkeys-api').NotificationService;
 
 module.exports = {

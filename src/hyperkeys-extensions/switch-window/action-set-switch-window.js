@@ -1,5 +1,6 @@
 const store = require('./store-switch-window');
-const debug = require('debug')('hyperkeys-action-set-switch-window');
+const path = require('path');
+const debug = require('debug')(`hyperkeys-${path.basename(__dirname)}`);
 const NotificationService = require('hyperkeys-api').NotificationService;
 const activeWin = require('active-win');
 

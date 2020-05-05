@@ -25,31 +25,10 @@ class ShortcutsListItem extends React.Component {
     
     render() {
         const shortcut = this.props.shortcut;
-        //return (
-        //    <ListGroupItem>
-        //		<FlexLayout direction="row" >
-        //			<FlexChild width={200} grow={0.1}>
-        //				<div style={{lineHeight:"40px"}}>{this.props.metadata.title}</div>
-        //			</FlexChild>
-        //
-        //			<FlexChild width={100} grow={1}>
-        //				<ShortcutRenderer shortcut={shortcut}/>
-        //				<span className="pull-right">
-        //					<span className="btn btn-default" onClick={this.handleOpenPopup}>
-        //						<i className="fa fa-pencil" aria-hidden="true"/>
-        //					</span>
-        //					&nbsp;
-        //				</span>
-        //			</FlexChild>
-        //		</FlexLayout>
-        //		{this.state.settingShortcut && (
-        //			<PopupSetShortcut onClose={this.handlePopupClose} onSubmit={this.handleChangeShortcut} />
-        //		)}
-        //    </ListGroupItem>
-        //);
+        const metadata = this.props.metadata || {};
         return (
             <span style={{padding: '0 15px'}}>
-                {this.props.metadata.title}
+                {metadata.title}
                 {' '}
                 <span onClick={this.handleOpenPopup}>
                     {!shortcut || shortcut === '' ? (

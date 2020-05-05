@@ -13,6 +13,7 @@ function compile_module {
 	if test -f "src/hyperkeys-extensions/$MODULE_NAME/build.sh"; then
 		bash "src/hyperkeys-extensions/$MODULE_NAME/build.sh";
 	fi
+	echo ""
 }
 
 if [[ $1 != '' ]]; then
@@ -28,12 +29,10 @@ else
 	node $BASEPATH/build_package_json.js
 
 	# Build hyperkeys modules
-	#TODO iterate over folders and build instead of hard-coded
-	compile_module switch-window
-	compile_module run-command
-	compile_module window-pin-by-name
-	compile_module switch-audio
-	compile_module ifttt-webhook
+	ls -l $BASEPATH/../src/hyperkeys-extensions | grep '^d' | awk '{print $9}' | \
+	while read line; do
+	   compile_module $line
+	done
 
 	# Build app
 	webpack

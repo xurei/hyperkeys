@@ -1,5 +1,6 @@
 const exec = require('child_process').exec;
-const debug = require('debug')('hyperkeys-action-show-switch-window');
+const path = require('path');
+const debug = require('debug')(`hyperkeys-${path.basename(__dirname)}`);
 const platform = require('hyperkeys-api').platform;
 
 module.exports = {

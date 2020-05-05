@@ -1,6 +1,6 @@
-const spawn = require('child_process').spawn;
 const exec = require('child_process').exec;
-const debug = require('debug')('hyperkeys-action-switch-audio');
+const path = require('path');
+const debug = require('debug')(`hyperkeys-${path.basename(__dirname)}`);
 const NotificationService = require('hyperkeys-api').NotificationService;
 
 function getAudioSinks() {

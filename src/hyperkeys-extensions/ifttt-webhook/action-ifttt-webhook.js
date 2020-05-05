@@ -1,5 +1,5 @@
-const spawn = require('child_process').spawn;
-const debug = require('debug')('hyperkeys-action-ifttt-webhook');
+const path = require('path');
+const debug = require('debug')(`hyperkeys-${path.basename(__dirname)}`);
 const NotificationService = require('hyperkeys-api').NotificationService;
 const request = require('request-promise-native');
 
