@@ -20,6 +20,7 @@ module.exports = {
                 try {
                     const child = spawn(command, {
                         detached: true,
+                        shell: true,
                     });
                     child.on('error', onError);
                 }
