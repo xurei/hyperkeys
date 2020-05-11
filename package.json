@@ -38,7 +38,7 @@
     "@babel/runtime": "^7.9.6",
     "@babel/runtime-corejs3": "^7.9.6",
     "active-win": "^6.1.0",
-    "asfw": "^2.2.0",
+    "asfw": "git+https://github.com/xurei/node-asfw.git#48dcdf931aef2459584bc880f84dcf5eef10dd50",
     "core-js": "^3.6.5",
     "debug": "^4.1.1",
     "electron-json-storage": "^4.1.8",
