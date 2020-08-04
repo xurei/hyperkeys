@@ -1,6 +1,6 @@
 {
   "name": "hyperkeys",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "description": "Global shortcuts on steroids",
   "main": "main.js",
   "scripts": {
@@ -48,7 +48,8 @@
     "node-notifier": "^7.0.0",
     "request": "^2.88.2",
     "request-promise-native": "^1.0.8",
-    "uuid": "^7.0.1",
+    "robotjs": "^0.6.0",
+    "uuid": "^7.0.3",
     "xurei-util": "^1.4.1"
   },
   "devDependencies": {
