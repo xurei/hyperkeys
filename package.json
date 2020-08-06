@@ -7,7 +7,6 @@
     "start": "node_modules/.bin/electron build",
     "build:dependencies": "bash scripts/build-dependencies.sh",
     "build": "bash scripts/build.sh",
-    "preversion": "npm run lint -- --quiet",
     "lint": "eslint src",
     "watch": "bash scripts/watch.sh",
     "package:linux": "bash scripts/package-linux.sh",

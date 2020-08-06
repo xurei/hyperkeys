@@ -10,6 +10,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - run: git pull
       - run: npm version patch --no-git-tag-version
       - run: git commit --amend -m "Started New version development"
       - run: git push
