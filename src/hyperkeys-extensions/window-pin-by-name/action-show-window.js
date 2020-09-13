@@ -29,8 +29,6 @@ module.exports = {
                             asfw(action.config.name);
                             resolve();
                         });
-                        
-                        //command = `"${__dirname}\\..\\..\\natives\\win32\\nircmd\\nircmdc.exe" win activate ititle "${action.config.name}"`;
                     }
     
                     command()
