@@ -1,6 +1,7 @@
 const exec = require('child_process').exec;
 const path = require('path');
 const debug = require('debug')(`hyperkeys-${path.basename(__dirname)}`);
+const NotificationService = require('hyperkeys-api').NotificationService;
 const platform = require('hyperkeys-api').platform;
 
 module.exports = {
@@ -9,23 +10,35 @@ module.exports = {
         return {
             execute: () => {
                 if (action.config.name && action.config.name !== '') {
-                    let command = '';
+                    let command;
                     if (platform.isLinux) {
-                        command = `${__dirname}/../../natives/linux/wmctrl -a "${action.config.name}"`;
+                        command = () => new Promise((resolve, reject) => {
+                            exec(`${__dirname}/../../natives/linux/wmctrl -a "${action.config.name}"`, function callback(error, stdout, stderr) {
+                                if (!error) {
+                                    resolve();
+                                }
+                                else {
+                                    reject(error);
+                                }
+                            });
+                        });
                     }
                     else if (platform.isWin) {
-                        command = `"${__dirname}\\..\\..\\natives\\win32\\nircmd\\nircmdc.exe" win activate ititle "${action.config.name}"`;
+                        const asfw = require('asfw').SetForegroundWindowByName;
+                        command = () => new Promise((resolve, reject) => {
+                            asfw(action.config.name);
+                            resolve();
+                        });
+                        
+                        //command = `"${__dirname}\\..\\..\\natives\\win32\\nircmd\\nircmdc.exe" win activate ititle "${action.config.name}"`;
                     }
-                    
-                    debug(command);
-                    debug('Switching to', action.config.name);
-                    exec(command, function callback(error, stdout, stderr){
-                        if (error === null) {
-                            /* nothing */
-                        }
-                        else {
-                            //TODO error management
-                        }
+    
+                    command()
+                    .catch(e => {
+                        NotificationService.notify({
+                            'title': 'Window Pin By Name',
+                            'message': `Cannot bring window to foreground: ${e}`,
+                        });
                     });
                 }
                 else {

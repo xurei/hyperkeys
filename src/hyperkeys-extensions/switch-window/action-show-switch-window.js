@@ -37,7 +37,7 @@ module.exports = {
                     command()
                     .catch(e => {
                         NotificationService.notify({
-                            'title': 'Window Pinner',
+                            'title': 'Window Pin',
                             'message': `Cannot bring window to foreground: ${e}`,
                         });
                     });
