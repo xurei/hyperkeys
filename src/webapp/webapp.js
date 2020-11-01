@@ -7,7 +7,7 @@ import store from './store';
 import './assets/font-awesome.min.css';
 import './assets/bootstrap.min.css';
 import './assets/style.scss';
-import { setMacros, setMetadatas } from './actions';
+import { setLatestRelease, setMacros, setMetadatas } from './actions';
 
 const document = global.document;
 const ipc = global.ipc;
@@ -31,6 +31,11 @@ global.addEventListener('DOMContentLoaded', function() {
 		
         store.dispatch(setMetadatas(metadatas));
         ipc.send('request_macros');
+    });
+    ipc.on('latest_version', (event, release) => {
+        console.log('Latest version:', release.tag_name);
+        console.log('URL:', release.html_url);
+        store.dispatch(setLatestRelease(release));
     });
     ipc.on('macros', (event, arg) => {
         console.log('Got macros', arg);

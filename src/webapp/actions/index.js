@@ -25,3 +25,10 @@ export const removeKeybind = (keybind) => {
         keybind: keybind,
     };
 };
+
+export const setLatestRelease = (release) => {
+    return {
+        type: 'SET_LATEST_RELEASE',
+        release: release,
+    };
+};
