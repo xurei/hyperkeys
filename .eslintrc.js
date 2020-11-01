@@ -72,6 +72,6 @@ module.exports = {
 
         "no-class-assign": 0,
         
-        "xurei/no-relative-parent-imports": ["error"]
+        "xurei/no-relative-parent-imports": ["warn"]
     }
 };

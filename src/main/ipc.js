@@ -11,10 +11,12 @@ const debug = require('debug')('hyperkeys-ipc');
 function registerShortcuts(macros) {
     debug(macros);
     for (const macro of macros) {
-        for (const action of Object.keys(macro.shortcuts)) {
-            const shortcut = macro.shortcuts[action];
-            if (shortcut !== null) {
-                keybindsService.registerKey({key: shortcut, action: {id_macro: macro.id, name: action, config: macro.config}});
+        if (macro.enabled) {
+            for (const action of Object.keys(macro.shortcuts)) {
+                const shortcut = macro.shortcuts[action];
+                if (shortcut !== null) {
+                    keybindsService.registerKey({key: shortcut, action: {id_macro: macro.id, name: action, config: macro.config}});
+                }
             }
         }
     }
@@ -126,6 +128,19 @@ module.exports = {
 			
             ipc.on('remove_macro', function(event, id_macro) {
                 macros = macros.filter((macro) => macro.id !== id_macro);
+				
+                updateShortcuts(macros);
+                macrosProvider.saveMacros(macros);
+                sendMacros();
+            });
+			
+            ipc.on('set_enabled', function(event, newConfig) {
+                macros.forEach((macro, index) => {
+                    if (macro.id === newConfig.id) {
+                        debug('found matching macro');
+                        macros[index].enabled = newConfig.enabled;
+                    }
+                });
 				
                 updateShortcuts(macros);
                 macrosProvider.saveMacros(macros);

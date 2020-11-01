@@ -27,6 +27,13 @@ const provider = {
                 }
 				
                 //TODO add default config on first launch ?
+    
+                //By default, macros are enabled
+                data.forEach(macro => {
+                    if (typeof(macro.enabled) === 'undefined') {
+                        macro.enabled = true;
+                    }
+                });
 				
                 resolve(data);
             });

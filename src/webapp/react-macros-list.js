@@ -2,9 +2,10 @@ import React from 'react'; //eslint-disable-line no-unused-vars
 import PropTypes from 'prop-types'; //eslint-disable-line no-unused-vars
 import deepEqual from 'deep-eql';
 import autobind from 'autobind-decorator';
-import ShortcutsList from './react-shortcuts-list';
-
 import { ListGroup, ListGroupItem } from 'reactstrap';
+
+import ShortcutsList from './react-shortcuts-list';
+import { Checkbox } from './components/checkbox';
 
 class MacrosListItem extends React.Component {
     static propTypes = {
@@ -29,28 +30,35 @@ class MacrosListItem extends React.Component {
         
         return (
             <ListGroupItem>
-                <div>
-                    <span onClick={this.handleToggleDetails} style={{cursor: 'pointer'}}>
-                        <span style={{lineHeight: '45px', display: 'inline-block', width: 32, paddingLeft: 3}}>
-                            {hasConfig ? (this.state.detailsVisible ? (
-                                <i className="fa fa-cog"/>
-                            ): (
-                                <i className="fa fa-cog"/>
-                            )) : ' '}
+                <div style={{ userSelect: 'none' }}>
+                    <Checkbox
+                        name="test"
+                        checked={macro.enabled}
+                        onClick={this.handleEnabledClick}
+                    />
+                    <span style={{ opacity: macro.enabled ? 1 : 0.33, paddingLeft: '8px' }}>
+                        <span onClick={this.handleToggleDetails} style={{cursor: 'pointer'}}>
+                            <span style={{lineHeight: '45px', display: 'inline-block', width: 32, paddingLeft: 0}}>
+                                {hasConfig ? <i className="fa fa-cog btn-settings"/> : ' '}
+                            </span>
+                            <span style={{lineHeight: '45px', display: 'inline-block', width: 300}}>
+                                {macro.title}
+                            </span>
                         </span>
-                        <span style={{lineHeight: '45px', display: 'inline-block', width: 300}}>
-                            {macro.title}
+                        <span style={{ position: 'relative', top: '-9px'}}>
+                            <ShortcutsList id_macro={macro.id} shortcuts={macro.shortcuts} metadatas={metadata.actions}/>
                         </span>
                     </span>
-                    <ShortcutsList id_macro={macro.id} shortcuts={macro.shortcuts} metadatas={metadata.actions}/>
                     <span className="pull-right">
-                        <span className="btn btn-danger" data-id={macro.id} onClick={this.handleRemoveclick}>&times;</span>
+                        <span className="btn btn-danger-hollow btn-danger" data-id={macro.id} onClick={this.handleRemoveclick}>
+                            <i className="fa fa-trash"/>
+                        </span>
                     </span>
                 </div>
                 {hasConfig && this.state.detailsVisible && (
-                    <div style={{marginTop: '10px'}}>
+                    <div>
                         {(metadata.configScreen && metadata.configScreen.enabled) && (
-                            <div style={{background: 'rgba(0,0,0,0.1)', padding: '5px 5px 5px 10px'}}>
+                            <div style={{padding: '0 5px 5px 10px'}}>
                                 {ConfigScreen && <ConfigScreen config={macro.config} onSubmit={this.handleConfigChange}/>}
                             </div>
                         )}
@@ -62,13 +70,20 @@ class MacrosListItem extends React.Component {
     }
     
     @autobind
+    handleEnabledClick(e) {
+        e.stopPropagation();
+        const macro = this.props.macro;
+        global.ipc.send('set_enabled', { id: macro.id, enabled: !macro.enabled });
+        global.ipc.send('request_macros');
+    }
+    
+    @autobind
     handleRemoveclick(e) {
         e.stopPropagation();
         if (global.confirm('Remove macro ?')) {
             this.props.onRemoveMacro(e.target.getAttribute('data-id'));
         }
     }
-    
     
     @autobind
     handleConfigChange(config) {

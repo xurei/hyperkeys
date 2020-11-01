@@ -2,7 +2,7 @@ import React from 'react'; //eslint-disable-line no-unused-vars
 import PropTypes from 'prop-types'; //eslint-disable-line no-unused-vars
 import autobind from 'autobind-decorator';
 
-import { FormGroup, Input, Label, Button } from 'reactstrap';
+import { FormGroup, InputGroup, Input, Label, Button } from 'reactstrap';
 
 class ConfigScreen extends React.Component {
     static propTypes = {
@@ -22,14 +22,16 @@ class ConfigScreen extends React.Component {
             <form onSubmit={this.handleSubmit}>
                 <FormGroup>
                     <Label>Command to execute</Label>
-                    <div style={{display: 'flex'}}>
-                        <div style={{flexGrow: 1}}>
-                            <Input type="text" value={this.state.value} placeholder="Example : firefox" onChange={this.handleChange}/>
+                    <InputGroup>
+                        <div style={{display: 'flex'}}>
+                            <div style={{flexGrow: 1}}>
+                                <Input type="text" value={this.state.value} placeholder="Example : firefox" onChange={this.handleChange}/>
+                            </div>
+                            <div style={{flexGrow: 0, width: 90}}>
+                                <Button color="success" disabled={this.state.value === this.props.config.command} className="pull-right fullw" onClick={this.handleSubmit}>Confirm</Button>
+                            </div>
                         </div>
-                        <div style={{flexGrow: 0, width: 90}}>
-                            <Button color="success" disabled={this.state.value === this.props.config.command} className="pull-right fullw" onClick={this.handleSubmit}>Confirm</Button>
-                        </div>
-                    </div>
+                    </InputGroup>
                 </FormGroup>
             </form>
         );

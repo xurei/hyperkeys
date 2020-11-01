@@ -4,7 +4,6 @@ import deepEqual from 'deep-eql';
 import autobind from 'autobind-decorator';
 
 import PopupSetShortcut from './react-popup-setshortcut';
-import { FlexLayout, FlexChild } from './components/layout/flex-layout';
 
 import ShortcutRenderer from './react-shortcut-renderer';
 
@@ -27,8 +26,10 @@ class ShortcutsListItem extends React.Component {
         const shortcut = this.props.shortcut;
         const metadata = this.props.metadata || {};
         return (
-            <span style={{padding: '0 15px'}}>
-                {metadata.title}
+            <span style={{padding: '0 32px 0 0'}}>
+                <div style={{paddingRight: '5px'}}>
+                    {metadata.title}
+                </div>
                 {' '}
                 <span onClick={this.handleOpenPopup}>
                     {!shortcut || shortcut === '' ? (
@@ -91,8 +92,10 @@ class ShortcutsList extends React.Component {
         });
 		
         return (
-            <span>
-                {shortcuts}
+            <span style={{display: 'inline-block'}}>
+                <span style={{display: 'flex', flexDirection: 'row'}}>
+                    {shortcuts}
+                </span>
             </span>
         );
     }
