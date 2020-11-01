@@ -14,6 +14,22 @@ class Popup extends React.Component {
         maxHeight: '350px',
     };
     
+    componentDidMount() {
+        console.log('add evt listener');
+        this.handleEscape = this.handleEscape.bind(this);
+        global.document.body.addEventListener('keydown', this.handleEscape);
+    }
+    
+    componentWillUnmount() {
+        global.document.body.removeEventListener('keydown', this.handleEscape);
+    }
+    
+    handleEscape(e) {
+        if(e.key === 'Escape') {
+            this.props.onClose();
+        }
+    }
+    
     render() {
         //TODO allow to not have an height. This can be done by removing some absolute positions if maxHeight is not set
 		
