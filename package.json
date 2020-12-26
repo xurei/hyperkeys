@@ -42,7 +42,7 @@
     "electron-json-storage": "^4.1.8",
     "gkm": "^0.2.0",
     "hyperkeys-api": "^1.1.2",
-    "node-notifier": "^7.0.0",
+    "node-notifier": "^8.0.1",
     "request": "^2.88.2",
     "request-promise-native": "^1.0.8",
     "semver": "^7.3.2",
