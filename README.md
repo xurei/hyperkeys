@@ -1,5 +1,5 @@
 <div align="center">
-    <img style="margin: 0 auto" src="src/main/icon.png" alt="Logo"/>
+    <img style="margin: 0 auto" src="src/main/300x300.png" alt="Logo"/>
     <h1>HyperKeys</h1>
     <h3>Keyboard shortcuts on steroids</h3>
     <a href="https://hyperkeys.xureilab.com">hyperkeys.xureilab.com</a>

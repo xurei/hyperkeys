@@ -48,8 +48,8 @@ const App = {
         }
 		
         if (platform.isWin || platform.isLinux) {
-            console.log(`${APPPATH + DIRSEP}icon.png`);
-            appIcon = new Tray(`${APPPATH + DIRSEP}icon.png`);
+            console.log(`${APPPATH + DIRSEP}300x300.png`);
+            appIcon = new Tray(`${APPPATH + DIRSEP}300x300.png`);
             const contextMenu = Menu.buildFromTemplate([
                 {label: 'Show', click: toggleWindow},
                 {label: 'Exit', click: App.exit},

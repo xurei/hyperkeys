@@ -18,14 +18,13 @@
     "productName": "HyperKeys",
     "appId": "com.xureilab.hyperkeys",
     "asar": false,
-    "includeRequiredLib": true,
     "mac": {
       "category": "Utility"
     },
     "linux": {
       "category": "Utility",
       "target": "AppImage",
-      "icon": "64x64.png"
+      "icon": "300x300.png"
     },
     "directories": {
       "app": "build",
