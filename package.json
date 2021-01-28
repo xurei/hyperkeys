@@ -24,7 +24,13 @@
     "linux": {
       "category": "Utility",
       "target": "AppImage",
-      "icon": "300x300.png"
+      "icon": "300x300.png",
+      "extraFiles": [
+        {
+           "from": "natives/linux/libappindicator3.so.1",
+            "to": "usr/lib/libappindicator3.so.1"
+        }
+      ]
     },
     "directories": {
       "app": "build",
