@@ -18,12 +18,14 @@
     "productName": "HyperKeys",
     "appId": "com.xureilab.hyperkeys",
     "asar": false,
+    "includeRequiredLib": true,
     "mac": {
       "category": "Utility"
     },
     "linux": {
       "category": "Utility",
-      "target": "AppImage"
+      "target": "AppImage",
+      "icon": "64x64.png"
     },
     "directories": {
       "app": "build",
@@ -35,11 +37,11 @@
     "@babel/polyfill": "^7.8.7",
     "@babel/runtime": "^7.9.6",
     "@babel/runtime-corejs3": "^7.9.6",
-    "active-win": "^6.1.0",
+    "active-win": "^6.2.0",
     "asfw": "git+https://github.com/xurei/node-asfw.git#337a3b513e82c5cb12146a4343c2dbb6c2582f07",
     "core-js": "^3.6.5",
     "debug": "^4.1.1",
-    "electron-json-storage": "^4.1.8",
+    "electron-json-storage": "^4.3.0",
     "gkm": "^0.2.0",
     "hyperkeys-api": "^1.1.2",
     "node-notifier": "^8.0.1",
@@ -66,7 +68,7 @@
     "brace-expansion": "^1.1.11",
     "css-loader": "^3.5.3",
     "deep-eql": "^4.0.0",
-    "electron": "^7.2.4",
+    "electron": "10.3.1",
     "electron-builder": "^22.6.0",
     "electron-devtools-installer": "^2.2.4",
     "electron-packager": "^14.2.1",

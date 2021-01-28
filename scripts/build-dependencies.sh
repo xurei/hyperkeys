@@ -14,7 +14,7 @@ cd $BASEPATH/../build
 npm install
 
 # Node rebuild
-npm rebuild --runtime=electron --target=7.2.4 --disturl=https://atom.io/download/atom-shell --abi=$(../node_modules/.bin/electron -a)
+npm rebuild --runtime=electron --target=10.3.1 --disturl=https://atom.io/download/atom-shell --abi=$(../node_modules/.bin/electron -a)
 
 # Patching dependency files to use local binaries
 patch -N node_modules/active-win/lib/linux.js ../patches/active-win.patch
