@@ -11,6 +11,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: git pull origin master
+      - run: git config --global user.email "ci@github.com"
+      - run: git config --global user.name "Github Actions"
       - run: npm version patch --no-git-tag-version
       - run: git add package.json && git add package-lock.json
       - run: git commit -m "Started New version development"
