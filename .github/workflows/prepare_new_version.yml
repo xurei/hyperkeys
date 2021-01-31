@@ -16,4 +16,4 @@ jobs:
       - run: npm version patch --no-git-tag-version
       - run: git add package.json && git add package-lock.json
       - run: git commit -m "Started New version development"
-      - run: git push
+      - run: git push origin HEAD:master
