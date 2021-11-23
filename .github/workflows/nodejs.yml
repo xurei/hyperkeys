@@ -8,9 +8,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - run: npm i -g node@16.13.0
-      - run: npm i -g npm@8.1.0
-      - run: npm i -g node-gyp@8.4.1
+      - run: npm i --force -g node@16.13.0
+      - run: npm i --force -g npm@8.1.0
+      - run: npm i --force -g node-gyp@8.4.1
       - run: npm i
       - run: npm run lint
       - run: rm -rf build || true; mkdir build
