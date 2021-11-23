@@ -5,26 +5,26 @@ const NotificationService = require('hyperkeys-api').NotificationService;
 
 function getAudioSinks() {
     return new Promise((resolve, reject) => {
-        exec('pacmd list-sinks', {}, (err, stdout, stderr) => {
+        exec('pactl list sinks', {}, (err, stdout, stderr) => {
             // TODO handle errors
             const output = `${stdout}`.split('\n');
             const sinks = [];
             let curSink = {};
             output.forEach(line => {
                 line = line.trim();
-                if (line.startsWith('index:')) {
+                if (line.startsWith('Sink #')) {
                     sinks.push(curSink);
                     curSink = {
-                        index: line.substring(7),
+                        index: line.substring(6),
                     };
                 }
-                else if (line.startsWith('* index:')) {
+                /*else if (line.startsWith('* index:')) {
                     sinks.push(curSink);
                     curSink = {
                         index: line.substring(9),
                     };
-                }
-                else if (line.startsWith('state: RUNNING')) {
+                }*/
+                else if (line.startsWith('State: RUNNING')) {
                     curSink.active = true;
                 }
                 else if (line.startsWith('alsa.card_name =')) {
@@ -79,7 +79,7 @@ module.exports = {
             execute: () => {
                 const command = action.config.command;
                 debug('Switching audio', command);
-                return Promise.all([getAudioSinks(), getSinkInputs()])
+                return Promise.all([getAudioSinks()/*, getSinkInputs()*/])
                 .then(([sinks, inputs]) => {
                     debug('Sinks:');
                     debug(sinks);
@@ -87,16 +87,16 @@ module.exports = {
                     const activeIndex = sinks.findIndex(sink => sink.active);
                     const newActiveSink = sinks[(activeIndex+1) % sinks.length];
 					
-                    exec(`pacmd set-default-sink ${newActiveSink.index}`, {}, (err,stderr,stdout) => {
+                    exec(`pactl set-default-sink ${newActiveSink.index}`, {}, (err,stderr,stdout) => {
                         debug(stderr);
                         debug(stdout);
                     });
-                    inputs.forEach((sinkInput) => {
+                    /*inputs.forEach((sinkInput) => {
                         exec(`pacmd move-sink-input ${sinkInput.index} ${newActiveSink.index}`, {}, (err,stderr,stdout) => {
                             debug(stderr);
                             debug(stdout);
                         });
-                    });
+                    });*/
 					
                     NotificationService.notify({
                         title: 'Audio switch',
