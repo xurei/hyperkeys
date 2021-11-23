@@ -13,12 +13,13 @@ const document = global.document;
 const ipc = global.ipc;
 
 function addModule(path) {
+    console.debug(`Add Module ${path}`);
     var script = document.createElement('SCRIPT');
     script.src = path;
     document.body.appendChild(script);
 }
 
-global.addEventListener('DOMContentLoaded', function() {
+function initApp() {
     ipc.on('metadatas', (event, metadatas) => {
         console.log('Got metadatas', metadatas);
 		
@@ -30,7 +31,7 @@ global.addEventListener('DOMContentLoaded', function() {
         });
 		
         store.dispatch(setMetadatas(metadatas));
-        ipc.send('request_macros');
+        global.postMessage({ action: 'request_macros'}, '*');
     });
     ipc.on('latest_version', (event, release) => {
         console.log('Latest version:', release.tag_name);
@@ -55,5 +56,14 @@ global.addEventListener('DOMContentLoaded', function() {
             loadingView.style.display = 'none';
         }, 200);
     });
-    ipc.send('request_metadatas');
-});
+    global.postMessage({ action: 'request_metadatas'}, '*');
+}
+
+if( document.readyState !== 'loading' ) {
+    console.log( 'document is already ready' );
+    initApp();
+}
+else {
+    console.log( 'document not ready, waiting for it to load...' );
+    document.addEventListener('DOMContentLoaded', initApp);
+}

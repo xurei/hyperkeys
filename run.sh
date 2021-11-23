@@ -2,4 +2,4 @@
 
 DIR=$(dirname $0)
 
-$DIR/node_modules/.bin/electron $DIR/build --no-sandbox
+$DIR/node_modules/.bin/electron $DIR/build

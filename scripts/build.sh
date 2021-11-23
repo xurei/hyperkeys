@@ -8,7 +8,9 @@ function compile_module {
 	echo "-- Building $MODULE_NAME..."
 	node_modules/.bin/babel --config-file $BASEPATH/../.babelrc.main src/hyperkeys-extensions/$MODULE_NAME/* -d build/hyperkeys-extensions/$MODULE_NAME --copy-files
 	if test -f "src/hyperkeys-extensions/$MODULE_NAME/configscreen.js"; then
-		webpack "src/hyperkeys-extensions/$MODULE_NAME/configscreen.js" --output "build/hyperkeys-extensions/$MODULE_NAME/configscreen.js"
+		webpack "./src/hyperkeys-extensions/$MODULE_NAME/configscreen.js" --config "./webpack.config.extension.js" --output-path "./build/hyperkeys-extensions/$MODULE_NAME"
+		mv "build/hyperkeys-extensions/$MODULE_NAME/main.js" "build/hyperkeys-extensions/$MODULE_NAME/configscreen.js"
+		mv "build/hyperkeys-extensions/$MODULE_NAME/main.js.map" "build/hyperkeys-extensions/$MODULE_NAME/configscreen.js.map" || true
 	fi
 	if test -f "src/hyperkeys-extensions/$MODULE_NAME/build.sh"; then
 		bash "src/hyperkeys-extensions/$MODULE_NAME/build.sh";

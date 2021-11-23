@@ -2,7 +2,6 @@ const fs = require('fs');
 const path = require('path');
 const webpack = require('webpack');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const NODE_ENV = process.env.NODE_ENV || 'development';
 const DEST_DIR = process.env.DEST_DIR || 'build';
@@ -27,7 +26,7 @@ const config = {
                 sideEffects: false,
         
                 loader: 'babel-loader',
-                options: JSON.parse(`${fs.readFileSync('.babelrc.web')}`),
+                options: JSON.parse(`${fs.readFileSync(path.resolve('.babelrc.web'))}`),
             },
             {
                 test: /\.css$/i,
@@ -53,9 +52,9 @@ const config = {
         ],
         extensions: ['.js', '.jsx'],
     },
-    entry: {
-        webapp: './src/webapp/webapp.js',
-    },
+    //entry: {
+    //    webapp: './src/webapp/webapp.js',
+    //},
     devtool: (NODE_ENV === 'production' ? false : 'cheap-module-source-map'),
     mode: (NODE_ENV === 'production' ? 'production' : 'development'),
     target: 'electron-renderer',
@@ -88,15 +87,6 @@ const config = {
         new webpack.IgnorePlugin({
             resourceRegExp: /^\.\/locale$/,
             contextRegExp: /moment$/,
-        }),
-        new HtmlWebpackPlugin({
-            title: 'HyperKeys',
-            hash: true,
-            template: path.resolve(__dirname.trim(), 'src', 'webapp', 'index.html'),
-            loader: 'lodash-loader',
-            
-            favicon_suffix: NODE_ENV === 'production' ? '.png' : '.dev.png',
-            inject: true,
         }),
     ],
     

@@ -2,6 +2,7 @@
 <html lang="en">
     <head>
 		<meta charset="utf-8">
+		<meta http-equiv="Content-Security-Policy" content="script-src 'self' 'nonce-basejs';">
 		<title>HyperKeys</title>
     </head>
     <body>
@@ -9,28 +10,18 @@
 			<div style="position:absolute;width:100%;top:38%;margin-top:-10px;line-height:60px;background:#EE8202;color:#fff;font-family: 'sans-serif'">LOADING...</div>
 		</div>
 		<div id="content"></div>
-		<script>
+		<script nonce="basejs">
 			window.hyperkeys_modules = {};
+			window.global = window;
 
-			if (typeof(window.require) !== 'undefined') {
-				window.requireNode = window.require;
-				window.require = undefined;
-				window.ipc = requireNode('electron').ipcRenderer;
-			}
-			else {
-				window.ipc = {
-					send: function () {},
-					on: function () {}
-				};
-			}
 			document.addEventListener("keydown", function (e) {
-				if (e.which === 123) {
-					ipc.send('devtools', null);
-				} else if (e.which === 116) {
+				if (e.which === 123) { // F12
+					window.postMessage({ action: 'devtools'}, '*');
+				}
+				else if (e.which === 116) { // F5
 					location.reload();
 				}
 			});
 		</script>
-		<script src="webapp.js"></script>
     </body>
 </html>

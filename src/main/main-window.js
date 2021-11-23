@@ -9,10 +9,12 @@ const pkg = require('./package.json');
 const mainWindow = new BrowserWindow({
     width: 1024,
     height: 768,
+    sandbox: true,
     show: false,
     icon: path.join(__dirname, '300x300.png'),
     webPreferences: {
-        nodeIntegration: true,
+        preload: path.join(__dirname, 'preload.js'),
+        contextIsolation: true,
     },
 });
 mainWindow.setMenu(null);
