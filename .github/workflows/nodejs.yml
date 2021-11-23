@@ -4,10 +4,12 @@ on: [push]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     steps:
       - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
       - run: npm i --force -g node@16.13.0
       - run: npm i --force -g npm@8.1.0
       - run: npm i --force -g node-gyp@8.4.1
