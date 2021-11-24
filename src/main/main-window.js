@@ -1,4 +1,4 @@
-const {BrowserWindow} = require('electron');
+const { BrowserWindow, shell } = require('electron');
 const path = require('path');
 const releasesProvider = require('./providers/releases-provider');
 const semver = require('semver');
@@ -36,6 +36,12 @@ mainWindow.on('show', function(e) {
     .catch(e => {
         console.error(e);
     });
+});
+
+// Open external links in the default browser
+mainWindow.webContents.setWindowOpenHandler(({ url }) => {
+    shell.openExternal(url);
+    return { action: 'deny' };
 });
 
 // Emitted when the window is closed.

@@ -14,9 +14,9 @@ class MainView extends React.Component {
                     <div className="new-version">
                         <strong>A new version of Hyperkeys is available !</strong>
                         {' '}
-                        {props.release && props.release.tag_name}
+                        {props.release.tag_name}
                         {' '}
-                        <a href={props.release}>Download</a>
+                        <a href="https://hyperkeys.xureilab.com/download" target="_blank">Download</a>
                     </div>
                 )}
                 <div className="main-content">
