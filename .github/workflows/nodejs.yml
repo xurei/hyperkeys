@@ -17,7 +17,11 @@ jobs:
       - run: npm run lint
       - run: rm -rf build || true; mkdir build
       - run: npm run build:dependencies
+        env:
+          NODE_ENV: production
       - run: npm run build
+        env:
+          NODE_ENV: production
 
   release-linux:
     runs-on: ubuntu-latest
@@ -28,12 +32,17 @@ jobs:
       - run: npm ci
       - run: rm -rf build || true; mkdir build
       - run: npm run build:dependencies
+        env:
+          NODE_ENV: production
       - run: npm run build
+        env:
+          NODE_ENV: production
       - run: npm run package:linux
         env:
           # This token is provided by Actions, you do not need to create your own token
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           USE_HARD_LINKS: false
+          NODE_ENV: production
 
   release-windows:
     runs-on: windows-2019
@@ -45,9 +54,14 @@ jobs:
       - run: npm i
       - run: mkdir build
       - run: npm run build:dependencies
+        env:
+          NODE_ENV: production
       - run: npm run build
+        env:
+          NODE_ENV: production
       - run: npm run package:windows
         env:
           # This token is provided by Actions, you do not need to create your own token
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           USE_HARD_LINKS: false
+          NODE_ENV: production

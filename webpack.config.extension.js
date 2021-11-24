@@ -1,7 +1,6 @@
 const fs = require('fs');
 const path = require('path');
 const webpack = require('webpack');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const NODE_ENV = process.env.NODE_ENV || 'development';
 const DEST_DIR = process.env.DEST_DIR || 'build';
@@ -99,17 +98,6 @@ if (NODE_ENV === 'production') {
     config.optimization = config.optimization || {};
     config.optimization.minimize = true;
     config.optimization.usedExports = true;
-    
-    config.plugins.push(new BundleAnalyzerPlugin({
-        analyzerMode: 'static',
-        reportFilename: 'stats2.html',
-        defaultSizes: 'parsed',
-        openAnalyzer: false,
-        generateStatsFile: true,
-        statsFilename: 'stats.json',
-        statsOptions: { source: false },
-        logLevel: 'info',
-    }));
 }
 
 module.exports = [
