@@ -59,6 +59,10 @@ input[type="text"], textarea, select.form-control {
   }
 }
 
+select option {
+  background: #1A1A1A;
+}
+
 .btn-danger-hollow {
   background: transparent;
   border-width: 0px;
