@@ -71,7 +71,7 @@
     "brace-expansion": "^1.1.11",
     "css-loader": "^3.6.0",
     "deep-eql": "^4.0.0",
-    "electron": "^16.0.1",
+    "electron": "^16.0.6",
     "electron-builder": "^22.11.11",
     "electron-devtools-installer": "^2.2.4",
     "electron-packager": "^15.4.0",
