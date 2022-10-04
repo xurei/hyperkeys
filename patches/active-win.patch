@@ -3,8 +3,8 @@ IDEA additional info:
 Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 <+>UTF-8
 ===================================================================
---- app/node_modules/active-win/lib/linux.js	(date 1586808886334)
-+++ app/node_modules/active-win/lib/linux.js	(date 1586808886334)
+--- app/node_modules/active-win/lib/linux.js
++++ app/node_modules/active-win/lib/linux.js
 @@ -7,8 +7,8 @@
  const readFile = promisify(fs.readFile);
  const readlink = promisify(fs.readlink);
@@ -16,7 +16,7 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
  const xpropActiveArgs = ['-root', '\t$0', '_NET_ACTIVE_WINDOW'];
  const xpropDetailsArgs = ['-id'];
 
-@@ -46,7 +46,7 @@
+@@ -49,7 +49,7 @@
  	return {
  		platform: 'linux',
  		title: JSON.parse(result['_NET_WM_NAME(UTF8_STRING)'] || result['WM_NAME(STRING)']) || null,
