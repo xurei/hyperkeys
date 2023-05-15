@@ -51,7 +51,7 @@
     "react-is": "^16.8.0",
     "request": "^2.88.2",
     "request-promise-native": "^1.0.9",
-    "semver": "^7.3.4",
+    "semver": "^7.4.0",
     "uuid": "^7.0.3",
     "xurei-util": "^1.4.1"
   },
