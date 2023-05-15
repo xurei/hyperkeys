@@ -8,7 +8,7 @@ function compile_module {
 	MODULE_NAME=$1
 	echo "$EXTPATH/$MODULE_NAME/configscreen.js"
 	if test -f "$EXTPATH/$MODULE_NAME/configscreen.js"; then
-		webpack --watch "$EXTPATH/$MODULE_NAME/configscreen.js" --output "$BASEPATH/../build/hyperkeys-extensions/$MODULE_NAME/configscreen.js"
+		webpack --watch "$EXTPATH/$MODULE_NAME/configscreen.js" --output-path "$BASEPATH/../build/hyperkeys-extensions/$MODULE_NAME/"
 	fi
 }
 
@@ -20,9 +20,12 @@ function compile_module {
 #compile_module switch-audio
 #compile_module ifttt-webhook
 
-compile_module $1
+trap 'kill %1; kill %2' SIGINT
+
+# Build hyperkeys module
+compile_module $1 &
 
 # Build app
-#webpack --watch
+webpack --watch
 
 
