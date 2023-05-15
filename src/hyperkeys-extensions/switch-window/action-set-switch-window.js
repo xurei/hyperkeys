@@ -10,7 +10,6 @@ module.exports = {
         return {
             execute: () => {
                 activeWin().then((winData) => {
-                    console.log(winData);
                     const id = winData.id;
                     debug(`Action mapped to ${id}`);
                     store[action.id_macro] = id;
@@ -29,37 +28,6 @@ module.exports = {
                         'message': 'ERROR : cannot pin window',
                     });
                 });
-                /*
-                var command = '';
-                if (platform.isLinux) {
-                    command = 'xdotool getwindowfocus';
-                }
-                else if (platform.isWin) {
-                    command = `"${__dirname}\\foregroundwin.exe"`;
-                }
-				
-                debug(command);
-				
-                exec(command, function callback(error, stdout) {
-                    if (error === null) {
-                        debug(`Action mapped to ${  stdout.trim()}`);
-                        store[action.id_macro] = stdout.trim();
-						
-                        NotificationService.notify({
-                            'title': 'Window Pinner',
-                            'message': 'Window pinned',
-                        });
-                    }
-                    else {
-                        debug('Error occured');
-                        debug(error);
-						
-                        NotificationService.notify({
-                            'title': 'Window Pinner',
-                            'message': 'ERROR : cannot pin window',
-                        });
-                    }
-                });*/
             },
         };
     },
