@@ -1,7 +1,6 @@
 import React from 'react'; //eslint-disable-line no-unused-vars
 import PropTypes from 'prop-types'; //eslint-disable-line no-unused-vars
 import deepEqual from 'deep-eql';
-import autobind from 'autobind-decorator';
 
 class ShortcutRenderer extends React.Component {
     static propTypes = {
