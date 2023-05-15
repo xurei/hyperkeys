@@ -21,7 +21,7 @@ class Checkbox extends React.Component {
         renderer: PropTypes.oneOfType([
             PropTypes.instanceOf(React.Component),
             PropTypes.func,
-        ]).isRequired,
+        ]),
     };
     
     state = {
@@ -119,40 +119,34 @@ class DefaultCheckboxRenderer extends React.Component {
             `
                   .xureact-checkbox__default-renderer {
                     display: inline-block;
-                    width: 22px;
-                    height: 22px;
-                    background: #fff;
+                    width: 26px;
+                    height: 26px;
+                    border: solid 1px #999;
+                    background: #777;
+                    color: #444;
                     text-align: center;
                     border-radius: 4px;
                     cursor: pointer;
-                    border: solid 1px #ddd;
-                    font-size: 20px;
-                    line-height: 22px;
+                    font-size: 24px;
+                    line-height: 24px;
                     position: relative;
                     top: 1px;
                   }
 
                   .xureact-checkbox__default-renderer-checked {
-                    /*background: #35D;
-                    border-color: #35D;*/
                     background: #FC7E28;
                     border-color: #FC7E28;
                     color: #fff;
                   }
 
                   .xureact-checkbox__default-renderer-checked-disabled {
-                    background: #aaa;
-                    border-color: #aaa;
+                    background: #777;
+                    border-color: #999;
                     color: #fff;
-                    /*background: #FC7E28,*/
-                    /*border-color: #FC7E28;*/
-                    font-size: 20px;
-                    line-height: 20px;
                     cursor: default;
                   }
 
                   .xureact-checkbox__default-renderer:hover, .xureact-checkbox__default-renderer-focus {
-                    /*border-color: #35D;*/
                     border-color: #FC7E28;
                   }
                   

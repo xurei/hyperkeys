@@ -30,11 +30,13 @@ class MacrosView extends React.Component {
         const props = this.props;
 		
         return (
-            <div>
-                <div className="pull-right">
-                    <Button color="success" onClick={this.handleAddMacroClick}>Add Macro</Button>
+            <div className="pos-relative">
+                <div className="macros-header">
+                    <div className="pull-right">
+                        <Button color="success" onClick={this.handleAddMacroClick}>Add Macro</Button>
+                    </div>
+                    <h2>Configured Macros</h2>
                 </div>
-                <h2>Configured Macros</h2>
                 <MacrosList macros={props.macros} metadatas={props.metadatas} onRemoveMacro={this.handleRemoveMacro} />
 				
                 {this.state.showPopupAddMacro && (
