@@ -40,7 +40,7 @@
   "private": true,
   "dependencies": {
     "@babel/runtime": "^7.12.5",
-    "@babel/runtime-corejs3": "^7.12.5",
+    "@babel/runtime-corejs3": "^7.20.13",
     "active-win": "7.7.2",
     "asfw": "git+https://github.com/xurei/node-asfw#d5e9aee8c5de7e85470dda22330e821ca8c971f5",
     "core-js": "^3.8.3",
