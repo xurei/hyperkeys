@@ -45,7 +45,7 @@
     "asfw": "git+https://github.com/xurei/node-asfw#d5e9aee8c5de7e85470dda22330e821ca8c971f5",
     "core-js": "^3.8.3",
     "debug": "^4.3.1",
-    "electron-json-storage": "^4.3.0",
+    "electron-json-storage": "^4.6.0",
     "hyperkeys-api": "^1.2.0",
     "node-notifier": "^8.0.1",
     "react-is": "^16.8.0",
