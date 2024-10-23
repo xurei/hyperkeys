@@ -14,7 +14,6 @@
             "corejs": 3,
             "proposals": true
         }],
-        "@babel/plugin-syntax-dynamic-import",
         ["@babel/plugin-proposal-decorators", {
             "legacy": true
         }],

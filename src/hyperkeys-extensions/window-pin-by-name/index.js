@@ -14,6 +14,7 @@ module.exports = {
         },
         defaultConfig: {
             name: '',
+            fallbackCommand: null,
         },
     },
 };

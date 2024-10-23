@@ -3,10 +3,9 @@ import PropTypes from 'prop-types'; //eslint-disable-line no-unused-vars
 import deepEqual from 'deep-eql';
 import autobind from 'autobind-decorator';
 
-import { FormGroup, Input } from 'reactstrap';
+import { FormGroup } from 'reactstrap';
 import ShortcutRenderer from './react-shortcut-renderer';
 const uuid = require('uuid').v4;
-const ReactDOM = require ('react-dom');
 
 class ShortcutInput extends React.Component {
     static propTypes = {

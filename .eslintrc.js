@@ -1,7 +1,20 @@
+const fs= require('fs');
+const babelOptions = JSON.parse(`${fs.readFileSync('./.babelrc.main')}`);
+
 module.exports = {
     "extends": "xurei/react",
-    "parser": "babel-eslint",
-
+    "parser": "@babel/eslint-parser",
+    "parserOptions": {
+        "requireConfigFile": false,
+        "ecmaVersion": 2017,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "experimentalObjectRestSpread": true,
+            "jsx": true
+        },
+        "babelOptions": babelOptions,
+    },
+    
     "plugins": [
         "promise",
         "jsx",
@@ -21,14 +34,6 @@ module.exports = {
         "es6": true
     },
 
-    "parserOptions": {
-        "ecmaVersion": 2017,
-        "sourceType": "module",
-        "ecmaFeatures": {
-            "experimentalObjectRestSpread": true,
-            "jsx": true
-        }
-    },
     "rules": {
         "no-alert": "warn",
         "no-eval": "error",
@@ -69,6 +74,8 @@ module.exports = {
     
         "react-hooks/rules-of-hooks": "error",
         "react-hooks/exhaustive-deps": "warn",
+        
+        "react-native/no-inline-styles": 0,
 
         "no-class-assign": 0,
         
