@@ -41,7 +41,7 @@
   "dependencies": {
     "@babel/runtime": "^7.22.15",
     "@babel/runtime-corejs3": "^7.22.15",
-    "active-win": "8.1.0",
+    "active-win": "9.0.0",
     "asfw": "git+https://github.com/xurei/node-asfw#d5e9aee8c5de7e85470dda22330e821ca8c971f5",
     "core-js": "^3.32.2",
     "debug": "^4.3.4",
