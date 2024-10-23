@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'; //eslint-disable-line no-unused-vars
 import autobind from 'autobind-decorator';
 
 import { FormGroup, InputGroup, Input, Label, Button } from 'reactstrap';
-import {Checkbox} from '../../webapp/components/checkbox';
 
 class ConfigScreen extends React.Component {
     static propTypes = {

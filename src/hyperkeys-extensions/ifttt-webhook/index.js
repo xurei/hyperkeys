@@ -1,5 +1,3 @@
-const path = require('path');
-
 module.exports = {
     actions: [
         require('./action-ifttt-webhook'),

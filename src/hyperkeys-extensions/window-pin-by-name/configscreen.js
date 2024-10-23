@@ -1,4 +1,3 @@
-import ReactDOM from 'react-dom'; //eslint-disable-line no-unused-vars
 import React from 'react'; //eslint-disable-line no-unused-vars
 import PropTypes from 'prop-types'; //eslint-disable-line no-unused-vars
 import autobind from 'autobind-decorator';
@@ -15,6 +14,7 @@ class ConfigScreen extends React.Component {
         super(props);
         this.state = {
             value: props.config.name,
+            fallbackCommand: props.config.fallbackCommand,
         };
     }
     
@@ -24,24 +24,37 @@ class ConfigScreen extends React.Component {
                 <FormGroup>
                     <Label>Title bar</Label>
                     <InputGroup>
-                        <div style={{display: 'flex'}}>
-                            <div style={{flexGrow: 1}}>
-                                <Input type="text" value={this.state.value} placeholder="Example : firefox" onChange={this.handleChange}/>
-                            </div>
-                            <div style={{flexGrow: 0, width: 90}}>
-                                <Button color="success" disabled={this.state.value === this.props.config.name} className="pull-right fullw" onClick={this.handleSubmit}>Confirm</Button>
-                            </div>
-                        </div>
+                        <Input type="text" value={this.state.value} placeholder="Ex: firefox" onChange={this.handleChangeName}/>
                     </InputGroup>
                     <div>Enter a title bar that matches the window you want to pin. Partial names are accepted.</div>
+                    
+                    <br/>
+                    
+                    <Label>Fallback command</Label>
+                    <InputGroup>
+                        <Input type="text" value={this.state.fallbackCommand} placeholder="Ex: /bin/firefox" onChange={this.handleChangeFallbackCmd}/>
+                    </InputGroup>
+                    <div>If set, run this command if no window match the title bar filter</div>
+                    
+                    <br/>
+                    
+                    <div style={{width: 200}}>
+                        <Button color="success" disabled={this.state.value === this.props.config.name && this.state.fallbackCommand === this.props.config.fallbackCommand} className="pull-right fullw" onClick={this.handleSubmit}>Confirm</Button>
+                    </div>
+                    <br/>
                 </FormGroup>
             </form>
         );
     }
     
     @autobind
-    handleChange(e) {
+    handleChangeName(e) {
         this.setState({value: e.target.value});
+    }
+    
+    @autobind
+    handleChangeFallbackCmd(e) {
+        this.setState({value: e.target.fallbackCommand});
     }
     
     @autobind

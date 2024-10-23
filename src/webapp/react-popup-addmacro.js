@@ -7,7 +7,7 @@ import { Button } from 'reactstrap';
 import Popup from './react-popup';
 const arrayToMap = require('xurei-util').arrayToMap;
 
-import { FormGroup, Input, Label, FormText } from 'reactstrap';
+import { FormGroup, Label, FormText } from 'reactstrap';
 
 function buildMacro(macro) {
     macro = JSON.parse(JSON.stringify(macro));
