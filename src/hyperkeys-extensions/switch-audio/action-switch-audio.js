@@ -86,6 +86,7 @@ module.exports = {
 					
                     const activeIndex = sinks.findIndex(sink => sink.active);
                     const newActiveSink = sinks[(activeIndex+1) % sinks.length];
+                    debug(`Active Sink: ${activeIndex}`);
 					
                     exec(`pactl set-default-sink ${newActiveSink.index}`, {}, (err,stderr,stdout) => {
                         debug(stderr);
