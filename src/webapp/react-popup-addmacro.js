@@ -7,11 +7,16 @@ import { Button } from 'reactstrap';
 import Popup from './react-popup';
 const arrayToMap = require('xurei-util').arrayToMap;
 
-import { FormGroup, Label, FormText } from 'reactstrap';
+import { FormGroup, Label } from 'reactstrap';
 
 function buildMacro(macro) {
     macro = JSON.parse(JSON.stringify(macro));
-    return {name: macro.name, shortcuts: arrayToMap(Object.keys(macro.actions), k=>k, v=>null), config: macro.defaultConfig};
+    return {
+        name: macro.name,
+        description: macro.description,
+        shortcuts: arrayToMap(Object.keys(macro.actions), k=>k, v=>null),
+        config: macro.defaultConfig
+    };
 }
 
 class PopupAddMacro extends React.Component {
@@ -30,14 +35,12 @@ class PopupAddMacro extends React.Component {
     
     @autobind
     handleChange(e) {
-        console.log(e.target);
         const macro = this.props.metadatas[
         Object.keys(this.props.metadatas).filter((key) => {
             const m = this.props.metadatas[key];
             return (m.name === e.target.value);
         })[0]
         ];
-        console.log(macro, buildMacro(macro));
         this.setState({chosenMacro: buildMacro(macro)}, null);
     }
     
@@ -58,6 +61,8 @@ class PopupAddMacro extends React.Component {
         });
 		
         const curMacroDescription = (this.state.chosenMacro ? this.state.chosenMacro.description : 'plop');
+        console.log(this.state);
+        console.log(curMacroDescription);
 		
         return (
             <Popup maxHeight="220px" title="Add Macro" {...this.props}>
@@ -67,7 +72,9 @@ class PopupAddMacro extends React.Component {
                         <select className="form-control" placeholder="Select" onChange={this.handleChange}>
                             {metadatas}
                         </select>
-                        <FormText color="muted">{curMacroDescription}</FormText>
+                        <div style={{padding: 10}}>
+                            {curMacroDescription}
+                        </div>
                     </FormGroup>
 					
                     <div style={{lineHeight: '40px'}} className="pull-right">
