@@ -46,7 +46,7 @@ jobs:
           NODE_ENV: production
 
   release-windows:
-    runs-on: windows-2019
+    runs-on: windows-2022
     needs: build
     permissions: write-all
 
