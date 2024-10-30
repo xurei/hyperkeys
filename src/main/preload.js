@@ -6,7 +6,7 @@ contextBridge.exposeInMainWorld('ipc', {
         ipcRenderer.on(type, callback);
     },
     send: (message, data) => {
-        global.postMessage({ action: message, data: data }, '*');
+        ipcRenderer.send(message, data);
     },
 });
 
