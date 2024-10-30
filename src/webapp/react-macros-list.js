@@ -36,17 +36,17 @@ class MacrosListItem extends React.Component {
                         checked={macro.enabled}
                         onClick={this.handleEnabledClick}
                     />
-                    <span style={{ opacity: macro.enabled ? 1 : 0.33, paddingLeft: '8px' }}>
-                        <span onClick={this.handleToggleDetails} style={{cursor: 'pointer'}}>
-                            <span style={{lineHeight: '45px', display: 'inline-block', width: 32, paddingLeft: 0}}>
+                    <span style={{ paddingLeft: '8px', position: 'relative', zIndex: 1 }}>
+                        <span className="macro-name" onClick={this.handleToggleDetails} style={{cursor: 'pointer'}}>
+                            <span style={{opacity: macro.enabled ? 1 : 0.33, lineHeight: '45px', display: 'inline-block', width: 32, paddingLeft: 0}}>
                                 {hasConfig ? <i className="fa fa-cog btn-settings"/> : ' '}
                             </span>
-                            <span style={{lineHeight: '45px', display: 'inline-block', width: 300}}>
+                            <span style={{opacity: macro.enabled ? 1 : 0.33, lineHeight: '45px', display: 'inline-block', width: 300}}>
                                 {macro.title}
                             </span>
                         </span>
                         <span style={{ position: 'relative', top: '-9px'}}>
-                            <ShortcutsList id_macro={macro.id} shortcuts={macro.shortcuts} metadatas={metadata.actions}/>
+                            <ShortcutsList enabled={macro.enabled} id_macro={macro.id} shortcuts={macro.shortcuts} metadatas={metadata.actions}/>
                         </span>
                     </span>
                     <span className="pull-right">
@@ -58,7 +58,7 @@ class MacrosListItem extends React.Component {
                 {hasConfig && this.state.detailsVisible && (
                     <div>
                         {(metadata.configScreen && metadata.configScreen.enabled) && (
-                            <div style={{padding: '0 5px 5px 10px'}}>
+                            <div style={{position: 'relative', zIndex: 0, padding: '0 5px 5px 10px'}}>
                                 {ConfigScreen && <ConfigScreen config={macro.config} onSubmit={this.handleConfigChange}/>}
                             </div>
                         )}

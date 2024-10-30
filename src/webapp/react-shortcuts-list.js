@@ -11,6 +11,7 @@ class ShortcutsListItem extends React.Component {
     static propTypes = {
         id_macro: PropTypes.string.isRequired,
         action_name: PropTypes.string.isRequired,
+        enabled: PropTypes.bool.isRequired,
         metadata: PropTypes.object.isRequired,
         shortcut: PropTypes.string,
     };
@@ -23,23 +24,26 @@ class ShortcutsListItem extends React.Component {
     }
     
     render() {
+        const props = this.props;
         const shortcut = this.props.shortcut;
         const metadata = this.props.metadata || {};
         return (
             <span style={{padding: '0 32px 0 0'}}>
-                <div style={{paddingRight: '5px'}}>
-                    {metadata.title}
+                <div style={{opacity: props.enabled ? 1 : 0.33}}>
+                    <div style={{paddingRight: '5px'}}>
+                        {metadata.title}
+                    </div>
+                    {' '}
+                    <span onClick={this.handleOpenPopup}>
+                        {!shortcut || shortcut === '' ? (
+                            <span className="btn btn-default" style={{padding: '5px'}}>
+                                <i className="fa fa-pencil" aria-hidden="true"/>
+                            </span>
+                        ) : (
+                            <ShortcutRenderer shortcut={shortcut}/>
+                        )}
+                    </span>
                 </div>
-                {' '}
-                <span onClick={this.handleOpenPopup}>
-                    {!shortcut || shortcut === '' ? (
-                        <span className="btn btn-default" style={{padding: '5px'}}>
-                            <i className="fa fa-pencil" aria-hidden="true"/>
-                        </span>
-                    ) : (
-                        <ShortcutRenderer shortcut={shortcut}/>
-                    )}
-                </span>
                 {' '}
                 {this.state.settingShortcut && (
                     <PopupSetShortcut onClose={this.handlePopupClose} onSubmit={this.handleChangeShortcut} />
@@ -79,15 +83,24 @@ export { ShortcutsListItem };
 class ShortcutsList extends React.Component {
     static propTypes = {
         id_macro: PropTypes.string.isRequired,
+        enabled: PropTypes.bool.isRequired,
         shortcuts: PropTypes.object.isRequired,
         metadatas: PropTypes.object.isRequired,
     };
     
     render() {
-        const shortcuts = Object.keys(this.props.shortcuts).map((key) => {
-            const shortcut = this.props.shortcuts[key];
+        const props = this.props;
+        const shortcuts = Object.keys(props.shortcuts).map((key) => {
+            const shortcut = props.shortcuts[key];
             return (
-                <ShortcutsListItem id_macro={this.props.id_macro} key={`shortcut_${key}`} action_name={key} metadata={this.props.metadatas[key]} shortcut={shortcut} />
+                <ShortcutsListItem
+                    key={`shortcut_${key}`}
+                    id_macro={props.id_macro}
+                    enabled={props.enabled}
+                    action_name={key}
+                    metadata={props.metadatas[key]}
+                    shortcut={shortcut}
+                />
             );
         });
 		
