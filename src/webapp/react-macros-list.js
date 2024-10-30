@@ -81,7 +81,7 @@ class MacrosListItem extends React.Component {
     handleRemoveclick(e) {
         e.stopPropagation();
         if (global.confirm('Remove macro ?')) {
-            this.props.onRemoveMacro(e.target.getAttribute('data-id'));
+            this.props.onRemoveMacro(this.props.macro.id);
         }
     }
     
