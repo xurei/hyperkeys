@@ -62,7 +62,6 @@ class Checkbox extends React.Component {
     }
     
     handleBlur(e) {
-        console.log('blur');
         this.setState(s => ({
             ...s,
             focus: false,
@@ -70,7 +69,6 @@ class Checkbox extends React.Component {
     }
     
     handleFocus(e) {
-        console.log('focus');
         this.setState(s => ({
             ...s,
             focus: true,
@@ -78,7 +76,6 @@ class Checkbox extends React.Component {
     }
     
     handleMouseEnter(e) {
-        console.log('enter');
         this.setState(s => ({
             ...s,
             hover: true,
@@ -86,7 +83,6 @@ class Checkbox extends React.Component {
     }
     
     handleMouseLeave(e) {
-        console.log('exit');
         this.setState(s => ({
             ...s,
             hover: false,

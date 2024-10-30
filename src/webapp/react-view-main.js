@@ -33,7 +33,6 @@ class MainView extends React.Component {
 
 MainView = redux_connect(
     (state) => {
-        console.log(state);
         return ({
             release: state.latestRelease,
         });
