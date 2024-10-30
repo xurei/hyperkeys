@@ -35,7 +35,7 @@ class MacrosView extends React.Component {
                     <div className="pull-right">
                         <Button color="success" onClick={this.handleAddMacroClick}>Add Macro</Button>
                     </div>
-                    <h2>Configured Macros</h2>
+                    <h2 className="pos-relative" style={{top: 10}}>Configured Macros</h2>
                 </div>
                 <MacrosList macros={props.macros} metadatas={props.metadatas} onRemoveMacro={this.handleRemoveMacro} />
 				

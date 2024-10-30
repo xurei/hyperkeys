@@ -41,7 +41,7 @@ class MacrosListItem extends React.Component {
                             <span style={{opacity: macro.enabled ? 1 : 0.33, lineHeight: '45px', display: 'inline-block', width: 32, paddingLeft: 0}}>
                                 {hasConfig ? <i className="fa fa-cog btn-settings"/> : ' '}
                             </span>
-                            <span style={{opacity: macro.enabled ? 1 : 0.33, lineHeight: '45px', display: 'inline-block', width: 300}}>
+                            <span style={{opacity: macro.enabled ? 1 : 0.33, lineHeight: '40px', display: 'inline-block', width: 280}}>
                                 {macro.title}
                             </span>
                         </span>
@@ -50,7 +50,7 @@ class MacrosListItem extends React.Component {
                         </span>
                     </span>
                     <span className="pull-right">
-                        <span className="btn btn-danger-hollow btn-danger" data-id={macro.id} onClick={this.handleRemoveclick}>
+                        <span className="btn btn-danger-hollow btn-danger" data-id={macro.id} onClick={this.handleRemoveclick} style={{position: 'relative', top: '3px'}}>
                             <i className="fa fa-trash"/>
                         </span>
                     </span>

@@ -28,25 +28,24 @@ class ShortcutsListItem extends React.Component {
         const shortcut = this.props.shortcut;
         const metadata = this.props.metadata || {};
         return (
-            <span style={{padding: '0 32px 0 0'}}>
-                <div style={{opacity: props.enabled ? 1 : 0.33}}>
-                    <div style={{paddingRight: '5px'}}>
-                        {metadata.title}
-                    </div>
-                    {' '}
-                    <span onClick={this.handleOpenPopup}>
-                        {!shortcut || shortcut === '' ? (
-                            <span className="btn btn-default" style={{padding: '5px'}}>
-                                <i className="fa fa-pencil" aria-hidden="true"/>
-                            </span>
-                        ) : (
-                            <ShortcutRenderer shortcut={shortcut}/>
-                        )}
-                    </span>
+            <span style={{padding: 0, minWidth: 285, minHeight: 62}}>
+                <div style={{paddingRight: '5px'}}>
+                    {metadata.title}
                 </div>
-                {' '}
-                {this.state.settingShortcut && (
+                {this.state.settingShortcut ? (
                     <PopupSetShortcut onClose={this.handlePopupClose} onSubmit={this.handleChangeShortcut} />
+                ) : (
+                    <div style={{opacity: props.enabled ? 1 : 0.33, padding: '0 16px 0 0'}}>
+                        <span onClick={this.handleOpenPopup}>
+                            {!shortcut || shortcut === '' ? (
+                                <span className="btn btn-default btn-shortcut-edit" style={{padding: '5px'}}>
+                                    <i className="fa fa-pencil" aria-hidden="true"/>
+                                </span>
+                            ) : (
+                                <ShortcutRenderer shortcut={shortcut}/>
+                            )}
+                        </span>
+                    </div>
                 )}
             </span>
         );

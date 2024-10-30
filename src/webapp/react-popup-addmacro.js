@@ -15,7 +15,7 @@ function buildMacro(macro) {
         name: macro.name,
         description: macro.description,
         shortcuts: arrayToMap(Object.keys(macro.actions), k=>k, v=>null),
-        config: macro.defaultConfig
+        config: macro.defaultConfig,
     };
 }
 

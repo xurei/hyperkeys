@@ -9,6 +9,7 @@ const pkg = require('./package.json');
 const mainWindow = new BrowserWindow({
     width: 1024,
     height: 768,
+    minWidth: 1010,
     sandbox: true,
     show: false,
     icon: path.join(__dirname, '300x300.png'),

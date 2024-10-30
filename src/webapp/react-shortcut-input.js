@@ -75,35 +75,43 @@ class ShortcutInput extends React.Component {
     }
     
     render() {
-        var inputStyle = {
+        const inputStyle = {
             position: 'relative',
             background: '#222',
-            height: '56px',
+            height: 40,
+            width: 190,
             borderRadius: '5px',
             padding: '5px',
             textAlign: 'center',
-            border: (this.state.editing ? 'solid 1px #666' : 'none'),
+            borderStyle: 'solid',
+            borderColor: (this.state.editing ? '#EE8202' : 'none'),
+            borderLeftWidth: '1px',
+            borderTopWidth: '1px',
+            borderBottomWidth: '1px',
+            borderRightWidth: '0',
+            borderTopRightRadius: 0,
+            borderBottomRightRadius: 0,
         };
 		
         return (
-            <FormGroup>
+            <FormGroup className="nomargin">
                 <input
                     type="text"
                     value={''}
                     className="form-control"
                     ref={this.inputRef}
-                    style={{height: '0px', padding: 0, border: 'none'}}
+                    style={{...inputStyle, height: '0px', padding: 0, border: 'none'}}
                     id={this.props.id}
                     placeholder={this.props.placeholder}
                     onKeyDown={this.handleKey}
                     onKeyUp={this.handleKey}
                 />
                 <div ref="fakeinput" onClick={this.handleFocus} style={inputStyle}>
-                    <div style={{zIndex: 1, position: 'absolute', width: '100%', height: '100%', lineHeight: '51px', top: 0, left: 0}}>
-                        <ShortcutRenderer shortcut={this.state.shortcut}/>
+                    <div style={{zIndex: 1, position: 'absolute', width: '100%', height: '100%', padding: 3, top: 0, left: 0}}>
+                        <ShortcutRenderer noEditHover shortcut={this.state.shortcut}/>
                     </div>
                     {this.state.shortcut === '' && (
-                        <div style={{zIndex: 0, position: 'absolute', width: '100%', height: '100%', lineHeight: '56px', top: 0, left: 0, color: '#666'}}>
+                        <div style={{zIndex: 0, position: 'absolute', width: '100%', height: '100%', lineHeight: '36px', top: 0, left: 0, color: '#666'}}>
                             {this.props.placeholder}
                         </div>
                     )}

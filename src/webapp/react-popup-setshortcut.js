@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'; //eslint-disable-line no-unused-vars
 import deepEqual from 'deep-eql';
 import autobind from 'autobind-decorator';
 
-import Popup from './react-popup';
 import ShortcutInput from './react-shortcut-input';
 
 import { Button } from 'reactstrap';
@@ -38,15 +37,16 @@ class PopupSetShortcut extends React.Component {
     
     render() {
         return (
-            <Popup maxHeight="180px"
-                title="Enter Shortcut"
-                {...this.props}>
+            <div style={{display: 'flex', alignItems: 'center'}}>
                 <ShortcutInput focus={true} ref="add_shortcut_input" shortcut={this.state.shortcut} onChange={this.handleChange} />
-                <div style={{lineHeight: '40px'}} className="pull-right">
-                    <a href="javascript:" onClick={this.props.onClose} style={{marginRight: '10px'}}>Cancel</a>
-                    <Button color="success" onClick={this.handleSubmit}>Set Shortcut</Button>
+                <div style={{display: 'inline-block', lineHeight: '30px'}}>
+                    <Button className="btn-shortcut-confirm" color="success" onClick={this.handleSubmit}>
+                        <i className="fa fa-check" aria-hidden="true"/>
+                    </Button>
+                    {' '}
+                    <a href="javascript:" onClick={this.props.onClose} style={{marginRight: '10px'}}>cancel</a>
                 </div>
-            </Popup>
+            </div>
         );
     }
     

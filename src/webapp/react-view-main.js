@@ -22,9 +22,9 @@ class MainView extends React.Component {
                 <div className="main-content">
                     <div className="header"/>
                     <MacrosView/>
-                    <div>
+                    <footer>
                         Version: {pkg.version}
-                    </div>
+                    </footer>
                 </div>
             </div>
         );
@@ -43,7 +43,8 @@ MainView = redux_connect(
 MainView = Styled(MainView)`
 & {
   .main-content {
-    padding: 10px 40px;
+    padding: 0;
+    margin: 0 auto;
   }
 
   .new-version {

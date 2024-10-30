@@ -26,6 +26,10 @@ a,a:hover,a:focus,a:active,a:focus:active {
   width: 100%;
 }
 
+.nomargin {
+  margin: 0 !important;
+}
+
 .pos-relative {
   position: relative;
 }
@@ -37,11 +41,12 @@ body {
 .macros-header {
   position: fixed;
   background: #2B2B2B;
-  right: 40px;
-  left: 40px;
-  z-index: 1;
+  right: 0;
+  left: 0;
+  z-index: 999;
   margin-top: -70px;
   padding: 15px;
+  box-shadow: 0 1px 8px rgba(0,0,0, 0.2);
 
   h2 {
     margin: 0;
@@ -50,6 +55,21 @@ body {
   & + * {
     margin-top: 60px;
   }
+}
+
+footer {
+  position: fixed;
+  background: #2B2B2B;
+  z-index: 999;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  padding: 1px 8px;
+}
+
+.list-group-item {
+  border-left: none !important;
+  border-right: none !important;
 }
 
 .input-group {
@@ -109,4 +129,41 @@ select option {
 .macro-name:hover .btn-settings {
   /*background: #FC7E28;*/
   background: rgba(255,255,255, 0.3);
+}
+
+.shortcut-renderer {
+  &:hover {
+    .btn {
+      background: #404040;
+      border-color: transparent;
+    }
+
+    &:not(.shortcut-renderer__no-edit-btn)
+    {
+      &:after {
+        margin-left: 6px;
+        color: #cccccc;
+        position: absolute;
+        padding-top: 8px;
+
+        /* from fa-pencil*/
+        content:"\f040";
+
+        /* from .fa */
+        display:inline-block;font:normal normal normal 14px/1 FontAwesome;font-size:inherit;text-rendering:auto;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale
+      }
+    }
+  }
+}
+
+.btn-shortcut-edit {
+  width: 32px;
+}
+.btn-shortcut-confirm {
+  height: 40px;
+  line-height: 16px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  padding-left: 8px;
+  padding-right: 8px;
 }

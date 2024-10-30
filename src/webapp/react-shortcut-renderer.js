@@ -5,10 +5,12 @@ import deepEqual from 'deep-eql';
 class ShortcutRenderer extends React.Component {
     static propTypes = {
         shortcut: PropTypes.string,
+        noEditHover: PropTypes.bool,
     };
     
     render() {
-        const shortcut = (this.props.shortcut || '').replace('++','+Plus');
+        const props = this.props;
+        const shortcut = (props.shortcut || '').replace('++','+Plus');
 		
         let i = 0;
         const keys = (
@@ -25,7 +27,7 @@ class ShortcutRenderer extends React.Component {
         );
 		
         return (
-            <span style={{background: 'transparent'}}>
+            <span className={`shortcut-renderer ${props.noEditHover ? 'shortcut-renderer__no-edit-btn' : ''}`} style={{background: 'transparent'}}>
                 {keys}
             </span>
         );
