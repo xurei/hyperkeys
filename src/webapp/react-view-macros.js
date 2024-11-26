@@ -32,7 +32,7 @@ class MacrosView extends React.Component {
         return (
             <div className="pos-relative">
                 <div className="macros-header">
-                    <div className="pull-right">
+                    <div className="pull-right" style={{position: 'relative', zIndex: 100}}>
                         <Button color="success" onClick={this.handleAddMacroClick}>Add Macro</Button>
                     </div>
                     <h2 className="pos-relative" style={{top: 10}}>Configured Macros</h2>
