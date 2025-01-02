@@ -44,7 +44,7 @@
     "active-win": "7.7.2",
     "asfw": "git+https://github.com/xurei/node-asfw#d5e9aee8c5de7e85470dda22330e821ca8c971f5",
     "core-js": "^3.32.2",
-    "debug": "^4.3.4",
+    "debug": "^4.4.0",
     "electron-json-storage": "^4.6.0",
     "hyperkeys-api": "^1.2.0",
     "node-notifier": "^10.0.1",
